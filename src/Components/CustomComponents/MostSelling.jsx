@@ -16,12 +16,9 @@ import {
 import { Dateformatter } from "@/Shared/Dateformatter";
 import { MainContext } from "../Context/ChartInfoContext";
 
-
 const MostSelling = () => {
   const [graph1, setGraph1] = useState(false);
-    const { selectdate,setSelectdate } = useContext(MainContext);
-
-    
+  const { selectdate, setSelectdate } = useContext(MainContext);
 
   const tokenData = JSON.parse(localStorage.getItem("usertoken"));
   const token = tokenData?.token;
@@ -31,12 +28,11 @@ const MostSelling = () => {
     token
   );
 
-  const [date, setDate] = useState(new Date());     
+  const [date, setDate] = useState(new Date());
   const formatedate = Dateformatter(date);
   console.log(formatedate);
   setSelectdate(formatedate);
   console.log(selectdate);
-  
 
   return (
     <>

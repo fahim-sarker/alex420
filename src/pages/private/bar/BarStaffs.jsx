@@ -350,12 +350,6 @@ const BarStaffs = () => {
       <section className="px-10 overflow-hidden pb-4 pt-8 border-t">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-xl font-semibold tracking-[0.6px]">Stuff list</h2>
-          <button
-            type="button"
-            className="text-lg font-medium text-[#0E0E0E] bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px] tracking-[0.54px]"
-          >
-            View all staffs
-          </button>
         </div>
         <Swiper
           slidesPerView={"auto"}
@@ -382,7 +376,7 @@ const BarStaffs = () => {
                           : "https://i.ibb.co.com/fYcPSK0y/profile-2.png"
                       }
                       alt={staff.name}
-                      className="w-fit px-4"
+                      className="w-fit"
                     />
                   </figure>
                 </div>
@@ -401,6 +395,14 @@ const BarStaffs = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="text-lg font-medium text-[#0E0E0E] bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px] tracking-[0.54px] cursor-pointer"
+          >
+            View all staffs
+          </button>
+        </div>
       </section>
     </section>
   );

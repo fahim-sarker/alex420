@@ -1,6 +1,18 @@
-import { GrowthIcon } from "@/assets/icons/icons";
-import SalesChart from "@/Components/CustomComponents/SalesChart";
+import Monthlysalescostcharts from "@/Components/CustomComponents/Monthlysalescostcharts";
+import useFetchData from "@/Components/Hooks/Api/UseFetchData";
 import { Input } from "@/Components/ui/input";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@radix-ui/react-popover"; 
+import { Button } from "@/components/ui/button"; 
+
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { useContext, useEffect, useState } from "react";
+import { CalendarIcon } from "lucide-react";
+import { Dateformatter } from "@/Shared/Dateformatter";
 import {
   Table,
   TableBody,
@@ -10,118 +22,67 @@ import {
   TableRow,
 } from "@/Components/ui/table";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { MainContext } from "@/Components/Context/ChartInfoContext";
 
 const PurchaseCost = () => {
   const [costTable, setCostTable] = useState(false);
-  const inventoryData = [
-    {
-      id: "#5464",
-      productName: "Mouton Mmsik Code",
-      cost: 100.99,
-      sellingPrice: 100.99,
-      date: "12/12/2024",
-      time: "8:00 PM",
-      assignedBy: "Jack toole",
-      categories: "Wine",
-      shelfNumber: 3,
-      note: "Note here",
-      image: "https://i.ibb.co.com/84S5d37z/bottole.png",
-    },
-    {
-      id: "#5464",
-      productName: "Mouton Cadet Bordeaux Rouge",
-      cost: 100.99,
-      sellingPrice: 100.99,
-      date: "12/12/2024",
-      time: "8:00 PM",
-      assignedBy: "Jack toole",
-      categories: "Wine",
-      shelfNumber: 3,
-      note: "Note here",
-      image: "https://i.ibb.co.com/84S5d37z/bottole.png",
-    },
-    {
-      id: "#5464",
-      productName: "Mouton Cadet Bordeaux Rouge",
-      cost: 100.99,
-      sellingPrice: 100.99,
-      date: "12/12/2024",
-      time: "8:00 PM",
-      assignedBy: "Jack toole",
-      categories: "Wine",
-      shelfNumber: 3,
-      note: "Note here",
-      image: "https://i.ibb.co.com/84S5d37z/bottole.png",
-    },
-    {
-      id: "#5464",
-      productName: "Mouton Cadet Bordeaux Rouge",
-      cost: 100.99,
-      sellingPrice: 100.99,
-      date: "12/12/2024",
-      time: "8:00 PM",
-      assignedBy: "Jack toole",
-      categories: "Wine",
-      shelfNumber: 3,
-      note: "Note here",
-      image: "https://i.ibb.co.com/84S5d37z/bottole.png",
-    },
-    {
-      id: "#5464",
-      productName: "Mouton Cadet Bordeaux Rouge",
-      cost: 100.99,
-      sellingPrice: 100.99,
-      date: "12/12/2024",
-      time: "8:00 PM",
-      assignedBy: "Jack toole",
-      categories: "Wine",
-      shelfNumber: 3,
-      note: "Note here",
-      image: "https://i.ibb.co.com/84S5d37z/bottole.png",
-    },
-    {
-      id: "#5464",
-      productName:
-        "Mouton Cadet Bordeaux Rouge Mouton Cadet Bordeaux RougeMouton Cadet Bordeaux Rou geMouton Cadet Bordeaux Rouge Cadet Bordeaux Rou geMouton Cadet Bordeaux Rouge",
-      cost: 100.99,
-      sellingPrice: 100.68,
-      date: "12/12/2024",
-      time: "8:00 PM",
-      assignedBy: "Jack toole",
-      categories: "Wine",
-      shelfNumber: 3,
-      note: "Note here",
-      image: "https://i.ibb.co.com/84S5d37z/bottole.png",
-    },
-  ];
+  const userToken = JSON.parse(localStorage.getItem("usertoken"));
+  const token = userToken?.token;
+  const { data: purchasecost } = useFetchData(
+    "/api/dashboard/bar/products/total-cost-today",
+    token
+  );
+  const { data: purchaseitem } = useFetchData(
+    "/api/dashboard/bar/products/total-added-today",
+    token
+  );
+
+  const inventoryData = purchaseitem?.data;
+  console.log(inventoryData);
+  
+
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(inventoryData);
 
-  // Filter data when search query changes
   useEffect(() => {
-    const searchString = searchQuery.toLowerCase().trim();
+    const searchString = searchQuery?.toLowerCase()?.trim();
 
     if (searchString === "") {
       setFilteredData(inventoryData);
     } else {
       const filtered = inventoryData.filter((item) => {
         return (
-          item.productName.toLowerCase().includes(searchString) ||
-          item.id.toLowerCase().includes(searchString) ||
-          item.assignedBy.toLowerCase().includes(searchString) ||
-          item.categories.toLowerCase().includes(searchString) ||
-          item.note.toLowerCase().includes(searchString) ||
-          item.date.includes(searchString) ||
-          item.time.toLowerCase().includes(searchString) ||
-          item.shelfNumber.toString().includes(searchString) ||
-          item.cost.toString().includes(searchString) ||
-          item.sellingPrice.toString().includes(searchString)
+          item.name?.toLowerCase()?.includes(searchString) ||
+          item.assigned_by?.toLowerCase()?.includes(searchString) ||
+          item.category?.toLowerCase()?.includes(searchString) ||
+          item.note?.toLowerCase()?.includes(searchString) ||
+          item.date?.includes(searchString) ||
+          item.time?.toLowerCase()?.includes(searchString) ||
+          item.shelf_number?.toString()?.includes(searchString) ||
+          item.cost?.toString()?.includes(searchString) ||
+          item.selling_price?.toString()?.includes(searchString)
         );
       });
       setFilteredData(filtered);
     }
   }, [searchQuery]);
+
+  const { selectdate, setSelectdate } = useContext(MainContext);
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const formatedate = Dateformatter(date);
+    setSelectdate(formatedate);
+  }, [date]);
+
+  console.log(selectdate);
+
+
+
+  
+
+
 
   return (
     <>
@@ -132,7 +93,7 @@ const PurchaseCost = () => {
             Total Purchase Cost today
           </h4>
           <div className="flex justify-between items-center">
-            <p className="text-xl font-semibold">$1900.99</p>
+            <p className="text-xl font-semibold">${purchasecost?.data?.total_cost}</p>
             <button
               type="button"
               onClick={() => setCostTable((prev) => !prev)}
@@ -144,7 +105,7 @@ const PurchaseCost = () => {
         </div>
       </div>
       {costTable ? (
-        <div className="container mx-auto mb-8">
+        <div className="container mx-auto mb-8 ">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-xl font-semibold">All Purchases today</h1>
             <div className="relative">
@@ -154,114 +115,148 @@ const PurchaseCost = () => {
                 placeholder="Search here"
                 className="w-64 pl-8"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} // Inline handler instead of separate function
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           </div>
 
-          <div className="border">
-            <Table>
-              <TableHeader className="bg-black text-white">
-                <TableRow>
-                  <TableHead className="font-medium py-4 text-nowrap w-[400px]">
-                    Product
-                  </TableHead>
-                  <TableHead className="font-medium py-4 text-center text-nowrap">
-                    Product Id
-                  </TableHead>
-                  <TableHead className="font-medium py-4 text-center text-nowrap">
-                    Cost
-                  </TableHead>
-                  <TableHead className="font-medium py-4 text-center text-nowrap">
-                    Selling price
-                  </TableHead>
-                  <TableHead className="font-medium py-4 text-center text-nowrap">
-                    Date
-                  </TableHead>
-                  <TableHead className="font-medium py-4 text-center text-nowrap">
-                    Time
-                  </TableHead>
-                  <TableHead className="font-medium py-4 w-[250px] text-center text-nowrap">
-                    Assigned by
-                  </TableHead>
-                  <TableHead className="font-medium py-4 text-center">
-                    Categories
-                  </TableHead>
-                  <TableHead className="font-medium py-4 w-[120px] text-center text-nowrap">
-                    Shelf Number
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredData.length > 0 ? (
-                  filteredData.map((item, index) => (
-                    <TableRow
-                      key={index}
-                      className="border-t border-gray-200 bg-[#FAFAFA]"
-                    >
-                      <TableCell className="py-4">
-                        <div className="flex items-center gap-2 text-wrap">
-                          <figure className="w-13 border py-1 overflow-hidden rounded-[3px] flex-shrink-0">
-                            <img
-                              src={item.image}
-                              alt="Wine bottle"
-                              width={32}
-                              height={48}
-                              className="object-cover object-center w-full h-full"
-                            />
-                          </figure>
-                          {item.productName}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap">
-                        id: {item.id}
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap font-semibold">
-                        ${item.cost.toFixed(2)}
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap">
-                        ${item.sellingPrice.toFixed(2)}
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap">
-                        {item.date}
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap">
-                        {item.time}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {item.assignedBy}
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap">
-                        {item.categories}
-                      </TableCell>
-                      <TableCell className="text-center text-nowrap font-semibold">
-                        {item.shelfNumber}
+            <div className="border h-[500px] overflow-y-auto">
+              <Table>
+                <TableHeader className="bg-black text-white">
+                  <TableRow>
+                    <TableHead className="font-medium py-4 text-nowrap w-[400px]">
+                      Product
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Product Id
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Quantity
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Cost
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Selling price
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Date
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Time
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Assigned by
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center">
+                      Categories
+                    </TableHead>
+                    <TableHead className="font-medium py-4 text-center text-nowrap">
+                      Shelf Number
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredData?.length > 0 ? (
+                    filteredData?.map((item, index) => (
+                      <TableRow
+                        key={index}
+                        className="border-t border-gray-200 bg-[#FAFAFA]"
+                      >
+                        <TableCell className="py-4">
+                          <div className="flex items-center gap-2 text-wrap">
+                            <figure className="w-13 border py-1 overflow-hidden rounded-[3px] flex-shrink-0">
+                              <img
+                                src={
+                                  item?.image
+                                    ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
+                                    : ""
+                                }
+                                alt="Wine bottle"
+                                width={32}
+                                height={48}
+                                className="object-cover object-center w-full h-full"
+                              />
+                            </figure>
+                            {item?.name}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap">
+                          id: {item?.id}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap">
+                          Quantity: {item?.quantity}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap font-semibold">
+                          ${item?.cost}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap">
+                          ${item?.selling_price}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap">
+                          {item?.date}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap">
+                          {item?.time}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {item?.assigned_by}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap">
+                          {item?.category}
+                        </TableCell>
+                        <TableCell className="text-center text-nowrap font-semibold">
+                          {item?.shelf_number}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={10} className="text-center py-4">
+                        No results found for {searchQuery}
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={10} className="text-center py-4">
-                      No results found for {searchQuery}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
           </div>
-        </div>
       ) : (
         <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-8 px-12">
-          <h3 className="text-2xl font-bold font-poppins mb-8">
-            Purchase cost
-          </h3>
-          <SalesChart className="bg-transparent" gold={true} />
-          <div className="w-fit mx-auto mt-5">
+          <div className="flex justify-between relative z-50">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-6 sm:mb-8">
+              Purchase cost
+            </h3>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={`w-[220px] justify-start text-left font-normal ${
+                    !date && "text-muted-foreground"
+                  }`}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  className="bg-white"
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+          <Monthlysalescostcharts className="bg-transparent" gold={true} />
+          {/* <div className="w-fit mx-auto mt-5">
             <p className="text-[#606060] font-medium inline-flex gap-1 items-center mb-[22px] p-2.5 border border-[#C8C8C8] rounded-[8px]">
               <GrowthIcon />
               <span className="text-[#00B69B] ">8.5% </span> Up from yesterday
             </p>
-          </div>
+          </div> */}
         </section>
       )}
     </>

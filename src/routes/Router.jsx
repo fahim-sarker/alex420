@@ -10,7 +10,7 @@ import BarDashboardLayout from "../layout/BarDashboardLayout";
 import BarOrder from "@/pages/private/bar/BarOrder";
 import BarInventory from "@/pages/private/bar/BarInventory";
 import BarStaffs from "./../pages/private/bar/BarStaffs";
-import BarSettings from "./../pages/private/bar/BarSettings";
+import BarSettings from "@/pages/private/bar/BarSettings";
 import BarChats from "@/pages/private/bar/BarChats";
 import ProfileDetails from "@/pages/private/bar/ProfileDetails";
 import BarStatistics from "@/pages/private/bar/BarStatistics";
@@ -26,6 +26,7 @@ import ForgotPass from "@/pages/Forgot/ForgotPass";
 import VerifyCode from "@/pages/Forgot/VerifyCode";
 import ResetPass from "@/pages/Forgot/ResetPass";
 import Addtable from "@/pages/private/bar/Addtable";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([
@@ -61,71 +62,39 @@ export const router = createBrowserRouter([
     path: "login",
     element: <Login />,
   },
-
   {
     path: "bar-dashboard",
-    element: <BarDashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <BarDashboardLayout />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
     children: [
-      {
-        path: "",
-        element: <BarOrder />,
-      },
-      {
-        path: "inventory",
-        element: <BarInventory />,
-      },
-      {
-        path: "addtable",
-        element: <Addtable />,
-      },
-      {
-        path: "staffs",
-        element: <BarStaffs />,
-      },
-      {
-        path: "statistics",
-        element: <BarStatistics />,
-      },
-      {
-        path: "settings",
-        element: <BarSettings />,
-      },
-      {
-        path: "chat",
-        element: <BarChats />,
-      },
-      {
-        path: "profile-details",
-        element: <ProfileDetails />,
-      },
+      { path: "", element: <BarOrder /> },
+      { path: "inventory", element: <BarInventory /> },
+      { path: "addtable", element: <Addtable /> },
+      { path: "staffs", element: <BarStaffs /> },
+      { path: "statistics", element: <BarStatistics /> },
+      { path: "settings", element: <BarSettings /> },
+      { path: "chat", element: <BarChats /> },
+      { path: "profile-details", element: <ProfileDetails /> },
     ],
   },
   {
     path: "/user-dashboard",
-    element: <UserDashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <UserDashboardLayout />
+      </PrivateRoute>
+    ),
     errorElement: <Error />,
     children: [
-      {
-        path: "/user-dashboard",
-        element: <UserOrder />,
-      },
-      {
-        path: "/user-dashboard/package",
-        element: <UserPackage />,
-      },
-      {
-        path: "/user-dashboard/payment",
-        element: <UserPayment />,
-      },
-      {
-        path: "/user-dashboard/settings",
-        element: <UserSettings />,
-      },
-      {
-        path: "/user-dashboard/chat",
-        element: <BarChats />,
-      },
+      { path: "/user-dashboard", element: <UserOrder /> },
+      { path: "/user-dashboard/package", element: <UserPackage /> },
+      { path: "/user-dashboard/payment", element: <UserPayment /> },
+      { path: "/user-dashboard/settings", element: <UserSettings /> },
+      { path: "/user-dashboard/chat", element: <BarChats /> },
       {
         path: "/user-dashboard/profile-details",
         element: <UserProfileDetails />,

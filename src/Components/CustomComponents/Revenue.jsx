@@ -1,8 +1,21 @@
-import { GrowthIcon } from "@/assets/icons/icons";
-import SalesChart from "@/Components/CustomComponents/SalesChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import useFetchData from "../Hooks/Api/UseFetchData";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@radix-ui/react-popover"; // or correct path
+import { Button } from "@/components/ui/button"; // ensure this path matches your button import
+
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { useContext, useEffect, useState } from "react";
+import { CalendarIcon } from "lucide-react";
+import { MainContext } from "../Context/ChartInfoContext";
+import { Dateformatter } from "@/Shared/Dateformatter";
+import RevenueChart from "./Revenuechart";
+import ReactPaginate from "react-paginate";
 
 const Revenue = ({ tabValue, setTabValue }) => {
   // const handleSubmit = (e) => {
@@ -10,20 +23,53 @@ const Revenue = ({ tabValue, setTabValue }) => {
   //   console.log(e.target.tips.value);
   // };
 
-
   const userToken = JSON.parse(localStorage.getItem("usertoken"));
   const token = userToken?.token;
   const { data: solditem } = useFetchData(
     "/api/dashboard/bar/products/total-item-sold-today",
     token
   );
-  
+
   const { data: earnings } = useFetchData(
     "/api/dashboard/bar/products/total-earnings-today",
     token
   );
-  
+  const { data: paidorders } = useFetchData(
+    "/api/dashboard/bar/orders/total-paid-today",
+    token
+  );
+  const { data: handcash } = useFetchData(
+    "/api/dashboard/bar/orders/total-cash-today",
+    token
+  );
 
+  const { data: servedata } = useFetchData(
+    "/api/dashboard/bar/order/served",
+    token
+  );
+
+  const { selectdate, setSelectdate } = useContext(MainContext);
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const formatedate = Dateformatter(date);
+    setSelectdate(formatedate);
+  }, [date]);
+
+  console.log(selectdate);
+
+  const itemsPerPage = 6;
+  const items = servedata?.data || [];
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = items.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(items.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % items.length;
+    setItemOffset(newOffset);
+  };
 
   return (
     <>
@@ -32,15 +78,39 @@ const Revenue = ({ tabValue, setTabValue }) => {
           <h2 className="text-xl font-semibold mt-10 mb-6">Revenue</h2>
           <section className="space-y-7">
             <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-6 px-6 sm:py-8 sm:px-10 lg:py-10 lg:px-16 xl:px-20">
-              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-6 sm:mb-8">
-                Total Revenue
-              </h3>
-              <SalesChart className="bg-transparent" gold={true} />
+              <div className="flex justify-between relative z-50">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-6 sm:mb-8">
+                  Total Revenue
+                </h3>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={`w-[220px] justify-start text-left font-normal ${
+                        !date && "text-muted-foreground"
+                      }`}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      className="bg-white"
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <RevenueChart className="bg-transparent" gold={true} />
               <div className="w-fit mx-auto mt-4 sm:mt-5">
-                <p className="text-[#606060] font-medium inline-flex gap-1 items-center mb-5 sm:mb-[22px] p-2 sm:p-2.5 border border-[#C8C8C8] rounded-[8px] text-sm sm:text-base">
+                {/* <p className="text-[#606060] font-medium inline-flex gap-1 items-center mb-5 sm:mb-[22px] p-2 sm:p-2.5 border border-[#C8C8C8] rounded-[8px] text-sm sm:text-base">
                   <GrowthIcon />
                   <span className="text-[#00B69B]">8.5%</span> Up from yesterday
-                </p>
+                </p> */}
               </div>
             </section>
 
@@ -50,7 +120,9 @@ const Revenue = ({ tabValue, setTabValue }) => {
                   Total Item sold today
                 </h4>
                 <div className="flex justify-between items-center">
-                  <p className="text-xl font-semibold">{solditem?.data?.total_items_sold}</p>
+                  <p className="text-xl font-semibold">
+                    {solditem?.data?.total_items_sold}
+                  </p>
                   <button
                     onClick={() => setTabValue("section2")}
                     className="bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] text-lg font-medium text-black px-4 py-1.5 leading-none rounded-md hover:shadow-xl cursor-pointer"
@@ -64,7 +136,9 @@ const Revenue = ({ tabValue, setTabValue }) => {
                   Total Earnings today
                 </h4>
                 <div className="flex justify-between items-center">
-                  <p className="text-xl font-semibold">${earnings?.data?.total_earnings}</p>
+                  <p className="text-xl font-semibold">
+                    ${earnings?.data?.total_earnings}
+                  </p>
                   <button
                     onClick={() => setTabValue("section2")}
                     className="bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] text-lg font-medium text-black px-4 py-1.5 leading-none rounded-md hover:shadow-xl cursor-pointer"
@@ -80,10 +154,16 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center text-xl gap-4">
                     <p className="">
-                      orders: <span className="font-semibold">94</span>
+                      orders:{" "}
+                      <span className="font-semibold">
+                        {paidorders?.data?.total_orders}
+                      </span>
                     </p>
                     <p className="">
-                      Earning: <span className="font-semibold">$100.99</span>
+                      Earning:{" "}
+                      <span className="font-semibold">
+                        ${paidorders?.data?.total_earnings}
+                      </span>
                     </p>
                   </div>
                   <button
@@ -101,10 +181,16 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center text-xl gap-4">
                     <p className="">
-                      orders: <span className="font-semibold">94</span>
+                      orders:{" "}
+                      <span className="font-semibold">
+                        {handcash?.data?.total_orders}
+                      </span>
                     </p>
                     <p className="">
-                      Earning: <span className="font-semibold">$100.99</span>
+                      Earning:{" "}
+                      <span className="font-semibold">
+                        ${handcash?.data?.total_earnings}
+                      </span>
                     </p>
                   </div>
                   <button
@@ -126,7 +212,9 @@ const Revenue = ({ tabValue, setTabValue }) => {
                   Total Earnings today
                 </h4>
                 <div className="flex justify-between items-center">
-                  <p className="text-xl font-semibold">$1900.99</p>
+                  <p className="text-xl font-semibold">
+                    ${earnings?.data?.total_earnings}
+                  </p>
                 </div>
               </div>
             </div>
@@ -157,150 +245,262 @@ const Revenue = ({ tabValue, setTabValue }) => {
               </div>
               <TabsContent value="all">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                  {Array(12)
-                    .fill(null)
-                    .map((_, idx) => (
-                      <div key={idx} className="">
-                        <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
-                          <div className="left shrink-0">
-                            <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
-                              <img
-                                src="https://i.ibb.co.com/84S5d37z/bottole.png"
-                                alt=""
-                              />
-                            </figure>
+                  {currentItems.map((item) => (
+                    <div key={item.id}>
+                      <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
+                        <div className="left shrink-0">
+                          <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                            <img
+                              src={
+                                item?.product?.image
+                                  ? `${import.meta.env.VITE_BASE_URL}/${
+                                      item?.product?.image
+                                    }`
+                                  : "/fallback.jpg"
+                              }
+                              alt={item.product?.name || "Product Image"}
+                              className="object-cover w-full h-full"
+                            />
+                          </figure>
+                        </div>
+                        <div className="right text-sm grow">
+                          <h3 className="text-xl tracking-[0.6px] font-instrument mb-2 line-clamp-1 capitalize">
+                            {item.product?.name || "Product Name"}
+                          </h3>
+                          <div className="flex items-center justify-between">
+                            <h4>
+                              Id: #{item.product?.product_id || item.product_id}
+                            </h4>
+                            <div className="px-2 rounded-[4px] leading-none border border-[#DBA514]">
+                              <p className="text-xs">
+                                {item.status === "served" ? "Paid" : "Pending"}
+                              </p>
+                            </div>
                           </div>
-                          <div className="right text-sm grow">
-                            <h3 className="text-xl tracking-[0.6px] font-instrument mb-2 line-clamp-1">
-                              Mouton Cadet Bordeaux Rouge
+                          <h4>Table: {item.table?.table_name || "N/A"}</h4>
+                          <div className="flex items-center justify-between">
+                            <h4>
+                              Date:{" "}
+                              {new Date(item.shots_date).toLocaleDateString(
+                                "en-GB"
+                              )}
+                            </h4>
+                            <h4>
+                              Time:{" "}
+                              {new Date(
+                                `2025-01-01T${item.shots_time}`
+                              ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </h4>
+                          </div>
+                          <h4 className="mb-3">Quantity: {item.quantity}</h4>
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-semibold">
+                              ${item.price?.toLocaleString() || "0"}
                             </h3>
-                            <div className="flex items-center justify-between">
-                              <h4>Id: #5464</h4>
-                              <div className="px-2 rounded-[4px] leading-none border border-[#DBA514]">
-                                <p className="text-xs">Paid</p>
-                              </div>
-                            </div>
-                            <h4>Table: 02</h4>
-                            <div className="flex items-center justify-between">
-                              <h4>Date : 12/12/2024</h4>
-                              <h4>Time : 8.00 PM</h4>
-                            </div>
-                            <h4 className="mb-3">Quantity : 02</h4>
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-xl font-semibold">$100.99</h3>
-                              <button
-                                type="button"
-                                className={cn(
-                                  `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
-                                  {
-                                    "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
-                                      idx % 2,
-                                    "bg-[#1F1F1F] border-[#1F1F1F] text-white":
-                                      idx % 2 == 0,
-                                  }
-                                )}
-                              >
-                                {idx % 2 ? "Paid" : "Hand cash"}
-                              </button>
-                            </div>
+                            <button
+                              type="button"
+                              className={cn(
+                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
+                                {
+                                  "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
+                                    item.payment_method !== "cash",
+                                  "bg-[#1F1F1F] border-[#1F1F1F] text-white":
+                                    item.payment_method === "cash",
+                                }
+                              )}
+                            >
+                              {item.payment_method === "cash"
+                                ? "Hand Cash"
+                                : "Paid"}
+                            </button>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </TabsContent>
               <TabsContent value="paid">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                  {Array(8)
-                    .fill(null)
-                    .map((_, idx) => (
-                      <div key={idx} className="">
-                        <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
-                          <div className="left shrink-0">
-                            <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
-                              <img
-                                src="https://i.ibb.co.com/84S5d37z/bottole.png"
-                                alt=""
-                              />
-                            </figure>
+                  {currentItems.map((item) => (
+                    <div key={item.id}>
+                      <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
+                        <div className="left shrink-0">
+                          <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                            <img
+                              src={
+                                item?.product?.image
+                                  ? `${import.meta.env.VITE_BASE_URL}/${
+                                      item?.product?.image
+                                    }`
+                                  : "/fallback.jpg"
+                              }
+                              alt={item.product?.name || "Product Image"}
+                              className="object-cover w-full h-full"
+                            />
+                          </figure>
+                        </div>
+                        <div className="right text-sm grow">
+                          <h3 className="text-xl tracking-[0.6px] font-instrument mb-2 line-clamp-1 capitalize">
+                            {item.product?.name || "Product Name"}
+                          </h3>
+                          <div className="flex items-center justify-between">
+                            <h4>
+                              Id: #{item.product?.product_id || item.product_id}
+                            </h4>
+                            <div className="px-2 rounded-[4px] leading-none border border-[#DBA514]">
+                              <p className="text-xs">
+                                {item.status === "served" ? "Paid" : "Pending"}
+                              </p>
+                            </div>
                           </div>
-                          <div className="right text-sm grow">
-                            <h3 className="text-xl tracking-[0.6px] font-instrument mb-2 line-clamp-1">
-                              Mouton Cadet Bordeaux Rouge
+                          <h4>Table: {item.table?.table_name || "N/A"}</h4>
+                          <div className="flex items-center justify-between">
+                            <h4>
+                              Date:{" "}
+                              {new Date(item.shots_date).toLocaleDateString(
+                                "en-GB"
+                              )}
+                            </h4>
+                            <h4>
+                              Time:{" "}
+                              {new Date(
+                                `2025-01-01T${item.shots_time}`
+                              ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </h4>
+                          </div>
+                          <h4 className="mb-3">Quantity: {item.quantity}</h4>
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-semibold">
+                              ${item.price?.toLocaleString() || "0"}
                             </h3>
-                            <div className="flex items-center justify-between">
-                              <h4>Id: #5464</h4>
-                              <div className="px-2 rounded-[4px] leading-none border border-[#DBA514]">
-                                <p className="text-xs">Paid</p>
-                              </div>
-                            </div>
-                            <h4>Table: 02</h4>
-                            <div className="flex items-center justify-between">
-                              <h4>Date : 12/12/2024</h4>
-                              <h4>Time : 8.00 PM</h4>
-                            </div>
-                            <h4 className="mb-3">Quantity : 02</h4>
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-xl font-semibold">$100.99</h3>
-                              <button
-                                type="button"
-                                className="text-[#181818] bg-[#C8C8C8] font-medium py-1 w-18 rounded-[4px]"
-                              >
-                                Paid
-                              </button>
-                            </div>
+                            <button
+                              type="button"
+                              className={cn(
+                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
+                                {
+                                  "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
+                                    item.payment_method !== "cash",
+                                  "bg-[#1F1F1F] border-[#1F1F1F] text-white":
+                                    item.payment_method === "cash",
+                                }
+                              )}
+                            >
+                              {item.payment_method === "cash"
+                                ? "Hand Cash"
+                                : "Paid"}
+                            </button>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </TabsContent>
               <TabsContent value="hand-cash">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                  {Array(8)
-                    .fill(null)
-                    .map((_, idx) => (
-                      <div key={idx} className="">
-                        <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
-                          <div className="left shrink-0">
-                            <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
-                              <img
-                                src="https://i.ibb.co.com/84S5d37z/bottole.png"
-                                alt=""
-                              />
-                            </figure>
+                  {currentItems.map((item) => (
+                    <div key={item.id}>
+                      <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
+                        <div className="left shrink-0">
+                          <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                            <img
+                              src={
+                                item?.product?.image
+                                  ? `${import.meta.env.VITE_BASE_URL}/${
+                                      item?.product?.image
+                                    }`
+                                  : "/fallback.jpg"
+                              }
+                              alt={item.product?.name || "Product Image"}
+                              className="object-cover w-full h-full"
+                            />
+                          </figure>
+                        </div>
+                        <div className="right text-sm grow">
+                          <h3 className="text-xl tracking-[0.6px] font-instrument mb-2 line-clamp-1 capitalize">
+                            {item.product?.name || "Product Name"}
+                          </h3>
+                          <div className="flex items-center justify-between">
+                            <h4>
+                              Id: #{item.product?.product_id || item.product_id}
+                            </h4>
+                            <div className="px-2 rounded-[4px] leading-none border border-[#DBA514]">
+                              <p className="text-xs">
+                                {item.status === "served" ? "Paid" : "Pending"}
+                              </p>
+                            </div>
                           </div>
-                          <div className="right text-sm grow">
-                            <h3 className="text-xl tracking-[0.6px] font-instrument mb-2 line-clamp-1">
-                              Mouton Cadet Bordeaux Rouge
+                          <h4>Table: {item.table?.table_name || "N/A"}</h4>
+                          <div className="flex items-center justify-between">
+                            <h4>
+                              Date:{" "}
+                              {new Date(item.shots_date).toLocaleDateString(
+                                "en-GB"
+                              )}
+                            </h4>
+                            <h4>
+                              Time:{" "}
+                              {new Date(
+                                `2025-01-01T${item.shots_time}`
+                              ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
+                            </h4>
+                          </div>
+                          <h4 className="mb-3">Quantity: {item.quantity}</h4>
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-semibold">
+                              ${item.price?.toLocaleString() || "0"}
                             </h3>
-                            <div className="flex items-center justify-between">
-                              <h4>Id: #5464</h4>
-                              <div className="px-2 rounded-[4px] leading-none border border-[#DBA514]">
-                                <p className="text-xs">Paid</p>
-                              </div>
-                            </div>
-                            <h4>Table: 02</h4>
-                            <div className="flex items-center justify-between">
-                              <h4>Date : 12/12/2024</h4>
-                              <h4>Time : 8.00 PM</h4>
-                            </div>
-                            <h4 className="mb-3">Quantity : 02</h4>
-                            <div className="flex items-center justify-between">
-                              <h3 className="text-xl font-semibold">$100.99</h3>
-                              <button
-                                type="button"
-                                className="text-white bg-[#1F1F1F] font-medium py-1 w-24 rounded-[4px]"
-                              >
-                                Hand Cash
-                              </button>
-                            </div>
+                            <button
+                              type="button"
+                              className={cn(
+                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
+                                {
+                                  "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
+                                    item.payment_method !== "cash",
+                                  "bg-[#1F1F1F] border-[#1F1F1F] text-white":
+                                    item.payment_method === "cash",
+                                }
+                              )}
+                            >
+                              {item.payment_method === "cash"
+                                ? "Hand Cash"
+                                : "Paid"}
+                            </button>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                 </div>
               </TabsContent>
+              {items.length > itemsPerPage && (
+                <div className="mt-8 flex justify-center">
+                  <ReactPaginate
+                    breakLabel="..."
+                    nextLabel="Next>"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    pageCount={pageCount}
+                    previousLabel="<Prev"
+                    containerClassName="flex items-center gap-2"
+                    pageClassName="px-3 py-1 border rounded cursor-pointer"
+                    activeClassName="bg-black text-white"
+                    previousClassName="px-3 py-1 border rounded cursor-pointer"
+                    nextClassName="px-3 py-1 border rounded cursor-pointer"
+                    breakClassName="px-3 py-1"
+                  />
+                </div>
+              )}
             </Tabs>
           </div>
         </TabsContent>

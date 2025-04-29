@@ -54,6 +54,8 @@ const BarInventory = () => {
       price: "",
       sellingPrice: "",
       image: null,
+      quantity: "",
+      description: "",
     },
   });
 
@@ -117,6 +119,8 @@ const BarInventory = () => {
       formData.append("shelf_number", data.shelfNumber);
       formData.append("date", dateString);
       formData.append("time", formattedTime);
+      formData.append("quantity", data.quantity);
+      formData.append("description", data.description);
 
       const response = await Axios.post(
         "/api/dashboard/bar/product/store",
@@ -353,8 +357,42 @@ const BarInventory = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Category */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Drink Type */}
+            <div>
+              <Label className="block mb-2 font-medium text-[#353B48] md:text-base">
+                Drink Type
+              </Label>
+              <Controller
+                name="drinkType"
+                control={control}
+                rules={{ required: "Drink type is required" }}
+                render={({ field }) => (
+                  <>
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger
+                        className={`w-full h-[56px] bg-white ${
+                          errors.drinkType ? "border border-red-500" : ""
+                        }`}
+                      >
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Premium">Premium</SelectItem>
+                        <SelectItem value="Feature">Feature</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.drinkType && (
+                      <span className="text-red-500 text-sm mt-1 block">
+                        {errors.drinkType.message}
+                      </span>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+
+            {/* Categories */}
             <div>
               <Label className="block mb-2 font-medium text-[#353B48] md:text-base">
                 Categories
@@ -391,6 +429,7 @@ const BarInventory = () => {
               />
             </div>
 
+            {/* Shelf Number */}
             <div>
               <Label className="block mb-2 font-medium text-[#353B48] md:text-base">
                 Shelf Number
@@ -465,6 +504,47 @@ const BarInventory = () => {
               {errors.sellingPrice && (
                 <span className="text-red-500 text-sm mt-1 block">
                   {errors.sellingPrice.message}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <Label className="block mb-2 font-medium text-[#353B48] md:text-base">
+                Quantity
+              </Label>
+              <Input
+                {...register("quantity", {
+                  required: "quantity  required",
+                })}
+                type="number"
+                className={`w-full h-[56px] bg-white ${
+                  errors.quantity ? "border border-red-500" : ""
+                }`}
+              />
+              {errors.quantity && (
+                <span className="text-red-500 text-sm mt-1 block">
+                  {errors.quantity.message}
+                </span>
+              )}
+            </div>
+            <div>
+              <Label className="block mb-2 font-medium text-[#353B48] md:text-base">
+                Description
+              </Label>
+              <textarea
+                {...register("description", {
+                  required: "description  required",
+                })}
+                type="text"
+                className={`w-full h-[56px] bg-white p-5 ${
+                  errors.description ? "border border-red-500" : ""
+                }`}
+              />
+              {errors.description && (
+                <span className="text-red-500 text-sm mt-1 block">
+                  {errors.description.message}
                 </span>
               )}
             </div>

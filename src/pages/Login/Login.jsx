@@ -11,7 +11,6 @@ import { PiSpinnerBold } from "react-icons/pi";
 
 const Login = () => {
   const Axios = useAxios();
-  const Navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -20,33 +19,45 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       let response = await Axios.post("/api/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
-      if (response.data && response.data.data && response.data.data.token) {
+  
+      if (response.data?.data?.token) {
         localStorage.setItem("usertoken", JSON.stringify(response.data.data));
+        localStorage.setItem("role", response.data.data.userData.role);
+        toast.success("Logged in successfully");
+  
+        const redirectPath = localStorage.getItem("redirectPath");
+        if (redirectPath) {
+          localStorage.removeItem("redirectPath");
+          navigate(redirectPath, { replace: true });
+        } else {
+          const role = response.data.data.userData.role;
+          switch (role) {
+            case "user":
+              navigate("/user-dashboard");
+              break;
+            case "bar_owner":
+              navigate("/bar-dashboard");
+              break;
+            default:
+              navigate("/");
+              break;
+          }
+        }
       }
+  
       reset();
-      toast.success("Logged in successfully");
-      const userRole = response.data.data.userData.role;
-      localStorage.setItem("role", userRole);
-      switch (userRole) {
-        case "user":
-          Navigate("/user-dashboard");
-          break;
-        case "bar_owner":
-          Navigate("/bar-dashboard");
-          break;
-      }
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Something went wrong");
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -135,7 +146,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex justify-center items-center leading-none py-[16px] px-[32px] mt-8 font-semibold text-[16px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] tracking-[0.72px] w-full"
+                className="flex justify-center items-center cursor-pointer leading-none py-[16px] px-[32px] mt-8 font-semibold text-[16px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] tracking-[0.72px] w-full"
               >
                 {isSubmitting ? (
                   <PiSpinnerBold className="animate-spin size-[20px] fill-white" />
