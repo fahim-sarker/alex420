@@ -25,7 +25,7 @@ const Customer = () => {
 
   return (
     <motion.section
-      className="pt-[100px] md:pt-[146px] pb-[60px] md:pb-[98px] bg-[#131313]"
+      className="pt-[100px] lg:pt-[146px] pb-[30px] lg:pb-[98px] bg-[#131313]"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -51,7 +51,7 @@ const Customer = () => {
             className="mySwiper"
           >
             <SwiperSlide>
-              <div className=" ">
+              <div className="-mx-1 lg:-mx-0">
                 <div className="flex justify-center">
                   <a
                     href=""

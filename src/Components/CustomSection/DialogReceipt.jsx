@@ -25,49 +25,55 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
 
   return (
     <>
-      <Dialog  open={receipt} onOpenChange={setReceipt}>
-        <DialogContent>
+      <Dialog open={receipt} onOpenChange={setReceipt}>
+        <DialogContent className="w-full max-w-[90vw] max-h-[90vh] overflow-y-auto p-4">
           <DialogHeader>
-            <DialogTitle className="text-[32px] text-center font-medium tracking-[0.96px]">
+            <DialogTitle className="text-[28px] md:text-[32px] text-center font-medium tracking-[0.96px] mt-10">
               Receipt
             </DialogTitle>
             <DialogDescription>
-              <div ref={contentRef} className="flex gap-6 mb-12 pt-2">
-                <div className="w-[220px] h-[250px] p-5 left border border-[#DBA514] flex items-center justify-center shrink-0 rounded-[6px]">
+              <div
+                ref={contentRef}
+                className="flex flex-col md:flex-row gap-6 mb-10 pt-4 mx-3"
+              >
+                <div className="w-full md:w-[320px] h-[220px] md:h-[250px] p-4 border border-[#DBA514] flex items-center justify-center shrink-0 rounded-[6px] max-w-full max-h-full">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       orderDetails?.image
                     }`}
                     alt=""
-                    className=" object-cover"
+                    className="object-cover w-full h-full rounded-md"
                   />
                 </div>
-                <div className="right text-[#0E0E0E] space-y-3">
-                  <h3 className="text-2xl font-instrument tracking-[0.72px]">
+                <div className="text-[#0E0E0E] space-y-3 flex-1">
+                  <h3 className="text-xl md:text-2xl font-instrument tracking-[0.72px]">
                     {orderDetails?.description}
                   </h3>
-                  <p className=" tracking-[0.48px]">{orderDetails?.title}</p>
-                  <p className="text-2xl font-semibold">
+                  <p className="tracking-[0.48px]">{orderDetails?.title}</p>
+                  <p className="text-xl md:text-2xl font-semibold">
                     ${orderDetails?.totalPrice}
                   </p>
                   <p>Table no : 1</p>
                   <p>Date : {orderDetails?.shots_date}</p>
                 </div>
               </div>
+
               <div className="flex flex-col items-center pb-2">
                 <img
                   src="https://i.ibb.co.com/4nVfb732/download.png"
                   alt=""
-                  className="mb-2 w-[260px]"
+                  className="mb-2 w-[220px] md:w-[260px] h-auto max-w-full"
                 />
-                <p className="mb-7">Provide this QR code to the Bar</p>
+                <p className="mb-7 text-center">
+                  Provide this QR code to the Bar
+                </p>
                 <button
                   onClick={() => {
                     handledownload();
                     reactToPrintFn();
                   }}
                   type="submit"
-                  className="bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] text-lg font-medium text-black px-6 py-4 leading-none rounded-md hover:shadow-xl cursor-pointer w-[260px] mb-[18px]"
+                  className="bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] text-lg font-medium text-black px-6 py-4 leading-none rounded-md hover:shadow-xl cursor-pointer w-full max-w-[260px] mb-[18px]"
                 >
                   Download
                 </button>
@@ -77,7 +83,7 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
                     reactToPrintFn();
                   }}
                   type="button"
-                  className="bg-[#1F1F1F] text-lg font-medium text-white w-[260px] px-6 py-4 leading-none rounded-md hover:shadow-xl cursor-pointer"
+                  className="bg-[#1F1F1F] text-lg font-medium text-white w-full max-w-[260px] px-6 py-4 leading-none rounded-md hover:shadow-xl cursor-pointer"
                 >
                   Print
                 </button>
@@ -86,11 +92,12 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
       {popup3 && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white pt-[67px] pb-[111px] px-[53px] rounded-lg relative w-[651px] z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4">
+          <div className="bg-white pt-12 pb-20 px-6 md:pt-[67px] md:pb-[111px] md:px-[53px] rounded-lg relative w-full sm:max-w-[550px]  max-w-[90vw] z-50">
             <button
-              className="float-right absolute top-4 right-4 cursor-pointer font-bold text-2xl"
+              className="absolute top-4 right-4 cursor-pointer font-bold text-2xl"
               onClick={() => setPopup3(false)}
             >
               ×
@@ -98,14 +105,14 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
             <div className="flex justify-center">
               <Popupsvg />
             </div>
-            <h3 className="text-[24px] text-[#000] font-medium text-center pt-8">
+            <h3 className="text-[20px] md:text-[24px] text-[#000] font-medium text-center pt-8">
               Your file has been downloaded
-            </h3>
+            </h3> 
             <div className="flex justify-center">
               <Link to="/bar">
                 <button
                   onClick={() => setPopup3(false)}
-                  className="flex justify-center items-center leading-none py-[18px] px-[90px] mt-[100px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px]"
+                  className="flex justify-center items-center leading-none py-4 px-10 md:py-[18px] md:px-[90px] mt-20 capitalize font-semibold text-[16px] md:text-[18px] rounded-lg bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#C69320_66.76%,#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px]"
                 >
                   Confirm
                 </button>

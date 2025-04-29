@@ -157,8 +157,8 @@ const BarInventory = () => {
 
   return (
     <section className="bg-[#F8F8FF] pt-12">
-      <section className="px-10 overflow-hidden">
-        <div className="flex justify-between items-center">
+      <section className="px-6 sm:px-10 overflow-hidden">
+        <div className="sm:flex justify-between items-center text-center">
           <h2 className="text-xl font-semibold mb-6">Add product</h2>
           <Link to="/bar-dashboard/addtable">
             <h2 className="text-xl font-semibold mb-6 border-2 border-[#DBA514] p-2 rounded-[6px] cursor-pointer">
@@ -169,7 +169,7 @@ const BarInventory = () => {
 
         <form
           onSubmit={handleSubmit(handleproductadd)}
-          className="p-6 py-10 space-y-8 bg-[#FAFAFA] border border-[#DBA514] rounded-[6px]"
+          className="px-4 sm:px-6 py-10 space-y-8 bg-[#FAFAFA] border border-[#DBA514] rounded-[6px]"
         >
           <div className="mx-auto w-fit mb-12 relative">
             <div {...getRootProps()} className="relative cursor-pointer group">
@@ -553,7 +553,7 @@ const BarInventory = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-between">
             <button
               type="button"
-              className="bg-[#1F1F1F] text-lg font-medium text-white w-full sm:w-auto px-6 py-4 leading-none rounded-md hover:shadow-xl"
+              className="bg-[#1F1F1F] text-base sm:text-lg font-medium text-white w-full sm:w-auto px-6 py-4 leading-none rounded-md hover:shadow-xl"
               onClick={handleqrcode}
             >
               Generate QR code
@@ -561,7 +561,7 @@ const BarInventory = () => {
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <button
                 type="button"
-                className="bg-[#1F1F1F] text-lg font-medium text-white w-full sm:w-auto px-6 py-4 leading-none rounded-md hover:shadow-xl"
+                className="bg-[#1F1F1F] text-base sm:text-lg font-medium text-white w-full sm:w-auto px-6 py-4 leading-none rounded-md hover:shadow-xl"
                 onClick={() => console.log("Add receipt")}
               >
                 Add receipt
@@ -569,7 +569,7 @@ const BarInventory = () => {
               <button
                 disabled={mutation.isPending}
                 type="submit"
-                className="bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] text-lg font-medium text-black w-full sm:w-auto px-6 py-4 leading-none rounded-md hover:shadow-xl cursor-pointer"
+                className="bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] text-base sm:text-lg font-medium text-black w-full sm:w-auto px-6 py-4 leading-none rounded-md hover:shadow-xl cursor-pointer"
               >
                 {mutation.isPending ? (
                   <PiSpinnerBold className="animate-spin size-[20px] fill-white" />
@@ -583,14 +583,19 @@ const BarInventory = () => {
       </section>
 
       <section className="px-10 overflow-hidden pb-4 pt-8 border-t">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-xl font-semibold">Recently added Product</h2>
-          <button
-            type="button"
-            className="text-lg font-medium text-[#0E0E0E] bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px]"
-          >
-            View all products
-          </button>
+        <div className="sm:flex items-center justify-between mb-8 text-center">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">
+            Recently added Product
+          </h2>
+
+          <div>
+            <button
+              type="button"
+              className="text-lg  font-medium text-[#0E0E0E] bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px]"
+            >
+              View all products
+            </button>
+          </div>
         </div>
         <Swiper
           slidesPerView={"auto"}
@@ -607,7 +612,7 @@ const BarInventory = () => {
         >
           {data?.data?.map((product, idx) => (
             <SwiperSlide key={idx} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] flex gap-4 text-[#181818] p-[18px] rounded-[6px] w-[450px] border border-[#C8C8C8]">
+              <div className="bg-[#fafafa] sm:flex gap-5 xl:gap-4 text-[#181818] p-[18px] rounded-[6px] w-full sm:w-[350px] xl:w-[450px] h-[360px] sm:h-full border border-[#C8C8C8]">
                 <div className="left shrink-0">
                   <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
                     <img

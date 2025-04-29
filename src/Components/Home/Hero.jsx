@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden">
       <Container>
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-4 lg:gap-x-[104px] relative z-10 pb-[120px] md:pb-[180px] lg:pb-[265px] mx-2 lg:mx-4">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-4 lg:gap-x-[104px] relative z-10 pb-[100px] md:pb-[120px] lg:pb-[265px] mx-3">
           <motion.div
             className="pt-[120px] md:pt-[180px] lg:pt-[329px] text-center lg:text-left"
             initial="hidden"
@@ -68,7 +68,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="pt-[60px] md:pt-[160px] lg:pt-[245px]  translate-x-0 xl:translate-x-[150px]"
+            className="pt-[60px] md:pt-[80px] lg:pt-[245px]  translate-x-0 xl:translate-x-[150px]"
             initial={{ opacity: 0, x: 200 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}

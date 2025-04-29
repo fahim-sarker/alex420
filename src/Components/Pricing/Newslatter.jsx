@@ -47,7 +47,7 @@ const Newslatter = () => {
           <Swiper
             slidesPerView={"auto"}
             centeredSlides={false}
-            spaceBetween={30}
+            spaceBetween={20}
             pagination={{
               clickable: true,
               renderBullet: function (index, className) {
@@ -68,7 +68,7 @@ const Newslatter = () => {
               Newscardimage2,
               Newscardimage3,
             ].map((img, i) => (
-              <SwiperSlide key={i} className="w-fit">
+              <SwiperSlide key={i} className="w-fit pl-3 xl:pl-0">
                 <motion.div
                   variants={cardVariants}
                   transition={{ duration: 0.6, delay: i * 0.1 }}

@@ -3,7 +3,7 @@ import Logo from "../assets/images/Logo/Sipawayy.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#181818] pt-[141px] pb-[96px] pl-3 px-3">
+    <footer className="bg-[#181818] pt-[90px] lg:pt-[141px] pb-[66px] lg:pb-[96px] pl-3 px-3">
       <Container>
         <div className="flex flex-wrap justify-between sm:w-[95%] mx-auto lg:w-full gap-y-12 pb-[87px] border-b border-[#B5B5B5]">
           <div className="w-full md:w-[45%] lg:w-auto">
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
 
         <p className="text-center text-[16px] font-normal text-[#FFF] capitalize pt-[30px]">
-          © 2024 SipSavvy.com, LLC. All rights reserved.
+          © 2024 SipSavvy.com, LLC. All rights reserved.
         </p>
       </Container>
     </footer>
@@ -104,10 +104,10 @@ const Facebook = () => (
         y2="0.199437"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#DBA514" />
-        <stop offset="0.345" stop-color="#EEB609" />
-        <stop offset="0.675" stop-color="#C69320" />
-        <stop offset="1" stop-color="#FCC201" />
+        <stop stopColor="#DBA514" />
+        <stop offset="0.345" stopColor="#EEB609" />
+        <stop offset="0.675" stopColor="#C69320" />
+        <stop offset="1" stopColor="#FCC201" />
       </linearGradient>
     </defs>
   </svg>
@@ -133,10 +133,10 @@ const Linkedin = () => (
         y2="2.71232"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#DBA514" />
-        <stop offset="0.345" stop-color="#EEB609" />
-        <stop offset="0.675" stop-color="#C69320" />
-        <stop offset="1" stop-color="#FCC201" />
+        <stop stopColor="#DBA514" />
+        <stop offset="0.345" stopColor="#EEB609" />
+        <stop offset="0.675" stopColor="#C69320" />
+        <stop offset="1" stopColor="#FCC201" />
       </linearGradient>
     </defs>
   </svg>
@@ -162,10 +162,10 @@ const Twiter = () => (
         y2="4.66398"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#DBA514" />
-        <stop offset="0.345" stop-color="#EEB609" />
-        <stop offset="0.675" stop-color="#C69320" />
-        <stop offset="1" stop-color="#FCC201" />
+        <stop stopColor="#DBA514" />
+        <stop offset="0.345" stopColor="#EEB609" />
+        <stop offset="0.675" stopColor="#C69320" />
+        <stop offset="1" stopColor="#FCC201" />
       </linearGradient>
     </defs>
   </svg>

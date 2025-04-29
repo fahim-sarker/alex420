@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import Container from "../../Shared/Container";
 import { Label } from "../ui/label";
 import { Popover } from "../ui/popover";
@@ -60,19 +60,23 @@ const Premiumdrinks = () => {
   ];
 
   return (
-    <section className="bg-[#1F1F1F] pt-[60px] pb-[142px]">
+    <section className="bg-[#1F1F1F] py-[100px]">
       <Container>
-        <h3 className="text-[48px] font-normal font-instrument text-[#EEB609] leading-none text-center pb-[45px]">
+        <h3 className="text-[42px] sm:text-[48px] font-normal font-instrument text-[#f1f1f1] text-center pb-10">
           Premium Drinks
         </h3>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 relative">
           {Premiumdrinksinfo?.map((item, index) => (
             <div
               key={index}
-              className="pt-[37px] px-[20px] pb-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group w-full"
+              className="pt-[37px] px-[20px] pb-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group mx-3"
             >
               <div className="pb-[50px] flex justify-center group-hover:scale-115 duration-300 ease-in-out">
-                <img src={item.image} alt="image" />
+                <img
+                  className="h-[120px] sm:h-[200px] w-fit"
+                  src={item.image}
+                  alt="image"
+                />
               </div>
               <h3 className="text-[16px] text-[#6B6B6B] font-medium">
                 {item.title}
@@ -207,7 +211,7 @@ const Premiumdrinks = () => {
                 </div>
                 <div>
                   <Popover>
-                    <div >
+                    <div>
                       <Button
                         variant="outline"
                         className="w-full justify-between text-left h-[56px] font-normal text-[18px] text-[#000]"
@@ -218,7 +222,7 @@ const Premiumdrinks = () => {
                         <CalenderIcon className="size-6" />
                       </Button>
                     </div>
-                    <div className="w-auto p-0" side="bottom" align="start">
+                    <div className="w-auto p-0">
                       <CalendarComponent
                         className="border border-black/5 rounded-[4px] p-3 mt-2 w-fit"
                         mode="single"

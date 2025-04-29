@@ -18,7 +18,7 @@ const BarDashboardNavBar = () => {
   console.log(barprofileinfo);
 
   return (
-    <section className="nav-bar px-4 md:px-10 py-4 md:py-7 bg-[#0F0F0F] w-full flex flex-wrap items-center justify-center md:justify-end gap-4 md:gap-8 sticky top-0 z-10">
+    <section className="nav-bar px-4 lg:px-10 py-4 lg:py-7 bg-[#0F0F0F] w-full flex flex-wrap items-center justify-center lg:justify-end gap-4 md:gap-8 sticky top-0 z-10">
       <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-white text-sm md:text-lg font-medium">
         {/* Notifications */}
         <DropdownMenu>

@@ -35,7 +35,7 @@ const OurMission = () => {
         </motion.h4>
 
         <motion.p
-          className="text-[#000] text-[16px] font-normal pt-4 sm:pt-5 pb-[40px] sm:pb-[50px] lg:pb-[60px] text-center max-w-full sm:max-w-[650px] lg:max-w-[850px] mx-auto"
+          className="text-[#000] text-[16px] font-normal pt-4 sm:pt-5 pb-[40px] sm:pb-[50px] lg:pb-[60px] px-1.5 sm:px-0 text-center max-w-full sm:max-w-[650px] lg:max-w-[850px] mx-auto"
           variants={cardVariants}
         >
           At SipSavvy, our mission is to transform the way people experience the

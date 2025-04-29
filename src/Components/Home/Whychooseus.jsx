@@ -12,7 +12,7 @@ const Whychooseus = () => {
       transition={{ duration: 0.8 }}
       viewport={{ once: true, amount: 0.3 }}
     >
-      <Container className="py-[50px] lg:pt-[128px] lg:pb-[218px] relative z-20">
+      <Container className="py-[60px] xl:pt-[128px] xl:pb-[218px] relative z-20">
         <h4 className="text-[32px] md:text-[52px] lg:text-[62px] pt-5 lg:pt-0 font-instrument font-normal text-center text-[#0E0E0E]">
           Why choose us
         </h4>

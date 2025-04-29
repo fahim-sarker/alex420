@@ -13,8 +13,10 @@ const Tabledata = () => {
   return (
     <div>
       <section className="px-10 overflow-hidden pb-4 pt-8 border-t">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-xl font-semibold">Recently added Table</h2>
+        <div className="sm:flex items-center justify-between mb-8 text-center">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">
+            Recently added Table
+          </h2>
           <button
             type="button"
             className="text-lg font-medium text-[#0E0E0E] bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px]"
@@ -58,7 +60,9 @@ const Tabledata = () => {
                     {product?.name}
                   </h3>
                   <h4>Table: {product?.id}</h4>
-                  <h4>Date: {new Date(product?.date).toISOString().split('T')[0]}</h4>
+                  <h4>
+                    Date: {new Date(product?.date).toISOString().split("T")[0]}
+                  </h4>
                   <h4>Added by : {product?.added_by}</h4>
                 </div>
               </div>

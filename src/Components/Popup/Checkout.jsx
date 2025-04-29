@@ -1,6 +1,6 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Mastercard from "../../assets/images/Checkout/card2.png";
 import Visacard from "../../assets/images/Checkout/card1.png";
 import Paypal from "../../assets/images/Checkout/paypal.png";
@@ -11,13 +11,13 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
   const [activeTab, setActiveTab] = useState("credit-card");
   const Axiosinstance = useAxios();
 
-
-  const { register, handleSubmit, formState: { errors } } = useForm();
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const orderDetails = useSelector((state) => state.order.orderDetails);
-
-
 
   const handleBtn = async (data) => {
     const userToken = JSON.parse(localStorage.getItem("usertoken"));
@@ -55,48 +55,46 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
           "Content-Type": "application/json",
         },
       });
-      console.log( 'responseData', response.data)
+      console.log("responseData", response.data);
       toast.success("Order placed successfully.");
       setReceipt(true);
       setPopUp2(false);
-    } catch (error) { 
+    } catch (error) {
       console.error("Payment failed:", error?.response?.data || error.message);
-      toast.error("Payment failed")
+      toast.error("Payment failed");
     }
   };
-  
-  
 
   return (
     <section>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="bg-white pt-[30px] pb-[50px] px-[53px] rounded-lg relative w-[651px] z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50  px-4">
+        <div className="bg-white pt-[30px] pb-[50px] px-[20px] md:px-[53px] rounded-lg relative w-full  max-w-[651px] max-h-[95vh] overflow-y-auto  z-50">
           <button
-            className="float-right absolute top-4 right-4 cursor-pointer font-bold text-2xl"
+            className="absolute top-4 right-4 cursor-pointer font-bold text-2xl"
             onClick={() => setPopUp2(false)}
           >
             ×
           </button>
-          <div className="">
-            <h3 className="text-[32px] font-medium text-black text-center">
+          <div>
+            <h3 className="text-[26px] md:text-[32px] font-medium text-black text-center">
               Checkout
             </h3>
-            <div className="flex justify-between gap-x-8 mt-[45px]">
+            <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-x-8 mt-[30px] md:mt-[45px]">
               <button
-                className={`text-center w-[260px] h-16 font-medium text-[20px] text-[#000] border border-[#222] rounded-[6px] cursor-pointer ${
+                className={`text-center w-full md:w-[260px] h-16 font-medium text-[18px] md:text-[20px] text-[#000] border border-[#222] rounded-[6px] cursor-pointer ${
                   activeTab === "credit-card"
-                    ? "border-b-2 bg-black text-white font-medium text-[20px]"
-                    : "text-[#000] font-medium text-[20px]"
+                    ? "border-b-2 bg-black text-white font-medium"
+                    : ""
                 }`}
                 onClick={() => setActiveTab("credit-card")}
               >
                 Credit Card
               </button>
               <button
-                className={`text-center w-[260px] h-16 border border-[#222] rounded-[6px] cursor-pointer ${
+                className={`text-center w-full md:w-[260px] h-16 border border-[#222] rounded-[6px] cursor-pointer ${
                   activeTab === "hand-cash"
-                    ? "border-b-2 bg-black text-white font-medium text-[20px]"
-                    : "text-[#000] font-medium text-[20px]"
+                    ? "border-b-2 bg-black text-white font-medium"
+                    : ""
                 }`}
                 onClick={() => setActiveTab("hand-cash")}
               >
@@ -108,33 +106,33 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
               <div>
                 {activeTab === "credit-card" ? (
                   <div>
-                    <div className="flex gap-x-8">
-                      <div className="border border-[#C8C8C8] my-5 rounded-[6px] flex justify-center items-center bg-[#FAFAFA] flex-1 py-5 cursor-pointer">
+                    <div className="flex flex-col md:flex-row gap-4 md:gap-x-8 mt-5">
+                      <div className="border border-[#C8C8C8] rounded-[6px] flex justify-center items-center bg-[#FAFAFA] flex-1 py-5 cursor-pointer">
                         <img
                           src={Mastercard}
                           alt="Mastercard"
-                          className="w-[100px]"
+                          className="w-[80px] md:w-[100px]"
                         />
                       </div>
-                      <div className="border border-[#C8C8C8] my-5 rounded-[6px] flex justify-center items-center bg-[#FAFAFA] flex-1 cursor-pointer">
+                      <div className="border border-[#C8C8C8] rounded-[6px] flex justify-center items-center bg-[#FAFAFA] flex-1 py-5 cursor-pointer">
                         <img
                           src={Visacard}
                           alt="Visacard"
-                          className="w-[100px]"
+                          className="w-[80px] md:w-[100px]"
                         />
                       </div>
                     </div>
 
                     <div className="border border-[#DBA514] rounded-[6px] p-4 mt-3 bg-[#FAFAFA]">
                       <div className="flex flex-wrap gap-4 justify-between">
-                        <div className="flex flex-col gap-1">
-                          <p className="text-[16px] font-medium text-[#353B48]">
+                        <div className="flex flex-col gap-1 w-full md:w-[45%]">
+                          <p className="text-[14px] md:text-[16px] font-medium text-[#353B48]">
                             Cardholder name
                           </p>
                           <input
                             {...register("cardholderName", { required: true })}
                             type="text"
-                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-[230px]"
+                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-full"
                           />
                           {errors.cardholderName && (
                             <span className="text-red-500 text-sm">
@@ -142,14 +140,14 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
                             </span>
                           )}
                         </div>
-                        <div className="flex flex-col gap-1">
-                          <p className="text-[16px] font-medium text-[#353B48]">
+                        <div className="flex flex-col gap-1 w-full md:w-[45%]">
+                          <p className="text-[14px] md:text-[16px] font-medium text-[#353B48]">
                             Card number
                           </p>
                           <input
                             {...register("cardNumber", { required: true })}
                             type="text"
-                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-[230px]"
+                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-full"
                           />
                           {errors.cardNumber && (
                             <span className="text-red-500 text-sm">
@@ -157,14 +155,14 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
                             </span>
                           )}
                         </div>
-                        <div className="flex flex-col gap-1">
-                          <p className="text-[16px] font-medium text-[#353B48]">
+                        <div className="flex flex-col gap-1 w-full md:w-[45%]">
+                          <p className="text-[14px] md:text-[16px] font-medium text-[#353B48]">
                             Expiry date
                           </p>
                           <input
                             {...register("expireDate", { required: true })}
                             type="text"
-                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-[230px]"
+                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-full"
                           />
                           {errors.expireDate && (
                             <span className="text-red-500 text-sm">
@@ -172,14 +170,14 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
                             </span>
                           )}
                         </div>
-                        <div className="flex flex-col gap-1">
-                          <p className="text-[16px] font-medium text-[#353B48]">
+                        <div className="flex flex-col gap-1 w-full md:w-[45%]">
+                          <p className="text-[14px] md:text-[16px] font-medium text-[#353B48]">
                             CCV
                           </p>
                           <input
                             {...register("ccv", { required: true })}
                             type="text"
-                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-[230px]"
+                            className="border border-[#C8C8C8] rounded-[6px] outline-none p-3 bg-[#FFF] w-full"
                           />
                           {errors.ccv && (
                             <span className="text-red-500 text-sm">
@@ -194,17 +192,21 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
                           type="checkbox"
                           className="h-[18px] w-[18px] rounded-full border border-gray-400 appearance-none checked:bg-blue-500 checked:border-blue-500 cursor-pointer"
                         />
-                        <img src={Paypal} alt="Paypal" />
+                        <img
+                          src={Paypal}
+                          alt="Paypal"
+                          className="w-[80px] md:w-[100px]"
+                        />{" "}
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className="mt-8">
-                    <h3 className="text-[18px] font-normal text-[#000] text-start my-8">
+                    <h3 className="text-[16px] md:text-[18px] font-normal text-[#000] text-start my-8">
                       Please complete your payment
                     </h3>
                     <div className="flex justify-center">
-                      <CheckoutSvg/>
+                      <CheckoutSvg />
                     </div>
                   </div>
                 )}
@@ -213,7 +215,7 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
               <div className="flex justify-center mt-6">
                 <button
                   type="submit"
-                  className="flex justify-center items-center leading-none py-[18px] px-[90px] mt-[55px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px]"
+                  className="flex justify-center items-center leading-none py-[16px] md:py-[18px] px-[60px] md:px-[90px] mt-[40px] md:mt-[55px] capitalize font-semibold text-[16px] md:text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px]"
                 >
                   Purchase
                 </button>
@@ -227,8 +229,6 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
 };
 
 export default Checkout;
-
-
 
 const CheckoutSvg = () => (
   <svg
