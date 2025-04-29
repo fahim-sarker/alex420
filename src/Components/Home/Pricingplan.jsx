@@ -27,7 +27,7 @@ const Pricingplan = () => {
       transition={{ duration: 0.8 }}
       viewport={{ once: true, amount: 0.3 }}
     >
-      <Container className="pt-[80px] md:pt-[112px] pb-[100px] md:pb-[159px] relative z-20 px-4">
+      <Container className="py-[80px] md:pt-[112px] ] lg:pb-[159px] relative z-20 px-3">
         <div className="flex justify-center">
           <a
             href="#"

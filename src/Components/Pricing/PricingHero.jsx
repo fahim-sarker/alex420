@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const PricingHero = () => {
   return (
-    <section className="relative pb-[50px] pt-[207px] lg:pb-[138px] px-3">
+    <section className="relative pb-[50px] pt-[150px] sm:pt-[207px] lg:pb-[138px] px-3">
       <Container className="relative z-20">
         <motion.h3
           initial={{ opacity: 0, y: 30 }}

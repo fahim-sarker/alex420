@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import Container from "../../Shared/Container";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -19,8 +19,8 @@ const FeaturedDrinks = () => {
     productName: "",
     productId: "",
     date: undefined,
-    hours: "7",
-    minutes: "00",
+    hours: "",
+    minutes: "",
     ampm: "AM",
     assignedBy: "",
     category: "",
@@ -88,11 +88,14 @@ const FeaturedDrinks = () => {
       tags: ["Best Seller", "In stock"],
     },
   ];
+  const handleDrinkClick = () => {
+    console.log("hello");
+  };
 
   return (
     <section className="bg-[#FFF] pb-[100px]">
       <Container>
-        <h3 className="text-[48px] font-normal font-instrument text-[#000] leading-none text-center pb-10">
+        <h3 className="text-[42px]  sm:text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
           Featured Drinks
         </h3>
       </Container>
@@ -111,10 +114,18 @@ const FeaturedDrinks = () => {
         className="newslatter !overflow-hidden"
       >
         {drinksinfo?.map((item, index) => (
-          <SwiperSlide key={index} className="w-fit">
-            <div className="pt-[37px] px-[20px] pb-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group w-[350px]">
-              <div className="pb-[50px] flex justify-center group-hover:scale-115 duration-300 ease-in-out">
-                <img src={item.image} alt="image" />
+          <SwiperSlide
+            key={index}
+            onClick={() => handleDrinkClick(item)}
+            className="w-fit"
+          >
+            <div className="pt-[37px] px-[20px] pb-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group xs:w-[300px] sm:w-[350px]">
+              <div className="xs:pb-[15px] sm:pb-[50px] flex justify-center group-hover:scale-115 duration-300 ease-in-out">
+                <img
+                  className="h-[120px] sm:h-[200px] w-fit"
+                  src={item.image}
+                  alt="image"
+                />
               </div>
               <h3 className="text-[16px] text-[#6B6B6B] font-medium">
                 {item.title}
@@ -138,7 +149,7 @@ const FeaturedDrinks = () => {
                 </p>
               </div>
               <button
-                onClick={() => setSelectedDrink(item)}
+                onClick={() => handleDrinkClick(item)}
                 className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full"
               >
                 Buy now
@@ -258,7 +269,7 @@ const FeaturedDrinks = () => {
                 </div>
                 <div>
                   <Popover>
-                    <div >
+                    <div>
                       <Button
                         variant="outline"
                         className="w-full justify-between text-left h-[56px] font-normal text-[18px] text-[#000]"
@@ -269,7 +280,7 @@ const FeaturedDrinks = () => {
                         <CalenderIcon className="size-6" />
                       </Button>
                     </div>
-                    <div className="w-auto p-0" side="bottom" align="start">
+                    <div className="w-auto p-0">
                       <CalendarComponent
                         className="border border-black/5 rounded-[4px] p-3 mt-2 w-fit"
                         mode="single"

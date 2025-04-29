@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav className="fixed w-full z-50">
       <Container>
-        <div className="mt-[20px] md:mt-[47px] rounded-[8px] font-ITCKabelStd border-[0.2px] border-[#DBA514]/30 bg-[rgba(42,46,53,0.20)]  mx-3 px-6 py-2 flex justify-between items-center">
+        <div className="mt-[20px] md:mt-[47px] rounded-[8px] font-ITCKabelStd border-[0.2px] border-[#DBA514]/30 bg-[rgba(42,46,53,0.8)] mx-3 px-6 py-2 flex justify-between items-center">
           <div className=" flex justify-between items-center w-full lg:w-auto">
             <Link to="/">
               <img src={Logo} alt="Logo" />
@@ -58,11 +58,7 @@ const Navbar = () => {
     bg-[rgba(30,30,30,0.85)] lg:bg-transparent
     px-6 py-4 mx-3 lg:mx-0 lg:p-0 rounded-b-lg lg:rounded-none
     transition-all duration-600 ease-[cubic-bezier(0.4, 0, 0.2, 1)] z-40
-    ${
-      isOpen
-        ? "translate-x-0 translate-y-0 opacity-100"
-        : "-translate-x-full -translate-y-full opacity-0"
-    }
+    ${isOpen ? "translate-x-0  opacity-100" : "-translate-x-full  opacity-0"}
     lg:translate-x-0 lg:translate-y-0 lg:opacity-100
   `}
           >
@@ -92,7 +88,7 @@ const Navbar = () => {
               )}
             </li>
             {/* login & signup */}
-            <div className="flex gap-x-2">
+            <div className="flex gap-x-2 pt-3 px-6 lg:px-0 lg:pt-0">
               {token && role ? (
                 <Link
                   to="/bar-dashboard/profile-details"
@@ -114,12 +110,12 @@ const Navbar = () => {
               ) : (
                 <>
                   <Link to="/login">
-                    <button className="flex justify-center items-center leading-none rounded-lg px-8 py-4 border-[0.5px] border-[#DBA514]/30 bg-[rgba(78,78,78,0.24)] backdrop-blur-[18px] text-[#E9B20C] capitalize font-semibold text-[14px] cursor-pointer">
+                    <button className="flex justify-center items-center leading-none rounded-lg px-5 sm:px-8 py-3 sm:py-4 border-[0.5px] border-[#DBA514]/30 bg-[rgba(78,78,78,0.24)] backdrop-blur-[18px] text-[#E9B20C] capitalize font-semibold text-[14px] cursor-pointer">
                       Login
                     </button>
                   </Link>
                   <Link to="/sign-up">
-                    <button className="flex justify-center items-center leading-none py-4 px-8 capitalize font-semibold text-[14px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer">
+                    <button className="flex justify-center items-center leading-none px-5 sm:px-8 py-3 sm:py-4 capitalize font-semibold text-[14px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer">
                       Sign up
                     </button>
                   </Link>
