@@ -38,10 +38,8 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
 
   const {
     data: products,
-    error,
-    isLoading,
   } = useFetchData(`/api/bar/${barId?.barId}/products`);
-  console.log(products);
+  console.log( 'drinks', products);
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -170,7 +168,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                         : "/fallback.jpg"
                     }
                     alt={item.title}
-                    className="h-full object-center object-cover mx-auto group-hover:scale-125 duration-300 transition-all"
+                    className="h-full object-center object-cover mx-auto duration-300 transition-all"
                   />
                 </figure>
                 <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
@@ -180,13 +178,13 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                   {item.description}
                 </h4>
                 <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
-                  {item.selling_price}
+                  ${item.selling_price}
                 </h5>
                 <div className="pb-3 flex gap-x-[10px]">
                   {renderStars(item.review)}
-                  <p className="text-[16px] font-medium text-[#6B6B6B] ">
+                  {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
                     {item.review}
-                  </p>
+                  </p> */}
                 </div>
                 <button
                   onClick={() => {
@@ -353,7 +351,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                           <CalenderIcon className="size-6" />
                         </Button>
                       </div>
-                      <div className="w-auto p-0" side="bottom" align="start">
+                      <div className="w-auto p-0">
                         <CalendarComponent
                           className="border border-black/5 rounded-[4px] p-3 mt-2 w-fit"
                           mode="single"

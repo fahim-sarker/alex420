@@ -244,7 +244,7 @@ const UserOrder = () => {
         >
           {barsdata.map((item, index) => (
             <SwiperSlide key={index} className="!w-fit mb-12">
-              <Link to="/bar-drinks">
+              <Link to="/bar">
                 <div className="min-w-[280px] sm:w-[340px] md:w-[393px] group rounded-[4px] border-2 border-[#DBA514] flex flex-col group cursor-pointer">
                   <img src={item.image} alt={item.name} className="w-full" />
                   <div className="px-3 pt-3 pb-[19px] group-hover:bg-black duration-300 ease-in-out cursor-pointer rounded-b-[4px]">
@@ -280,7 +280,6 @@ const UserOrder = () => {
           ))}
         </Swiper>
       </section>
-
       <DialogReceipt receipt={receipt} setReceipt={setReceipt} />
     </section>
   );
