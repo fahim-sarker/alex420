@@ -29,7 +29,9 @@ const BarStaffs = () => {
   const userToken = JSON.parse(localStorage.getItem("usertoken"));
   const token = userToken?.token;
   const { data } = useFetchData("/api/dashboard/bar/staff/index", token);
+  const { data:staffdetails } = useFetchData("/api/dashboard/bar/staff/list/details", token);
   console.log("bardata", data);
+  
 
   const {
     register,
@@ -364,7 +366,7 @@ const BarStaffs = () => {
           modules={[Pagination]}
           className="!overflow-visible"
         >
-          {data?.data?.map((staff, idx) => (
+          {staffdetails?.data?.map((staff, idx) => (
             <SwiperSlide key={idx} className="!w-fit mb-12">
               <div className="bg-[#fafafa] flex gap-4 text-[#181818] p-[18px] rounded-[6px] w-[280px] sm:w-[450px] border border-[#C8C8C8]">
                 <div className="left shrink-0">

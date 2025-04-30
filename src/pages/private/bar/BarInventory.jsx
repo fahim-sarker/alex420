@@ -56,6 +56,7 @@ const BarInventory = () => {
       image: null,
       quantity: "",
       description: "",
+      drink_type:""
     },
   });
 
@@ -121,6 +122,7 @@ const BarInventory = () => {
       formData.append("time", formattedTime);
       formData.append("quantity", data.quantity);
       formData.append("description", data.description);
+      formData.append("drink_type", data.drink_type);
 
       const response = await Axios.post(
         "/api/dashboard/bar/product/store",
@@ -364,27 +366,28 @@ const BarInventory = () => {
                 Drink Type
               </Label>
               <Controller
-                name="drinkType"
+                name="drink_type"
                 control={control}
-                rules={{ required: "Drink type is required" }}
+                rules={{ required: "drink_type type is required" }}
                 render={({ field }) => (
                   <>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger
                         className={`w-full h-[56px] bg-white ${
-                          errors.drinkType ? "border border-red-500" : ""
+                          errors.drink_type ? "border border-red-500" : ""
                         }`}
                       >
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="Normal">Normal</SelectItem>
                         <SelectItem value="Premium">Premium</SelectItem>
                         <SelectItem value="Feature">Feature</SelectItem>
                       </SelectContent>
                     </Select>
-                    {errors.drinkType && (
+                    {errors.drink_type && (
                       <span className="text-red-500 text-sm mt-1 block">
-                        {errors.drinkType.message}
+                        {errors.drink_type.message}
                       </span>
                     )}
                   </>

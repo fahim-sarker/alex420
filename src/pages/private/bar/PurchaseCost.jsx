@@ -1,6 +1,5 @@
 import Monthlysalescostcharts from "@/Components/CustomComponents/Monthlysalescostcharts";
 import useFetchData from "@/Components/Hooks/Api/UseFetchData";
-import { Input } from "@/Components/ui/input";
 import {
   Popover,
   PopoverTrigger,
@@ -21,7 +20,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
-import { Search } from "lucide-react";
 import { MainContext } from "@/Components/Context/ChartInfoContext";
 
 const PurchaseCost = () => {
@@ -39,36 +37,6 @@ const PurchaseCost = () => {
   
 
   const inventoryData = purchaseitem?.data;
-  console.log(inventoryData,"it");
-  
-
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState();
-
-  useEffect(() => {
-    const searchString = searchQuery?.toLowerCase()?.trim();
-
-    if (searchString === "") {
-      setFilteredData(inventoryData);
-    } else {
-      const filtered = inventoryData.filter((item) => {
-        return (
-          item.name?.toLowerCase()?.includes(searchString) ||
-          item.assigned_by?.toLowerCase()?.includes(searchString) ||
-          item.category?.toLowerCase()?.includes(searchString) ||
-          item.note?.toLowerCase()?.includes(searchString) ||
-          item.date?.includes(searchString) ||
-          item.time?.toLowerCase()?.includes(searchString) ||
-          item.shelf_number?.toString()?.includes(searchString) ||
-          item.cost?.toString()?.includes(searchString) ||
-          item.selling_price?.toString()?.includes(searchString)
-        );
-      });
-      setFilteredData(filtered);
-    }
-  }, [searchQuery]);
-  console.log(filteredData);
   
   
 
@@ -108,7 +76,7 @@ const PurchaseCost = () => {
         <div className="container mx-auto mb-8 ">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-xl font-semibold">All Purchases today</h1>
-            <div className="relative">
+            {/* <div className="relative">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
@@ -117,7 +85,7 @@ const PurchaseCost = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="border h-[500px] overflow-y-auto">
@@ -157,8 +125,8 @@ const PurchaseCost = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData?.length > 0 ? (
-                  filteredData?.map((item, index) => (
+                {inventoryData?.length > 0 ? (
+                  inventoryData?.map((item, index) => (
                     <TableRow
                       key={index}
                       className="border-t border-gray-200 bg-[#FAFAFA]"
@@ -215,7 +183,7 @@ const PurchaseCost = () => {
                 ) : (
                   <TableRow>
                     <TableCell colSpan={10} className="text-center py-4">
-                      No results found for {searchQuery}
+                      No results found
                     </TableCell>
                   </TableRow>
                 )}

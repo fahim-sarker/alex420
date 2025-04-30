@@ -167,8 +167,8 @@ const UserOrder = () => {
     "/api/dashboard/user/order/index",
     token
   );
+  console.log(userorder)
 
-  console.log(userorder);
   
 
 
@@ -189,8 +189,8 @@ const UserOrder = () => {
           modules={[Pagination]}
           className="!overflow-visible"
         >
-          {userorder?.data?.map((useritems,idx) => {
-            <SwiperSlide key={idx} className="!w-fit mb-12">
+          {userorder?.data?.map((useritems,index)=>(
+            <SwiperSlide key={index} className="!w-fit mb-12">
               <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] min-w-[300px] sm:w-[350px] md:w-[420px] border border-[#C8C8C8]">
                 <div className="left shrink-0">
                   <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
@@ -212,16 +212,18 @@ const UserOrder = () => {
                     <h3 className="text-xl font-semibold">${useritems?.product?.price}</h3>
                   </div>
                   <p className="line-clamp-3 tracking-[0.42px] text-sm text-[#4E4E4E]">
-                   {useritems?.prodduct?.description}
+                   fdf{useritems?.prodduct?.description}
                   </p>
                   <div className="flex justify-between">
-                    <p>Time : {useritems?.prodduct?.time}</p>
-                    <p>Date : {useritems?.prodduct?.date}</p>
+                    <p>Time : {useritems?.prodduct?.shots_time}</p>
+                    <p>Date : {useritems?.prodduct?.shots_date}</p>
                   </div>
                 </div>
               </div>
-            </SwiperSlide>;
-          })}
+            </SwiperSlide>
+
+          ))}
+
         </Swiper>
       </section>
 
