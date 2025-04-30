@@ -52,9 +52,9 @@ const UnderSelling = () => {
           </button>
         </div> */}
         {graph1 !== false && (
-          <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-8 px-12">
-            <div className="flex justify-between">
-              <h3 className="text-2xl font-bold font-poppins mb-8 capitalize">
+          <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-8 px-6 sm:px-12">
+            <div className="sm:flex justify-between">
+              <h3 className="text-2xl font-bold font-poppins py-3 sm:py-0 sm:mb-8 capitalize">
                 {most_selling?.data?.[graph1]?.name}
               </h3>
               <Popover>

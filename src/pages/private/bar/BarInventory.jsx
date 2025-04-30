@@ -56,7 +56,7 @@ const BarInventory = () => {
       image: null,
       quantity: "",
       description: "",
-      drink_type:""
+      drink_type: "",
     },
   });
 
@@ -615,7 +615,7 @@ const BarInventory = () => {
         >
           {data?.data?.map((product, idx) => (
             <SwiperSlide key={idx} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] sm:flex gap-5 xl:gap-4 text-[#181818] p-[18px] rounded-[6px] w-full sm:w-[350px] xl:w-[450px] h-[360px] sm:h-full border border-[#C8C8C8]">
+              <div className="bg-[#fafafa] sm:flex gap-5 xl:gap-4 text-[#181818] p-[18px] rounded-[6px] w-full sm:w-[350px] xl:w-[450px] h-[380px] sm:h-full border border-[#C8C8C8]">
                 <div className="left shrink-0">
                   <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
                     <img

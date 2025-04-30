@@ -29,9 +29,11 @@ const BarStaffs = () => {
   const userToken = JSON.parse(localStorage.getItem("usertoken"));
   const token = userToken?.token;
   const { data } = useFetchData("/api/dashboard/bar/staff/index", token);
-  const { data:staffdetails } = useFetchData("/api/dashboard/bar/staff/list/details", token);
+  const { data: staffdetails } = useFetchData(
+    "/api/dashboard/bar/staff/list/details",
+    token
+  );
   console.log("bardata", data);
-  
 
   const {
     register,
@@ -349,8 +351,8 @@ const BarStaffs = () => {
           </div>
         </form>
       </section>
-      <section className="px-10 overflow-hidden pb-4 pt-8 border-t">
-        <div className="flex items-center justify-between mb-8">
+      <section className="px-6 sm:px-10 overflow-hidden pb-4 pt-8 border-t">
+        <div className="flex items-center justify-between  mb-8">
           <h2 className="text-xl font-semibold tracking-[0.6px]">Stuff list</h2>
         </div>
         <Swiper
@@ -367,8 +369,8 @@ const BarStaffs = () => {
           className="!overflow-visible"
         >
           {staffdetails?.data?.map((staff, idx) => (
-            <SwiperSlide key={idx} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] flex gap-4 text-[#181818] p-[18px] rounded-[6px] w-[280px] sm:w-[450px] border border-[#C8C8C8]">
+            <SwiperSlide key={idx} className="!w-fit mb-8 sm:mb-12">
+              <div className="bg-[#fafafa] flex gap-4 text-[#181818] p-[18px] rounded-[6px] w-[350px] sm:w-[450px] border border-[#C8C8C8]">
                 <div className="left shrink-0">
                   <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
                     <img
@@ -397,7 +399,7 @@ const BarStaffs = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="flex justify-end">
+        <div className="flex justify-center sm:justify-end">
           <button
             type="button"
             className="text-lg font-medium text-[#0E0E0E] bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px] tracking-[0.54px] cursor-pointer"
