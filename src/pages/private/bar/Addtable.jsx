@@ -55,14 +55,16 @@ const Addtable = () => {
     event.preventDefault();
     addTableMutation.mutate(data);
   };
-  const {data: stafflist} = useFetchData("/api/dashboard/bar/staff/index",token)
+  const { data: stafflist } = useFetchData(
+    "/api/dashboard/bar/staff/index",
+    token
+  );
   console.log(stafflist);
-  
 
   return (
     <div>
-      <section className="px-10 overflow-hidden py-16">
-        <div className="flex justify-between items-center">
+      <section className="px-6 sm:px-10 overflow-hidden py-16">
+        <div className="sm:flex justify-between items-center text-center">
           <h2 className="text-xl font-semibold mb-6">Add table</h2>
           <Link to="/bar-dashboard/inventory">
             <h2 className="text-xl font-semibold mb-6 border-2 border-[#DBA514] p-2 rounded-[6px] cursor-pointer">

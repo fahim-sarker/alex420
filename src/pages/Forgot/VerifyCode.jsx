@@ -59,44 +59,41 @@ const VerifyCode = () => {
   };
 
   return (
-    <section className="bg-[#000]  h-screen flex items-center">
-      <Container className="py-[60px] rounded-[6px] font-poppins w-full">
-        <div className="flex gap-x-20 justify-between">
-          <div className="w-[40%]">
-            <h3 className="text-[30px] text-[#FFF] font-normal font-instrument">
-              Verify your
-              <span className="text-[#EEB609]"> Email Address</span>
+    <section className="bg-[#000] min-h-screen flex items-center">
+      <Container className="px-10 xl:px-0 py-[60px] font-poppins w-full">
+        <div className="flex flex-col-reverse md:flex-row gap-10 md:gap-x-20 justify-between items-center">
+          {/* Left Content */}
+          <div className="w-full md:w-[50%]">
+            <h3 className="text-[24px] md:text-[30px] text-[#FFF] font-normal font-instrument">
+              Verify your <span className="text-[#EEB609]">Email Address</span>
             </h3>
-            <p className="text-[16px] text-[#F8F8FF] font-normal font-itc mt-2">
+            <p className="text-[14px] md:text-[16px] text-[#F8F8FF] font-normal font-itc mt-2">
               Enter the verification code we sent to
             </p>
-            <p className="text-[16px] text-[#EEB609] font-normal font-itc mt-4 cursor-pointer">
+            <p className="text-[14px] md:text-[16px] text-[#EEB609] font-normal font-itc mt-4 break-words">
               {email}
             </p>
-            <div className="text-white mt-8 !text-2xl">
+
+            {/* OTP Input */}
+            <div className="text-white mt-8 text-2xl">
               <InputOTP
                 maxLength={4}
                 pattern={REGEXP_ONLY_DIGITS}
                 value={value}
                 onChange={(value) => setValue(value)}
               >
-                <InputOTPGroup>
-                  <InputOTPSlot index={0} />
-                </InputOTPGroup>
-                <InputOTPGroup>
-                  <InputOTPSlot index={1} />
-                </InputOTPGroup>
-                <InputOTPGroup>
-                  <InputOTPSlot index={2} />
-                </InputOTPGroup>
-                <InputOTPGroup>
-                  <InputOTPSlot index={3} />
-                </InputOTPGroup>
+                {[0, 1, 2, 3].map((index) => (
+                  <InputOTPGroup key={index}>
+                    <InputOTPSlot index={index} />
+                  </InputOTPGroup>
+                ))}
               </InputOTP>
             </div>
-            <p className="text-white font-itc mt-6">
-              Your verification code may take a few moments to arrive
-              Didn&apos;t receive a verification code?{" "}
+
+            {/* Message & Resend */}
+            <p className="text-white font-itc mt-6 text-[14px] md:text-[16px]">
+              Your verification code may take a few moments to arrive.
+              Didn&apos;t receive a code?{" "}
               <span
                 onClick={async () => {
                   try {
@@ -104,21 +101,22 @@ const VerifyCode = () => {
                     toast.success("OTP resent successfully");
                   } catch (error) {
                     console.log(error);
-                    
                     toast.error("Failed to resend OTP");
                   }
                 }}
-                className="hover:underline text-lg text-[#FCC201] cursor-pointer"
+                className="hover:underline text-[#FCC201] cursor-pointer"
               >
                 Re-send
               </span>
             </p>
-            <div className="">
+
+            {/* Buttons */}
+            <div className="mt-8 space-y-4">
               <button
                 onClick={onSubmit}
                 type="submit"
                 disabled={isSubmitting}
-                className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[16 px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full mt-8"
+                className="flex justify-center items-center leading-none py-[14px] px-[32px] capitalize font-semibold text-[16px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full"
               >
                 {isSubmitting ? (
                   <PiSpinnerBold className="animate-spin size-[16px] fill-white" />
@@ -126,17 +124,24 @@ const VerifyCode = () => {
                   "Verify"
                 )}
               </button>
+
               <button
-                type="submit"
+                type="button"
                 onClick={() => Navigate(-1)}
-                className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-medium text-[16 px] rounded-lg border border-[#DBA514] backdrop-blur-[6.5px] text-white cursor-pointer tracking-[0.72px] w-full mt-4"
+                className="flex justify-center items-center leading-none py-[14px] px-[32px] capitalize font-medium text-[16px] rounded-lg border border-[#DBA514] backdrop-blur-[6.5px] text-white cursor-pointer tracking-[0.72px] w-full"
               >
                 Back
               </button>
             </div>
           </div>
-          <div className="">
-            <img src={Signupbg} alt="Signupbg" className="w-full" />
+
+          {/* Right Image */}
+          <div className="w-full md:w-[50%] mb-10 md:mb-0">
+            <img
+              src={Signupbg}
+              alt="Signupbg"
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
         </div>
       </Container>

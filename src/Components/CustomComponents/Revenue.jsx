@@ -151,8 +151,8 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 <h4 className="font-instrument  tracking-[0.668px] text-[22px]">
                   Total paid orders today
                 </h4>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center text-xl gap-4">
+                <div className="flex justify-between items-end">
+                  <div className="xl:flex items-center text-xl gap-4">
                     <p className="">
                       orders:{" "}
                       <span className="font-semibold">
@@ -178,8 +178,8 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 <h4 className="font-instrument  tracking-[0.668px] text-[22px]">
                   Total Hand cash orders today
                 </h4>
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center text-xl gap-4">
+                <div className="flex justify-between items-end gap-1 sm:gap-0">
+                  <div className="xl:flex items-center text-xl gap-4">
                     <p className="">
                       orders:{" "}
                       <span className="font-semibold">
@@ -220,8 +220,8 @@ const Revenue = ({ tabValue, setTabValue }) => {
             </div>
 
             <Tabs defaultValue="all" className="mt-12">
-              <div className="flex justify-between items-center">
-                <h3 className="text-xl font-medium">Served</h3>
+              <div className="sm:flex justify-between items-center">
+                <h3 className="text-xl font-medium mb-2 sm:mb-0">Served</h3>
                 <TabsList className="flex items-center gap-2">
                   <TabsTrigger
                     value="all"
@@ -244,12 +244,12 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 </TabsList>
               </div>
               <TabsContent value="all">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-8">
                   {currentItems.map((item) => (
                     <div key={item.id}>
-                      <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
+                      <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
-                          <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                          <figure className="w-full sm:w-[135px] aspect-[3/2] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
                             <img
                               src={
                                 item?.product?.image
@@ -259,7 +259,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                                   : "/fallback.jpg"
                               }
                               alt={item.product?.name || "Product Image"}
-                              className="object-cover w-full h-full"
+                              className="object-contain w-full  h-[180px] sm:h-full"
                             />
                           </figure>
                         </div>
@@ -278,7 +278,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                             </div>
                           </div>
                           <h4>Table: {item.table?.table_name || "N/A"}</h4>
-                          <div className="flex items-center justify-between">
+                          <div className="flex sm:block 2xl:flex items-center justify-between">
                             <h4>
                               Date:{" "}
                               {new Date(item.shots_date).toLocaleDateString(
@@ -296,14 +296,14 @@ const Revenue = ({ tabValue, setTabValue }) => {
                             </h4>
                           </div>
                           <h4 className="mb-3">Quantity: {item.quantity}</h4>
-                          <div className="flex items-center justify-between">
+                          <div className="flex sm:block  2xl:flex items-center justify-between">
                             <h3 className="text-xl font-semibold">
                               ${item.price?.toLocaleString() || "0"}
                             </h3>
                             <button
                               type="button"
                               className={cn(
-                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
+                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-base 2xl:text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
                                 {
                                   "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
                                     item.payment_method !== "cash",
@@ -324,12 +324,12 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 </div>
               </TabsContent>
               <TabsContent value="paid">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-8">
                   {currentItems.map((item) => (
                     <div key={item.id}>
-                      <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
+                      <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
-                          <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                          <figure className="w-full sm:w-[135px] aspect-[3/2] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
                             <img
                               src={
                                 item?.product?.image
@@ -339,7 +339,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                                   : "/fallback.jpg"
                               }
                               alt={item.product?.name || "Product Image"}
-                              className="object-cover w-full h-full"
+                              className="object-contain w-full  h-[180px] sm:h-full"
                             />
                           </figure>
                         </div>
@@ -358,7 +358,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                             </div>
                           </div>
                           <h4>Table: {item.table?.table_name || "N/A"}</h4>
-                          <div className="flex items-center justify-between">
+                          <div className="flex sm:block  2xl:flex items-center justify-between">
                             <h4>
                               Date:{" "}
                               {new Date(item.shots_date).toLocaleDateString(
@@ -376,14 +376,14 @@ const Revenue = ({ tabValue, setTabValue }) => {
                             </h4>
                           </div>
                           <h4 className="mb-3">Quantity: {item.quantity}</h4>
-                          <div className="flex items-center justify-between">
+                          <div className="flex sm:block  2xl:flex items-center justify-between">
                             <h3 className="text-xl font-semibold">
                               ${item.price?.toLocaleString() || "0"}
                             </h3>
                             <button
                               type="button"
                               className={cn(
-                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
+                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-base 2xl:text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
                                 {
                                   "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
                                     item.payment_method !== "cash",
@@ -404,12 +404,12 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 </div>
               </TabsContent>
               <TabsContent value="hand-cash">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-8">
                   {currentItems.map((item) => (
                     <div key={item.id}>
-                      <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
+                      <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
-                          <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                          <figure className="w-full sm:w-[135px] aspect-[3/2] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
                             <img
                               src={
                                 item?.product?.image
@@ -419,7 +419,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                                   : "/fallback.jpg"
                               }
                               alt={item.product?.name || "Product Image"}
-                              className="object-cover w-full h-full"
+                              className="object-contain w-full  h-[180px] sm:h-full"
                             />
                           </figure>
                         </div>
@@ -438,7 +438,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                             </div>
                           </div>
                           <h4>Table: {item.table?.table_name || "N/A"}</h4>
-                          <div className="flex items-center justify-between">
+                          <div className="flex sm:block  2xl:flex items-center justify-between">
                             <h4>
                               Date:{" "}
                               {new Date(item.shots_date).toLocaleDateString(
@@ -456,14 +456,14 @@ const Revenue = ({ tabValue, setTabValue }) => {
                             </h4>
                           </div>
                           <h4 className="mb-3">Quantity: {item.quantity}</h4>
-                          <div className="flex items-center justify-between">
+                          <div className="flex sm:block  2xl:flex items-center justify-between">
                             <h3 className="text-xl font-semibold">
                               ${item.price?.toLocaleString() || "0"}
                             </h3>
                             <button
                               type="button"
                               className={cn(
-                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
+                                `border border-transparent block py-1.5 px-6 rounded-[6px] text-center text-base 2xl:text-lg font-medium leading-none tracking-[0.54px] text-[#181818]`,
                                 {
                                   "bg-[#C8C8C8] border-[#C8C8C8] text-[#181818]":
                                     item.payment_method !== "cash",
@@ -484,7 +484,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                 </div>
               </TabsContent>
               {items.length > itemsPerPage && (
-                <div className="mt-8 flex justify-center">
+                <div className="mt-8 flex justify-center flex-wrap">
                   <ReactPaginate
                     breakLabel="..."
                     nextLabel="Next>"

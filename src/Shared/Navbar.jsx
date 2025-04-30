@@ -55,8 +55,7 @@ const Navbar = () => {
             ref={menuRef}
             className={` lg:flex flex-col items-center lg:flex-row gap-y-2 lg:gap-x-4
     absolute lg:static top-full left-0 w-[calc(100%-.9rem*2)] lg:w-auto
-    bg-[rgba(30,30,30,0.85)] lg:bg-transparent
-    px-6 py-4 mx-3 lg:mx-0 lg:p-0 rounded-b-lg lg:rounded-none
+    bg-[rgba(30,30,30,0.85)] lg:bg-transparent py-4 mx-3 lg:mx-0 lg:p-0 rounded-b-lg lg:rounded-none
     transition-all duration-600 ease-[cubic-bezier(0.4, 0, 0.2, 1)] z-40
     ${isOpen ? "translate-x-0  opacity-100" : "-translate-x-full  opacity-0"}
     lg:translate-x-0 lg:translate-y-0 lg:opacity-100

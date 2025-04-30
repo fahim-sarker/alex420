@@ -5,8 +5,8 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@radix-ui/react-popover"; 
-import { Button } from "@/components/ui/button"; 
+} from "@radix-ui/react-popover";
+import { Button } from "@/components/ui/button";
 
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
@@ -39,8 +39,6 @@ const PurchaseCost = () => {
 
   const inventoryData = purchaseitem?.data;
   console.log(inventoryData);
-  
-
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(inventoryData);
@@ -78,22 +76,18 @@ const PurchaseCost = () => {
 
   console.log(selectdate);
 
-
-
-  
-
-
-
   return (
     <>
       <h2 className="text-xl font-semibold mt-10 mb-6">Purchase cost</h2>
-      <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div className="card w-full bg-[#FAFAFA] border border-[#C8C8C8] rounded-[7px] p-5 space-y-6">
           <h4 className="font-instrument  tracking-[0.668px] text-[22px]">
             Total Purchase Cost today
           </h4>
           <div className="flex justify-between items-center">
-            <p className="text-xl font-semibold">${purchasecost?.data?.total_cost}</p>
+            <p className="text-xl font-semibold">
+              ${purchasecost?.data?.total_cost}
+            </p>
             <button
               type="button"
               onClick={() => setCostTable((prev) => !prev)}
@@ -120,107 +114,109 @@ const PurchaseCost = () => {
             </div>
           </div>
 
-            <div className="border h-[500px] overflow-y-auto">
-              <Table>
-                <TableHeader className="bg-black text-white">
-                  <TableRow>
-                    <TableHead className="font-medium py-4 text-nowrap w-[400px]">
-                      Product
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Product Id
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Quantity
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Cost
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Selling price
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Date
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Time
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Assigned by
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center">
-                      Categories
-                    </TableHead>
-                    <TableHead className="font-medium py-4 text-center text-nowrap">
-                      Shelf Number
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredData?.length > 0 ? (
-                    filteredData?.map((item, index) => (
-                      <TableRow
-                        key={index}
-                        className="border-t border-gray-200 bg-[#FAFAFA]"
-                      >
-                        <TableCell className="py-4">
-                          <div className="flex items-center gap-2 text-wrap">
-                            <figure className="w-13 border py-1 overflow-hidden rounded-[3px] flex-shrink-0">
-                              <img
-                                src={
-                                  item?.image
-                                    ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
-                                    : ""
-                                }
-                                alt="Wine bottle"
-                                width={32}
-                                height={48}
-                                className="object-cover object-center w-full h-full"
-                              />
-                            </figure>
-                            {item?.name}
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap">
-                          id: {item?.id}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap">
-                          Quantity: {item?.quantity}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap font-semibold">
-                          ${item?.cost}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap">
-                          ${item?.selling_price}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap">
-                          {item?.date}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap">
-                          {item?.time}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {item?.assigned_by}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap">
-                          {item?.category}
-                        </TableCell>
-                        <TableCell className="text-center text-nowrap font-semibold">
-                          {item?.shelf_number}
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={10} className="text-center py-4">
-                        No results found for {searchQuery}
+          <div className="border h-[500px] overflow-y-auto">
+            <Table>
+              <TableHeader className="bg-black text-white">
+                <TableRow>
+                  <TableHead className="font-medium py-4 text-nowrap w-[400px]">
+                    Product
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Product Id
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Quantity
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Cost
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Selling price
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Date
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Time
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Assigned by
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center">
+                    Categories
+                  </TableHead>
+                  <TableHead className="font-medium py-4 text-center text-nowrap">
+                    Shelf Number
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredData?.length > 0 ? (
+                  filteredData?.map((item, index) => (
+                    <TableRow
+                      key={index}
+                      className="border-t border-gray-200 bg-[#FAFAFA]"
+                    >
+                      <TableCell className="py-4">
+                        <div className="flex items-center gap-2 text-wrap">
+                          <figure className="w-13 border py-1 overflow-hidden rounded-[3px] flex-shrink-0">
+                            <img
+                              src={
+                                item?.image
+                                  ? `${import.meta.env.VITE_BASE_URL}/${
+                                      item.image
+                                    }`
+                                  : ""
+                              }
+                              alt="Wine bottle"
+                              width={32}
+                              height={48}
+                              className="object-cover object-center w-full h-full"
+                            />
+                          </figure>
+                          {item?.name}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap">
+                        id: {item?.id}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap">
+                        Quantity: {item?.quantity}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap font-semibold">
+                        ${item?.cost}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap">
+                        ${item?.selling_price}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap">
+                        {item?.date}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap">
+                        {item?.time}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {item?.assigned_by}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap">
+                        {item?.category}
+                      </TableCell>
+                      <TableCell className="text-center text-nowrap font-semibold">
+                        {item?.shelf_number}
                       </TableCell>
                     </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={10} className="text-center py-4">
+                      No results found for {searchQuery}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
           </div>
+        </div>
       ) : (
         <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-8 px-12">
           <div className="flex justify-between relative z-50">

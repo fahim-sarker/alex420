@@ -39,9 +39,9 @@ const Tabledata = () => {
         >
           {data?.data?.map((product, idx) => (
             <SwiperSlide key={idx} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] flex gap-4 items-center text-[#181818] p-[18px] rounded-[6px] w-[450px] border border-[#C8C8C8]">
+              <div className="bg-[#fafafa] sm:flex gap-4 items-center text-[#181818] p-[18px] rounded-[6px] w-[250px] sm:w-[450px] border border-[#C8C8C8]">
                 <div className="left shrink-0">
-                  <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
+                  <figure className="w-full sm:w-[135px] h-full rounded-[6px] sm:border border-[#C8C8C8] flex justify-center items-center mb-2 sm:mb-0">
                     <img
                       src={
                         product?.qr_code

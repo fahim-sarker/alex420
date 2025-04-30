@@ -17,7 +17,7 @@ export default function SalesChart({ className, gold = false }) {
 
   // Generate current month dates with simulated sales
   const generateCurrentMonthData = () => {
-  const now = new Date();
+    const now = new Date();
 
     // const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -39,16 +39,13 @@ export default function SalesChart({ className, gold = false }) {
 
   const data = chartInfo || fallbackData;
   console.log(chartInfo);
-  
 
   const maxSales = useMemo(() => {
-    return (
-      Math.ceil(Math.max(...data.map((item) => item.sales)))
-    );
+    return Math.ceil(Math.max(...data.map((item) => item.sales)));
   }, [data]);
 
   const yAxisTicks = useMemo(() => {
-    return Array.from({ length: maxSales + 10}, (_, i) => i);
+    return Array.from({ length: maxSales + 10 }, (_, i) => i);
   }, [maxSales]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -94,8 +91,15 @@ export default function SalesChart({ className, gold = false }) {
         }}
         className="h-full w-full"
       >
-        <ComposedChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 20 }}>
-          <CartesianGrid vertical={false} stroke="#e5e5e5" strokeDasharray="3 3" />
+        <ComposedChart
+          data={data}
+          margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
+        >
+          <CartesianGrid
+            vertical={false}
+            stroke="#e5e5e5"
+            strokeDasharray="3 3"
+          />
           <XAxis
             dataKey="date"
             axisLine={{ stroke: "#e5e5e5" }}
@@ -135,7 +139,12 @@ export default function SalesChart({ className, gold = false }) {
             stroke="#222"
             strokeWidth={2}
             dot={{ r: 4, fill: "#000000", stroke: "#000000", strokeWidth: 2 }}
-            activeDot={{ r: 6, fill: "#222", stroke: "#ffffff", strokeWidth: 2 }}
+            activeDot={{
+              r: 6,
+              fill: "#222",
+              stroke: "#ffffff",
+              strokeWidth: 2,
+            }}
           />
         </ComposedChart>
       </ChartContainer>

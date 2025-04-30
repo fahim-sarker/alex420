@@ -17,7 +17,7 @@ const UnderSelling = () => {
     <>
       <h2 className="text-xl font-semibold mt-10 mb-6">Under selling</h2>
       <section className="space-y-9">
-        <div className="grid grid-cols-3 gap-[22px]">
+        <div className="grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 gap-[22px]">
           <ProductSellCard
             onSelect={(index) => setGraph1(graph1 === index ? false : index)}
           />

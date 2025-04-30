@@ -30,14 +30,14 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
         console.error("Date or ID is not provided");
         return;
       }
-  
+
       const tokenData = JSON.parse(localStorage.getItem("usertoken"));
       const token = tokenData?.token;
       if (!token) {
         console.error("Token not found");
         return;
       }
-  
+
       try {
         const response = await axiosinstance.get(
           `/api/dashboard/bar/products/sales-statistics-chart?date=${selectdate}&product_id=${id}`,
@@ -57,10 +57,9 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
         console.error("Error fetching chartinfo data:", error);
       }
     };
-  
+
     handleChartInfo(selectedid);
   }, [selectdate, selectedid]);
-  
 
   return (
     <>
@@ -99,7 +98,7 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
           <GrowthIcon />
           <span className="text-[#00B69B] ">8.5% </span> Up from yesterday
         </p> */}
-            <p className="text-2xl font-semibold tracking-[0.668px]">
+            <p className="text-xl sm:text-2xl font-semibold tracking-[0.668px]">
               ${mostselling?.selling_price}
             </p>
           </div>
