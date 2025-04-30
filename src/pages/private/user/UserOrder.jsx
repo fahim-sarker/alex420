@@ -9,6 +9,7 @@ import DialogReceipt from "@/Components/CustomSection/DialogReceipt";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
+import useFetchData from "@/Components/Hooks/Api/UseFetchData";
 
 const UserOrder = () => {
   const [receipt, setReceipt] = useState(false);
@@ -159,6 +160,17 @@ const UserOrder = () => {
       ratings: "4.5",
     },
   ];
+  const userToken = JSON.parse(localStorage.getItem("usertoken"));
+  const token = userToken?.token;
+
+  const { data: userorder } = useFetchData(
+    "/api/dashboard/user/order/index",
+    token
+  );
+
+  console.log(userorder);
+  
+
 
   return (
     <section className="py-12 lg:pb-0">
@@ -177,38 +189,39 @@ const UserOrder = () => {
           modules={[Pagination]}
           className="!overflow-visible"
         >
-          {Array(12)
-            .fill(null)
-            .map((_, idx) => (
-              <SwiperSlide key={idx} className="!w-fit mb-12">
-                <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] min-w-[300px] sm:w-[350px] md:w-[420px] border border-[#C8C8C8]">
-                  <div className="left shrink-0">
-                    <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
-                      <img
-                        src="https://i.ibb.co.com/84S5d37z/bottole.png"
-                        alt=""
-                      />
-                    </figure>
+          {userorder?.data?.map((useritems,idx) => {
+            <SwiperSlide key={idx} className="!w-fit mb-12">
+              <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] min-w-[300px] sm:w-[350px] md:w-[420px] border border-[#C8C8C8]">
+                <div className="left shrink-0">
+                  <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
+                    <img
+                       src={
+                        useritems?.product?.image
+                          ? `${import.meta.env.VITE_BASE_URL}/${useritems?.product?.image}`
+                          : "/fallback.jpg"
+                      }
+                      alt=""
+                    />
+                  </figure>
+                </div>
+                <div className="right text-sm grow space-y-[14px]">
+                  <div>
+                    <h3 className="text-xl tracking-[0.6px] font-instrument mb-1 line-clamp-1">
+                      {useritems?.product?.name}
+                    </h3>
+                    <h3 className="text-xl font-semibold">${useritems?.product?.price}</h3>
                   </div>
-                  <div className="right text-sm grow space-y-[14px]">
-                    <div>
-                      <h3 className="text-xl tracking-[0.6px] font-instrument mb-1 line-clamp-1">
-                        Mouton Cadet Bordeaux Rouge
-                      </h3>
-                      <h3 className="text-xl font-semibold">$100.99</h3>
-                    </div>
-                    <p className="line-clamp-3 tracking-[0.42px] text-sm text-[#4E4E4E]">
-                      It was popularised in the 1960s with the release of
-                      Letraset sheets containing
-                    </p>
-                    <div className="flex justify-between">
-                      <p>Time : 8.00 PM</p>
-                      <p>Date : 12/12/2024</p>
-                    </div>
+                  <p className="line-clamp-3 tracking-[0.42px] text-sm text-[#4E4E4E]">
+                   {useritems?.prodduct?.description}
+                  </p>
+                  <div className="flex justify-between">
+                    <p>Time : {useritems?.prodduct?.time}</p>
+                    <p>Date : {useritems?.prodduct?.date}</p>
                   </div>
                 </div>
-              </SwiperSlide>
-            ))}
+              </div>
+            </SwiperSlide>;
+          })}
         </Swiper>
       </section>
 

@@ -91,7 +91,11 @@ const Navbar = () => {
             <div className="flex gap-x-2 pt-3 px-6 lg:px-0 lg:pt-0">
               {token && role ? (
                 <Link
-                  to="/bar-dashboard/profile-details"
+                  to={
+                    role === "user"
+                      ? "/user-dashboard/profile-details"
+                      : "/bar-dashboard/profile-details"
+                  }
                   className="flex items-center gap-2 leading-none text-black text-lg font-medium bg-[#DBA514] py-2 px-3 rounded-[4px]"
                 >
                   <img
@@ -105,7 +109,7 @@ const Navbar = () => {
                     alt="avatar"
                     className="size-[30px] rounded-full shrink-0 object-cover"
                   />
-                  <h3>{barprofileinfo?.data?.bar_name ?? "Bar"}</h3>
+                  <h3>{barprofileinfo?.data?.name ?? "Bar"}</h3>
                 </Link>
               ) : (
                 <>

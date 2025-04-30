@@ -36,14 +36,15 @@ const PurchaseCost = () => {
     "/api/dashboard/bar/products/total-added-today",
     token
   );
+  
 
   const inventoryData = purchaseitem?.data;
-  console.log(inventoryData);
+  console.log(inventoryData,"it");
   
 
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(inventoryData);
+  const [filteredData, setFilteredData] = useState();
 
   useEffect(() => {
     const searchString = searchQuery?.toLowerCase()?.trim();
@@ -67,6 +68,9 @@ const PurchaseCost = () => {
       setFilteredData(filtered);
     }
   }, [searchQuery]);
+  console.log(filteredData);
+  
+  
 
   const { selectdate, setSelectdate } = useContext(MainContext);
   const [date, setDate] = useState(new Date());
@@ -264,3 +268,5 @@ const PurchaseCost = () => {
 };
 
 export default PurchaseCost;
+
+

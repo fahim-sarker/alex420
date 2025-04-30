@@ -1,8 +1,11 @@
-/* eslint-disable react/no-unknown-property */
-
-/* eslint-disable react/no-unknown-property */
 import { useEffect, useState } from "react";
 import Container from "../../Shared/Container";
+import { Label } from "../ui/label";
+import { Popover } from "../ui/popover";
+import { Button } from "../ui/button";
+import { CalenderIcon } from "@/assets/icons/icons";
+import { ClockIcon } from "lucide-react";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import Checkout from "../Popup/Checkout";
 import useFetchData from "../Hooks/Api/UseFetchData";
@@ -11,8 +14,6 @@ import { useDispatch } from "react-redux";
 import { setOrderDetails } from "../Slice/Productslice";
 import useAxios from "../Hooks/Api/UseAxios";
 import ReactPaginate from "react-paginate";
-import { PuffLoader } from "react-spinners";
-import Modal from "../CustomSection/Modal";
 
 const Drinks = ({ receipt, setReceipt, barId }) => {
   const [selectedDrinkId, setSelectedDrinkId] = useState(null);
@@ -40,7 +41,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     error,
     isLoading,
   } = useFetchData(`/api/bar/${barId?.barId}/products`);
-  // console.log(products);
+  console.log(products);
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {

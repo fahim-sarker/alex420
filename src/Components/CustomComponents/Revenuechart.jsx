@@ -10,8 +10,8 @@ import {
   LabelList,
   ResponsiveContainer,
 } from "recharts";
-import axios from "axios";
 import { MainContext } from "../Context/ChartInfoContext";
+import useAxios from "../Hooks/Api/UseAxios";
 
 const renderCustomizedLabel = ({ x, y, width, value }) => {
   const radius = 10;
@@ -52,44 +52,40 @@ const CustomTooltip = ({ active, payload, label }) => {
 const RevenueChart = () => {
   const [data, setData] = useState([]);
   const { selectdate } = useContext(MainContext);
+  const Axios = useAxios();
 
   const tokenData = JSON.parse(localStorage.getItem("usertoken"));
   const token = tokenData?.token;
 
   useEffect(() => {
-    const fetchRevenueByMonth = async () => {
+    const fetchRevenue = async () => {
       const dateObj = selectdate ? new Date(selectdate) : new Date();
       const year = dateObj.getFullYear();
-      const month = dateObj.getMonth(); 
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const dateStr = `${year}-${month}-01`;
 
-      const requests = Array.from({ length: daysInMonth }, (_, i) => {
-        const day = String(i + 1).padStart(2, "0");
-        const monthStr = String(month + 1).padStart(2, "0");
-        const dateStr = `${year}-${monthStr}-${day}`;
-
-        return axios
-          .get(`/api/dashboard/bar/products/revenue-stats-chart?date=${dateStr}`, {
+      try {
+        const res = await Axios.get(
+          `/api/dashboard/bar/products/revenue-stats-chart?date=${dateStr}`,
+          {
             headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((res) => {
-            const revenue = res.data?.data?.revenue || 0;
-            return {
-              name: `${day} ${dateObj.toLocaleString("default", { month: "short" })}`,
-              revenue,
-            };
-          })
-          .catch(() => ({
-            name: `${day} ${dateObj.toLocaleString("default", { month: "short" })}`,
-            revenue: 0,
-          }));
-      });
+          }
+        );
 
-      const results = await Promise.all(requests);
-      setData(results);
+        const dailyData = res.data?.data?.daily_revenue || [];
+        const formatted = dailyData.map((item) => ({
+          name: item.date,
+          revenue: item.total_revenue,
+        }));
+
+        setData(formatted);
+      } catch (error) {
+        console.error("Failed to fetch revenue data:", error);
+        setData([]);
+      }
     };
 
-    fetchRevenueByMonth();
+    fetchRevenue();
   }, [selectdate, token]);
 
   return (
@@ -97,7 +93,7 @@ const RevenueChart = () => {
       <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis  tickFormatter={(value) => `$${(value / 1)}k`} />
+        <YAxis tickFormatter={(value) => `$${(value / 1)}k`} />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Bar dataKey="revenue" fill="#DBA514" minPointSize={10}>

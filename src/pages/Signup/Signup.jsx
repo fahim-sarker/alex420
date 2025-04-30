@@ -206,7 +206,7 @@ const Signup = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="flex justify-center items-center gap-2 py-4 px-6 mt-10 rounded-lg bg-gradient-to-r from-[#DBA514] via-[#EEB609] to-[#FCC201] text-[#0E0E0E] font-semibold text-base tracking-wide w-full"
+                className="flex cursor-pointer justify-center items-center gap-2 py-4 px-6 mt-10 rounded-lg bg-gradient-to-r from-[#DBA514] via-[#EEB609] to-[#FCC201] text-[#0E0E0E] font-semibold text-base tracking-wide w-full"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
