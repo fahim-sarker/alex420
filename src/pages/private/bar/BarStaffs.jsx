@@ -378,7 +378,7 @@ const BarStaffs = () => {
                           : "https://i.ibb.co.com/fYcPSK0y/profile-2.png"
                       }
                       alt={staff.name}
-                      className="w-fit"
+                      className="w-fit h-[150px]"
                     />
                   </figure>
                 </div>
