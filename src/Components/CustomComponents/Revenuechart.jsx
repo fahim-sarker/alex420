@@ -89,11 +89,15 @@ const RevenueChart = () => {
   }, [selectdate, token]);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+    <div className="w-full overflow-x-auto">
+    <ResponsiveContainer width="100%" height={400} minWidth={300}>
+      <BarChart
+        data={data}
+        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
-        <YAxis tickFormatter={(value) => `$${(value / 1)}k`} />
+        <YAxis tickFormatter={(value) => `$${value}k`} />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
         <Bar dataKey="revenue" fill="#DBA514" minPointSize={10}>
@@ -101,6 +105,8 @@ const RevenueChart = () => {
         </Bar>
       </BarChart>
     </ResponsiveContainer>
+  </div>
+  
   );
 };
 

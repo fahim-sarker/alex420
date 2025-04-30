@@ -30,7 +30,7 @@ const ForgotPass = () => {
       console.log(response);
       toast.success("Password reset otp sent to your email");
       reset();
-      Navigate("/verify-code", { state: { email: data.email } });
+      Navigate("/verify-code", { state: { email: data.email } }); 
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }

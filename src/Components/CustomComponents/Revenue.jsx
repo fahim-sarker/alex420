@@ -77,8 +77,8 @@ const Revenue = ({ tabValue, setTabValue }) => {
         <TabsContent value="section1">
           <h2 className="text-xl font-semibold mt-10 mb-6">Revenue</h2>
           <section className="space-y-7">
-            <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-6 px-6 sm:py-8 sm:px-10 lg:py-10 lg:px-16 xl:px-20">
-              <div className="flex justify-between relative z-50">
+            <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-6 px-2 sm:py-8 sm:px-10 lg:py-10 lg:px-16 xl:px-20">
+              <div className="sm:flex justify-between relative z-50 mb-3 mx-2 sm:mx-0 sm:mb-0">
                 <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-6 sm:mb-8">
                   Total Revenue
                 </h3>

@@ -115,8 +115,8 @@ const BarSettings = () => {
           <AccordionItem value="item-1">
             <AccordionTrigger>My Package</AccordionTrigger>
             <AccordionContent>
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-                <p className="bg-[#FAFAFA] py-4 px-6 text-lg sm:text-xl font-medium w-full rounded-[6px]">
+              <div className="sm:flex justify-between gap-4 sm:gap-5">
+                <p className="bg-[#FAFAFA] py-4 px-6 text-lg sm:text-xl font-medium w-[390px] mb-2 sm:mb-0  rounded-[6px]">
                   Package: Premium
                 </p>
                 <button
