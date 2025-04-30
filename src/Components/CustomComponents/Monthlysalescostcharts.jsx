@@ -62,7 +62,7 @@ const Monthlysalescostcharts = () => {
       const dateObj = selectdate ? new Date(selectdate) : new Date();
       const year = dateObj.getFullYear();
       const month = String(dateObj.getMonth() + 1).padStart(2, "0");
-      const fullDate = `${year}-${month}-01`; 
+      const fullDate = `${year}-${month}-01`;
 
       try {
         const res = await Axios.get(
@@ -72,10 +72,11 @@ const Monthlysalescostcharts = () => {
           }
         );
 
-        const transformed = res.data?.data?.map((item) => ({
-          name: item.day,
-          revenue: item.total_cost,
-        })) || [];
+        const transformed =
+          res.data?.data?.map((item) => ({
+            name: item.day,
+            revenue: item.total_cost,
+          })) || [];
 
         setData(transformed);
       } catch (err) {
@@ -87,18 +88,25 @@ const Monthlysalescostcharts = () => {
   }, [selectdate, token]);
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis tickFormatter={(value) => `$${(value / 1000)}k`} />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="revenue" fill="#DBA514" minPointSize={10}>
-          <LabelList dataKey="name" content={renderCustomizedLabel} />
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <div className="w-full overflow-x-auto">
+      <div className="min-w-[400px] sm:min-w-full">
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={data}
+            margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis tickFormatter={(value) => `$${value / 1000}k`} />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend />
+            <Bar dataKey="revenue" fill="#DBA514" minPointSize={10}>
+              <LabelList dataKey="name" content={renderCustomizedLabel} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 };
 
