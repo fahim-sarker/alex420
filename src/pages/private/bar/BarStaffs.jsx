@@ -96,7 +96,7 @@ const BarStaffs = () => {
 
   return (
     <section className="bg-[#F8F8FF] pt-12">
-      <section className="px-10 pb-16">
+      <section className="px-6 sm:px-10 pb-16">
         <h2 className="text-xl font-semibold mb-6">Add Staff</h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -120,7 +120,7 @@ const BarStaffs = () => {
 
             <label
               htmlFor="avatar"
-              className="cursor-pointer border border-[#DBA514] bg-white flex items-center justify-center w-[250px] h-[250px] rounded-full relative overflow-hidden
+              className="cursor-pointer border border-[#DBA514] bg-white flex items-center justify-center w-[220px] sm:w-[250px] h-[220px]  sm:h-[250px] rounded-full relative overflow-hidden
                "
             >
               {imageFile?.[0] ? (
@@ -366,7 +366,7 @@ const BarStaffs = () => {
         >
           {data?.data?.map((staff, idx) => (
             <SwiperSlide key={idx} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] flex gap-4 text-[#181818] p-[18px] rounded-[6px] w-[450px] border border-[#C8C8C8]">
+              <div className="bg-[#fafafa] flex gap-4 text-[#181818] p-[18px] rounded-[6px] w-[280px] sm:w-[450px] border border-[#C8C8C8]">
                 <div className="left shrink-0">
                   <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
                     <img

@@ -30,18 +30,18 @@ const ForgotPass = () => {
       console.log(response);
       toast.success("Password reset otp sent to your email");
       reset();
-     Navigate("/verify-code", { state: { email: data.email } });
+      Navigate("/verify-code", { state: { email: data.email } });
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <section className="bg-[#000]  h-screen flex items-center">
-      <Container className="py-[60px] rounded-[6px] font-poppins w-full">
-        <div className="flex gap-x-20 justify-between">
-          <div className="w-[40%]">
-            <h3 className="text-[30px] text-[#FFF] font-normal font-instrument">
+    <section className="bg-[#000] min-h-screen flex items-center">
+      <Container className="px-10 xl:px-0 py-[60px] rounded-[6px] font-poppins w-full">
+        <div className="flex flex-col-reverse lg:flex-row gap-y-10 lg:gap-x-20 justify-between items-center">
+          <div className="w-full lg:w-[40%]">
+            <h3 className="text-[30px] text-[#FFF] font-normal font-instrument text-center lg:text-left">
               Forgot Your <span className="text-[#EEB609]">Password?</span>
             </h3>
             <form
@@ -62,7 +62,7 @@ const ForgotPass = () => {
                   type="text"
                   placeholder="Enter your Email"
                   {...register("email", { required: "email is required" })}
-                  className="py-[10px] px-[14px] outline-none border border-[#DBA514]/30 rounded-[8px]  bg-[#232323] text-[#7A7A7A] text-[14px] font-normal w-full"
+                  className="py-[10px] px-[14px] outline-none border border-[#DBA514]/30 rounded-[8px] bg-[#232323] text-[#7A7A7A] text-[14px] font-normal w-full"
                 />
                 {errors.email && (
                   <span className="text-red-500 text-sm">
@@ -74,26 +74,26 @@ const ForgotPass = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[16 px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full mt-8"
+                  className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[16px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full mt-8"
                 >
                   {isSubmitting ? (
                     <PiSpinnerBold className="animate-spin size-[16px] fill-white" />
                   ) : (
-                    " Forgot Password"
+                    "Forgot Password"
                   )}
                 </button>
                 <button
-                  type="submit"
+                  type="button"
                   onClick={() => Navigate(-1)}
-                  className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-medium text-[16 px] rounded-lg border border-[#DBA514] backdrop-blur-[6.5px] text-white cursor-pointer tracking-[0.72px] w-full mt-4"
+                  className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-medium text-[16px] rounded-lg border border-[#DBA514] backdrop-blur-[6.5px] text-white cursor-pointer tracking-[0.72px] w-full mt-4"
                 >
                   Back
                 </button>
               </div>
             </form>
           </div>
-          <div className="">
-            <img src={Signupbg} alt="Signupbg" className="w-full" />
+          <div className="w-full lg:w-[60%]">
+            <img src={Signupbg} alt="Signupbg" className="w-full h-auto" />
           </div>
         </div>
       </Container>
