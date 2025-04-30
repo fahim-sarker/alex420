@@ -21,7 +21,7 @@ const BarDrinks = () => {
       {token && (
         <>
           <FeaturedDrinks barId={barId} receipt={receipt} setReceipt={setReceipt} />
-          <Premiumdrinks />
+          <Premiumdrinks barId={barId} receipt={receipt} setReceipt={setReceipt}/>
         </>
       )}
       <DialogReceipt receipt={receipt} setReceipt={setReceipt} />

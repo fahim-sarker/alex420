@@ -4,6 +4,7 @@ import {
   CartesianGrid,
   ComposedChart,
   Line,
+  ResponsiveContainer,
   XAxis,
   YAxis,
 } from "recharts";
@@ -81,7 +82,7 @@ export default function SalesChart({ className, gold = false }) {
   };
 
   return (
-    <div className={cn("w-full h-[380px] bg-white p-4", className)}>
+    <div className={cn("w-full h-[380px] bg-white py-4 sm:py-0 ", className)}>
       <ChartContainer
         config={{
           sales: {
@@ -91,62 +92,70 @@ export default function SalesChart({ className, gold = false }) {
         }}
         className="h-full w-full"
       >
-        <ComposedChart
-          data={data}
-          margin={{ top: 10, right: 10, left: 10, bottom: 20 }}
-        >
-          <CartesianGrid
-            vertical={false}
-            stroke="#e5e5e5"
-            strokeDasharray="3 3"
-          />
-          <XAxis
-            dataKey="date"
-            axisLine={{ stroke: "#e5e5e5" }}
-            tickLine={false}
-            dy={5}
-            interval={getTickInterval}
-            tick={{ fill: "#222" }}
-            style={{ fill: "#222", fontWeight: "500", fontSize: "13px" }}
-          />
-          <YAxis
-            axisLine={{ stroke: "#e5e5e5" }}
-            tickLine={false}
-            ticks={yAxisTicks}
-            tickFormatter={(value) => `${value}`}
-            domain={[0, maxSales]}
-            tick={{ fill: "#222" }}
-            style={{ fill: "#222", fontWeight: "500", fontSize: "13px" }}
-          />
-          <ChartTooltip cursor={true} content={<CustomTooltip />} />
-          <defs>
-            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="2.3%" stopColor="#DBA514" />
-              <stop offset="35.25%" stopColor="#EEB609" />
-              <stop offset="97.79%" stopColor="#FCC201" />
-            </linearGradient>
-          </defs>
-          <Bar
-            dataKey="sales"
-            fill={gold ? "url(#goldGradient)" : "#C8C8C8"}
-            radius={[4, 4, 0, 0]}
-            barSize={50}
-            maxBarSize={50}
-          />
-          <Line
-            type="linear"
-            dataKey="sales"
-            stroke="#222"
-            strokeWidth={2}
-            dot={{ r: 4, fill: "#000000", stroke: "#000000", strokeWidth: 2 }}
-            activeDot={{
-              r: 6,
-              fill: "#222",
-              stroke: "#ffffff",
-              strokeWidth: 2,
-            }}
-          />
-        </ComposedChart>
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart
+            data={data}
+            margin={{ top: 10, right: 10, left: -10, bottom: 10 }}
+          >
+            <CartesianGrid
+              vertical={false}
+              stroke="#e5e5e5"
+              strokeDasharray="3 3"
+            />
+            <XAxis
+              dataKey="date"
+              axisLine={{ stroke: "#e5e5e5" }}
+              tickLine={false}
+              dy={5}
+              interval={getTickInterval}
+              tick={{ fill: "#222" }}
+              style={{ fill: "#222", fontWeight: "500", fontSize: "13px" }}
+            />
+            <YAxis
+              axisLine={{ stroke: "#e5e5e5" }}
+              tickLine={false}
+              ticks={yAxisTicks}
+              tickFormatter={(value) => `${value}`}
+              domain={[0, maxSales]}
+              tick={{ fill: "#222" }}
+              style={{ fill: "#222", fontWeight: "500", fontSize: "13px" }}
+            />
+            <ChartTooltip cursor={true} content={<CustomTooltip />} />
+            <defs>
+              <linearGradient
+                id="goldGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="2.3%" stopColor="#DBA514" />
+                <stop offset="35.25%" stopColor="#EEB609" />
+                <stop offset="97.79%" stopColor="#FCC201" />
+              </linearGradient>
+            </defs>
+            <Bar
+              dataKey="sales"
+              fill={gold ? "url(#goldGradient)" : "#C8C8C8"}
+              radius={[4, 4, 0, 0]}
+              barSize={50}
+              maxBarSize={50}
+            />
+            <Line
+              type="linear"
+              dataKey="sales"
+              stroke="#222"
+              strokeWidth={2}
+              dot={{ r: 4, fill: "#000000", stroke: "#000000", strokeWidth: 2 }}
+              activeDot={{
+                r: 6,
+                fill: "#222",
+                stroke: "#ffffff",
+                strokeWidth: 2,
+              }}
+            />
+          </ComposedChart>
+        </ResponsiveContainer>
       </ChartContainer>
     </div>
   );

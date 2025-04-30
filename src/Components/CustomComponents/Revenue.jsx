@@ -79,7 +79,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
           <section className="space-y-7">
             <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-6 px-2 sm:py-8 sm:px-10 lg:py-10 lg:px-16 xl:px-20">
               <div className="sm:flex justify-between relative z-50 mb-3 mx-2 sm:mx-0 sm:mb-0">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-6 sm:mb-8">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-2 sm:mb-8">
                   Total Revenue
                 </h3>
                 <Popover>
@@ -249,7 +249,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                     <div key={item.id}>
                       <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
-                          <figure className="w-full sm:w-[135px] aspect-[3/2] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                          <figure className="w-full sm:w-[135px]  h-[180px] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
                             <img
                               src={
                                 item?.product?.image
@@ -329,7 +329,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                     <div key={item.id}>
                       <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
-                          <figure className="w-full sm:w-[135px] aspect-[3/2] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                          <figure className="w-full sm:w-[135px]  h-[180px] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
                             <img
                               src={
                                 item?.product?.image
@@ -409,7 +409,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
                     <div key={item.id}>
                       <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
-                          <figure className="w-full sm:w-[135px] aspect-[3/2] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
+                          <figure className="w-full sm:w-[135px]  h-[180px] sm:h-full mb-1.5 sm:mb-0 rounded-[6px] border border-[#C8C8C8] flex justify-center items-center overflow-hidden">
                             <img
                               src={
                                 item?.product?.image

@@ -90,23 +90,22 @@ const RevenueChart = () => {
 
   return (
     <div className="w-full overflow-x-auto">
-    <ResponsiveContainer width="100%" height={400} minWidth={300}>
-      <BarChart
-        data={data}
-        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis tickFormatter={(value) => `$${value}k`} />
-        <Tooltip content={<CustomTooltip />} />
-        <Legend />
-        <Bar dataKey="revenue" fill="#DBA514" minPointSize={10}>
-          <LabelList dataKey="name" content={renderCustomizedLabel} />
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
-  </div>
-  
+      <ResponsiveContainer width="100%" height={400} minWidth={300}>
+        <BarChart
+          data={data}
+          margin={{ top: 20, right: 30, left: 10, bottom: 10 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis tickFormatter={(value) => `$${value}k`} />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Bar dataKey="revenue" fill="#DBA514" minPointSize={10}>
+            <LabelList dataKey="name" content={renderCustomizedLabel} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

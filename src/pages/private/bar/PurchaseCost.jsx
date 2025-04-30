@@ -34,11 +34,8 @@ const PurchaseCost = () => {
     "/api/dashboard/bar/products/total-added-today",
     token
   );
-  
 
   const inventoryData = purchaseitem?.data;
-  
-  
 
   const { selectdate, setSelectdate } = useContext(MainContext);
   const [date, setDate] = useState(new Date());
@@ -53,7 +50,7 @@ const PurchaseCost = () => {
   return (
     <>
       <h2 className="text-xl font-semibold mt-10 mb-6">Purchase cost</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
         <div className="card w-full bg-[#FAFAFA] border border-[#C8C8C8] rounded-[7px] p-5 space-y-6">
           <h4 className="font-instrument  tracking-[0.668px] text-[22px]">
             Total Purchase Cost today
@@ -192,9 +189,9 @@ const PurchaseCost = () => {
           </div>
         </div>
       ) : (
-        <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-8 px-12">
-          <div className="flex justify-between relative z-50">
-            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins mb-6 sm:mb-8">
+        <section className="bg-[#F8F8FF] border border-[#DBA514] rounded-md overflow-hidden py-8 px-6 sm:px-12">
+          <div className="sm:flex justify-between relative z-50">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-poppins py-3 sm:py-0  sm:mb-8">
               Purchase cost
             </h3>
             <Popover>
@@ -234,5 +231,3 @@ const PurchaseCost = () => {
 };
 
 export default PurchaseCost;
-
-

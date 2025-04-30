@@ -14,8 +14,9 @@ import { useDispatch } from "react-redux";
 import { setOrderDetails } from "../Slice/Productslice";
 import useAxios from "../Hooks/Api/UseAxios";
 import ReactPaginate from "react-paginate";
+import { motion } from "framer-motion";
 
-const FeaturedDrinks = ({ receipt, setReceipt, barId }) => {
+const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
   const [selectedDrinkId, setSelectedDrinkId] = useState(null);
   const [selectedDrinkDetails, setSelectedDrinkDetails] = useState(null);
   const [popUp2, setPopUp2] = useState(false);
@@ -38,10 +39,11 @@ const FeaturedDrinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const {
-    data: products,
-  } = useFetchData(`/api/bar/${barId?.barId}/premium/products`,token);
-  console.log( 'drinks', products);
+  const { data: products } = useFetchData(
+    `/api/bar/${barId?.barId}/feature/products`,
+    token
+  );
+  console.log("drinks", products);
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -151,12 +153,23 @@ const FeaturedDrinks = ({ receipt, setReceipt, barId }) => {
 
   return (
     <>
-      <section className="bg-[#FFF] py-[100px]">
+      <section className="bg-[#000] py-[100px]">
         <Container>
-          <h3 className="text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
+          <h3 className="text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
             Feature Drinks
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">
+          <motion.div
+            className="bg-[#EEB608] h-[2px] mx-auto mt-2 mb-20"
+            initial={{ width: 0 }}
+            animate={{ width: "257px" }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative bg-black">
             {currentItems?.map((item, index) => (
               <div
                 key={index}
@@ -176,10 +189,10 @@ const FeaturedDrinks = ({ receipt, setReceipt, barId }) => {
                 <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
                   {item.category}
                 </h3>
-                <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
+                <h4 className="text-[16px] text-[#fff] font-normal py-[6px] leading-none grow">
                   {item.description}
                 </h4>
-                <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
+                <h5 className="text-[24px] text-[#fff] font-semibold py-[6px]">
                   ${item.selling_price}
                 </h5>
                 <div className="pb-3 flex gap-x-[10px]">
@@ -396,4 +409,4 @@ const FeaturedDrinks = ({ receipt, setReceipt, barId }) => {
   );
 };
 
-export default FeaturedDrinks;
+export default Premiumdrinks;
