@@ -1,5 +1,6 @@
 import TextWithReadMore from "@/Components/CustomComponents/TextWithReadMore";
 import SupportAccordion from "@/Components/CustomSection/SupportAccordion";
+import useAxios from "@/Components/Hooks/Api/UseAxios";
 import NotifyBtn from "@/Components/ui/CustomUi/NotifyBtn";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
@@ -10,21 +11,56 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const BarSettings = () => {
-  const [formData, setFormData] = useState({
-    issue: "",
-    confirmPassword: "",
-  });
 
-  const updateFormData = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const Axios = useAxios();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const [loading, setLoading] = useState(false);
+  const userToken = JSON.parse(localStorage.getItem("usertoken"));
+  const token = userToken?.token;
+  const Navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      await Axios.post(
+        `/api/account/delete`,
+        {
+          issue: data.issue,
+          password: data.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      toast.success("Account deactivation request sent.");
+      reset();
+      Navigate("/")
+      localStorage.removeItem("usertoken");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to deactivate account.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Data:", formData);
-  };
+
+
 
   const features = [
     {
@@ -162,7 +198,7 @@ const BarSettings = () => {
             <AccordionTrigger>Privacy policy</AccordionTrigger>
             <AccordionContent className="py-6 border border-[#C8C8C8] rounded-[4px] px-4 sm:px-6 lg:px-12">
               <TextWithReadMore wordLimit="170">
-                {/* Privacy content */}
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat magni quasi sit atque eius quibusdam architecto optio ratione accusantium impedit sed omnis asperiores neque quidem, id necessitatibus repudiandae commodi! Illum corrupti minus nam amet omnis deleniti incidunt quaerat aspernatur molestias vel impedit, dolorem, soluta veritatis voluptatum. Quasi tempora eius fugiat.
               </TextWithReadMore>
             </AccordionContent>
           </AccordionItem>
@@ -172,7 +208,7 @@ const BarSettings = () => {
             <AccordionTrigger>Terms & conditions</AccordionTrigger>
             <AccordionContent className="py-6 border border-[#C8C8C8] rounded-[4px] px-4 sm:px-6 lg:px-12">
               <TextWithReadMore wordLimit="220">
-                {/* Terms content */}
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, necessitatibus corrupti? Sit, dolor reprehenderit? Repudiandae cumque alias non quidem ea. Ea sed, asperiores inventore nihil libero tenetur harum aperiam impedit dolore vero, rem at. Maiores veniam eum consequatur nostrum exercitationem, in voluptates possimus aut ex optio doloribus voluptatem dolorum ipsam!
               </TextWithReadMore>
             </AccordionContent>
           </AccordionItem>
@@ -191,7 +227,7 @@ const BarSettings = () => {
             <AccordionContent>
               <form
                 className="mx-1 flex flex-col gap-5 items-center"
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="w-full">
                   <Label
@@ -203,34 +239,38 @@ const BarSettings = () => {
                   <Input
                     id="issue"
                     className="w-full h-[56px] bg-white"
-                    value={formData.issue}
-                    onChange={(e) => updateFormData("issue", e.target.value)}
+                    {...register("issue")}
                   />
                 </div>
 
                 <div className="w-full">
                   <Label
-                    htmlFor="confirm-password"
+                    htmlFor="password"
                     className="block mb-2 font-medium text-[#353B48]"
                   >
                     Confirm Password
                   </Label>
                   <Input
-                    id="confirm-password"
+                    id="password"
+                    type="password"
                     className="w-full h-[56px] bg-white"
-                    value={formData.confirmPassword}
-                    onChange={(e) =>
-                      updateFormData("confirmPassword", e.target.value)
-                    }
-                    required
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                   />
+                  {errors.confirmPassword && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
 
                 <button
                   type="submit"
+                  disabled={loading}
                   className="text-base sm:text-lg font-medium text-[#0E0E0E] cursor-pointer bg-gradient-to-r from-[#DBA514] via-[#EEB609] to-[#FCC201] py-3.5 px-7 rounded-[6px] w-full sm:w-[180px]"
                 >
-                  Deactivated
+                  {loading ? "Processing..." : "Deactivate"}
                 </button>
               </form>
             </AccordionContent>

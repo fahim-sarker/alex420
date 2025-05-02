@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 
 const items = [
-  { title: "Bar Name", id: "bar_name" },
+  { title: "Name", id: "User Name" },
   { title: "Email", id: "email" },
   // { title: "Password", id: "password" },
   { title: "Birthday", id: "dob" },
@@ -49,7 +49,7 @@ export default function UserProfileDetails() {
         const file = acceptedFiles[0];
         const imageUrl = URL.createObjectURL(file);
         setImagePreview(imageUrl);
-        setValue("avatar", file);
+        setValue("cover_photo", file);
       }
     },
     [setValue]
@@ -98,7 +98,7 @@ export default function UserProfileDetails() {
               <input {...getInputProps()} />
               <div className="size-[220px] rounded-full overflow-hidden border-2 border-gray-200 bg-gray-100 relative">
                 <img
-                  src={data?.data?.avatar ? imageFromAPI : imagePreview}
+                  src={data?.data?.cover_photo ? imageFromAPI : imagePreview}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />

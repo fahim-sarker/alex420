@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 const tabs = [
   {
     name: "Order",
-    link: "/bar-dashboard",
+    link: "/bar-dashboard/order",
   },
   {
     name: "Inventory",
@@ -63,7 +63,7 @@ const BarDashboardSideBar = () => {
   return (
     <section className="h-full">
       <div className="min-h-screen w-[280px] xl:w-[350px] bg-[#1f1b1b] px-8 xl:px-16 pb-20 pt-12  flex flex-col justify-between gap-12">
-        <Link to={"/bar-dashboard"}>
+        <Link to="/">
           {/* Show full title on larger screens only */}
           <h2 className="text-[#F1B906] text-3xl sm:text-4xl font-bold text-center hidden lg:block">
             Sipawayy

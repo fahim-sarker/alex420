@@ -9,7 +9,7 @@ import BarDrinks from "../pages/BarDrinks/BarDrinks";
 import BarDashboardLayout from "../layout/BarDashboardLayout";
 import BarOrder from "@/pages/private/bar/BarOrder";
 import BarInventory from "@/pages/private/bar/BarInventory";
-import BarStaffs from "./../pages/private/bar/BarStaffs";
+import BarStaffs from "@/pages/private/bar/BarStaffs";
 import BarSettings from "@/pages/private/bar/BarSettings";
 import BarChats from "@/pages/private/bar/BarChats";
 import ProfileDetails from "@/pages/private/bar/ProfileDetails";
@@ -27,7 +27,7 @@ import VerifyCode from "@/pages/Forgot/VerifyCode";
 import ResetPass from "@/pages/Forgot/ResetPass";
 import Addtable from "@/pages/private/bar/Addtable";
 import PrivateRoute from "./PrivateRoute";
-
+import NotFound from "@/pages/Error.jsx/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -71,7 +71,7 @@ export const router = createBrowserRouter([
     ),
     errorElement: <Error />,
     children: [
-      { path: "", element: <BarOrder /> },
+      { path: "order", element: <BarOrder /> },
       { path: "inventory", element: <BarInventory /> },
       { path: "addtable", element: <Addtable /> },
       { path: "staffs", element: <BarStaffs /> },
@@ -100,5 +100,10 @@ export const router = createBrowserRouter([
         element: <UserProfileDetails />,
       },
     ],
+  },
+
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);

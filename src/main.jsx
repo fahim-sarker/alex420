@@ -15,9 +15,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <ChartInfoContext>
-        <Toaster position="top-right" />
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
+          <Toaster position="top-right" />
         </QueryClientProvider>
       </ChartInfoContext>
     </Provider>
