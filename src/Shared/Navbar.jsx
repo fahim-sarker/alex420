@@ -35,7 +35,7 @@ const Navbar = () => {
   return (
     <nav className="fixed w-full z-50">
       <Container>
-        <div className="mt-[20px] md:mt-[47px] rounded-[8px] font-ITCKabelStd border-[0.2px] border-[#DBA514]/30 bg-[rgba(42,46,53,0.8)] mx-3 px-6 py-2 flex justify-between items-center">
+        <div className="mt-[20px] lg:mt-[45px] rounded-[8px] font-ITCKabelStd border-[0.2px] border-[#DBA514]/30 bg-[rgba(42,46,53,0.8)] mx-3 px-6 py-2 flex justify-between items-center">
           <div className=" flex justify-between items-center w-full lg:w-auto">
             <Link to="/">
               <img src={Logo} alt="Logo" />
@@ -91,9 +91,7 @@ const Navbar = () => {
               {token && role ? (
                 <Link
                   to={
-                    role === "user"
-                      ? "/user-dashboard"
-                      : "/bar-dashboard/order"
+                    role === "user" ? "/user-dashboard" : "/bar-dashboard/order"
                   }
                   className="flex items-center gap-2 leading-none text-black text-lg font-medium bg-[#DBA514] py-2 px-3 rounded-[4px]"
                 >
@@ -113,7 +111,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <Link to="/login">
-                    <button className="flex justify-center items-center leading-none rounded-lg pb-3 xl:pb-0 px-5 sm:px-8 py-3 sm:py-4 border-[0.5px] border-[#DBA514]/30 bg-[rgba(78,78,78,0.24)] backdrop-blur-[18px] text-[#E9B20C] capitalize font-semibold text-[14px] cursor-pointer">
+                    <button className="flex justify-center items-center leading-none rounded-lg  px-5 sm:px-8 py-3 sm:py-4 border-[0.5px] border-[#DBA514]/30 bg-[rgba(78,78,78,0.24)] backdrop-blur-[18px] text-[#E9B20C] capitalize font-semibold text-[14px] cursor-pointer">
                       Login
                     </button>
                   </Link>

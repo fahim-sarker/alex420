@@ -36,10 +36,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const {
-    data: products,
-  } = useFetchData(`/api/bar/${barId?.barId}/products`);
-
+  const { data: products } = useFetchData(`/api/bar/${barId?.barId}/products`);
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -151,7 +148,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     <>
       <section className="bg-[#FFF] py-[100px]">
         <Container>
-          <h3 className="text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
+          <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
             Discover Our Drinks
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">

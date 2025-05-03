@@ -29,7 +29,7 @@ const BarDashboardNavBar = () => {
             <h4 className="">Notifications</h4>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[300px] md:w-[500px]"
+            className="w-[300px] md:w-[500px] mx-2 xl:mx-0"
             side="bottom"
             align="end"
           >

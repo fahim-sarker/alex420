@@ -18,7 +18,7 @@ const UserDashboardNavBar = () => {
 
   const imageFromAPI = `${import.meta.env.VITE_BASE_URL}/${data?.data?.avatar}`;
   return (
-    <section className="nav-bar px-4 md:px-10 py-4 md:py-7 bg-[#0F0F0F] w-full flex flex-wrap items-center justify-center md:justify-end gap-4 md:gap-8 sticky top-0 z-10">
+    <section className="nav-bar px-3 md:px-10 py-4 lg:py-7 bg-[#0F0F0F] w-full flex flex-wrap items-center justify-center lg:justify-end gap-4 md:gap-8 sticky top-0 z-10">
       <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-white text-sm md:text-lg font-medium">
         {/* Notifications */}
         <DropdownMenu>
@@ -29,7 +29,7 @@ const UserDashboardNavBar = () => {
             <h4>Notifications</h4>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[300px] md:w-[500px]"
+            className="w-[300px] md:w-[500px] mx-2 xl:mx-0"
             side="bottom"
             align="end"
           >

@@ -3,7 +3,7 @@ import Logo from "../assets/images/Logo/Sipawayy.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#181818] pt-[90px] lg:pt-[141px] pb-[66px] lg:pb-[96px] pl-3 px-3">
+    <footer className="bg-[#181818] pt-[90px] lg:pt-[141px] pb-[66px] lg:pb-[96px] px-4 xl:px-3">
       <Container>
         <div className="flex flex-wrap justify-between sm:w-[95%] mx-auto lg:w-full gap-y-12 pb-[87px] border-b border-[#B5B5B5]">
           <div className="w-full md:w-[45%] lg:w-auto">
@@ -12,7 +12,7 @@ const Footer = () => {
             </figure>
             <p className="text-[16px] font-normal text-[#FFF] pt-[10px] pb-5 max-w-[310px]">
               Sed sit amet nisl in velit viverra bibendum in ac nisi. Etia
-              efficitur dui vitae sem rutrum, id pretium nunc varius. Vestibulum
+              efficitur dui vitae sem rutrum, id pretium nunc varius. Vestibulum 
               hendrerit malesuada .
             </p>
             <div className="flex gap-x-5">

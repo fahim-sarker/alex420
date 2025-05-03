@@ -39,10 +39,11 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const {
-    data: products,
-  } = useFetchData(`/api/bar/${barId?.barId}/premium/products`,token);
-  console.log( 'drinks', products);
+  const { data: products } = useFetchData(
+    `/api/bar/${barId?.barId}/premium/products`,
+    token
+  );
+  console.log("drinks", products);
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -154,20 +155,20 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
     <>
       <section className="bg-[#000] py-[100px]">
         <Container>
-          <h3 className="text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
+          <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
             Premium Drinks
           </h3>
           <motion.div
-          className="bg-[#EEB608] h-[2px] mx-auto mt-2 mb-20"
-          initial={{ width: 0 }}
-          animate={{ width: "257px" }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-          }}
-        />
+            className="bg-[#EEB608] h-[2px] mx-auto mt-2 mb-20"
+            initial={{ width: 0 }}
+            animate={{ width: "257px" }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative bg-black">
             {currentItems?.map((item, index) => (
               <div

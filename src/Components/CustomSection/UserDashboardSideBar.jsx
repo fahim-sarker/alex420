@@ -59,7 +59,7 @@ const UserDashboardSideBar = () => {
 
   return (
     <section className="h-full">
-      <div className="min-h-screen w-[350px] bg-[#1f1b1b] px-16 pb-20 pt-12  flex flex-col justify-between gap-8">
+      <div className="min-h-screen w-[280px] xl:w-[350px] bg-[#1f1b1b] px-8 xl:px-16 pb-20 pt-12  flex flex-col justify-between gap-8">
         <Link to={"/bar-dashboard"}>
           <h2 className="text-[#F1B906] text-4xl font-bold text-center hidden lg:block">
             Sipawayy

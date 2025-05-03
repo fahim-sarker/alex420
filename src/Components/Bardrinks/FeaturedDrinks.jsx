@@ -155,7 +155,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
     <>
       <section className="bg-[#000] py-[100px]">
         <Container>
-          <h3 className="text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
+          <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
             Feature Drinks
           </h3>
           <motion.div
