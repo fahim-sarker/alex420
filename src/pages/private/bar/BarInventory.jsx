@@ -380,9 +380,9 @@ const BarInventory = () => {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Normal">Normal</SelectItem>
-                        <SelectItem value="Premium">Premium</SelectItem>
-                        <SelectItem value="Feature">Feature</SelectItem>
+                        <SelectItem value="normal">Normal</SelectItem>
+                        <SelectItem value="premium">Premium</SelectItem>
+                        <SelectItem value="feature">Feature</SelectItem>
                       </SelectContent>
                     </Select>
                     {errors.drink_type && (

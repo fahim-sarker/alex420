@@ -113,7 +113,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <Link to="/login">
-                    <button className="flex justify-center items-center leading-none rounded-lg px-5 sm:px-8 py-3 sm:py-4 border-[0.5px] border-[#DBA514]/30 bg-[rgba(78,78,78,0.24)] backdrop-blur-[18px] text-[#E9B20C] capitalize font-semibold text-[14px] cursor-pointer">
+                    <button className="flex justify-center items-center leading-none rounded-lg pb-3 xl:pb-0 px-5 sm:px-8 py-3 sm:py-4 border-[0.5px] border-[#DBA514]/30 bg-[rgba(78,78,78,0.24)] backdrop-blur-[18px] text-[#E9B20C] capitalize font-semibold text-[14px] cursor-pointer">
                       Login
                     </button>
                   </Link>
