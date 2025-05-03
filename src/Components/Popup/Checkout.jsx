@@ -33,7 +33,7 @@ const Checkout = ({ setPopUp2, setReceipt }) => {
     }
 
     const orderData = {
-      table_id: 1,
+      table_id: orderDetails.table_id,
       product_id: orderDetails.id,
       quantity: orderDetails.quantity,
       price: orderDetails.selling_price,

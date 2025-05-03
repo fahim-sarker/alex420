@@ -57,13 +57,13 @@ const Bararea = () => {
           <h3 className="text-[32px] sm:text-[36px] md:text-[40px] lg:text-[48px] font-normal font-instrument text-[#000] leading-none">
             Bars in your area
           </h3>
-          <div className="w-full sm:w-[80%] md:w-[70%] lg:max-w-[392px] relative">
+          {/* <div className="w-full sm:w-[80%] md:w-[70%] lg:max-w-[392px] relative">
             <input
               type="text"
               placeholder="Search here"
               className="px-[20px] sm:px-[25px] md:px-[33px] py-4 sm:py-5 border border-[#DBA514] rounded-[8px] outline-none w-full"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="relative min-h-[500px]">

@@ -155,6 +155,11 @@ const BarInventory = () => {
     mutation.mutate(data);
   };
 
+  const { data: stafflist } = useFetchData(
+    "/api/dashboard/bar/staff/index",
+    token
+  );
+
   const handleqrcode = () => {};
 
   return (
@@ -343,9 +348,11 @@ const BarInventory = () => {
                         <SelectValue placeholder="Select assignee" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="1">John Doe</SelectItem>
-                        <SelectItem value="2">Jane Smith</SelectItem>
-                        <SelectItem value="3">Alex Johnson</SelectItem>
+                        {stafflist?.data?.map((item) => (
+                          <SelectItem key={item.id} value={item.id.toString()}>
+                            {item.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     {errors.assignedBy && (
@@ -615,9 +622,9 @@ const BarInventory = () => {
         >
           {data?.data?.map((product, idx) => (
             <SwiperSlide key={idx} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] sm:flex gap-5 xl:gap-4 text-[#181818] p-[18px] rounded-[6px] w-full sm:w-[350px] xl:w-[450px] h-[380px] sm:h-full border border-[#C8C8C8]">
-                <div className="left shrink-0">
-                  <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
+              <div className="bg-[#fafafa] sm:flex gap-5 xl:gap-4 text-[#181818] p-[18px] rounded-[6px] w-full sm:w-[350px] xl:w-[450px] h-full border border-[#C8C8C8] flex">
+                <div className="left flex-1 shrink-0 h-full">
+                  <figure className="rounded-[6px] border border-[#C8C8C8] overflow-hidden h-[250px]">
                     <img
                       src={
                         product.image
@@ -625,11 +632,11 @@ const BarInventory = () => {
                           : "https://i.ibb.co.com/fYcPSK0y/profile-2.png"
                       }
                       alt={product.name}
-                      className="w-fit px-4"
+                      className="h-full object-center w-full"
                     />
                   </figure>
                 </div>
-                <div className="right text-sm grow">
+                <div className="right text-sm flex-1 shrink-0">
                   <h3 className="text-xl font-instrument mb-1 line-clamp-1 tracking-[0.6px]">
                     {product.name}
                   </h3>

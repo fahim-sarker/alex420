@@ -21,6 +21,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
   const [popUp2, setPopUp2] = useState(false);
   const [input2, setInput2] = useState(1);
   const Axiosinstance = useAxios();
+  const [selectedTableId, setSelectedTableId] = useState("");
 
   const [formData, setFormData] = useState({
     date: undefined,
@@ -36,10 +37,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const {
-    data: products,
-  } = useFetchData(`/api/bar/${barId?.barId}/products`);
-
+  const { data: products } = useFetchData(`/api/bar/${barId?.barId}/products`);
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -106,6 +104,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
       totalPrice,
       shots_date: formattedDate,
       shots_time: formattedTime,
+      table_id: selectedTableId,
     };
 
     if (orderData) {
@@ -146,6 +145,13 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
     setItemOffset(newOffset);
   };
+  const tokenData = JSON.parse(localStorage.getItem("usertoken"));
+  const token = tokenData?.token;
+
+  const { data: tablelist } = useFetchData(
+    "/api/dashboard/bar/table/index",
+    token
+  );
 
   return (
     <>
@@ -241,12 +247,13 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                 ×
               </button>
               <div className="flex gap-x-8">
-                <div className="px-[38px] py-[15px] border border-[#DBA514] rounded-[6px]">
+                <div className="px-[38px] py-[15px] border border-[#DBA514] rounded-[6px] h-[250px]">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       selectedDrinkDetails.image
                     }`}
                     alt={selectedDrinkDetails.name}
+                    className="h-[200px]"
                   />
                 </div>
                 <div>
@@ -262,6 +269,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                       {selectedDrinkDetails.review}
                     </p>
                   </div>
+
                   <div className="flex gap-x-3 py-[6px]">
                     <input
                       type="number"
@@ -331,6 +339,21 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                         >
                           <option value="AM">AM</option>
                           <option value="PM">PM</option>
+                        </select>
+                      </div>
+                      <div className="mt-5">
+                        <h2>Table id :</h2>
+                        <select
+                          value={selectedTableId}
+                          onChange={(e) => setSelectedTableId(e.target.value)}
+                          className="px-2 py-3 border rounded-[4px] text-[#000] w-[135px] mt-2"
+                        >
+                          <option value="">Select Table</option>
+                          {tablelist?.data?.map((table) => (
+                            <option key={table.id} value={table.id}>
+                              {table.name}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </Label>

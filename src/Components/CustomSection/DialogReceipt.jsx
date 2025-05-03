@@ -60,7 +60,9 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
 
               <div className="flex flex-col items-center pb-2">
                 <img
-                  src="https://i.ibb.co.com/4nVfb732/download.png"
+                  src={`${import.meta.env.VITE_BASE_URL}/${
+                    orderDetails?.qrcode
+                  }`}
                   alt=""
                   className="mb-2 w-[220px] md:w-[260px] h-auto max-w-full"
                 />

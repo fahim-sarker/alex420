@@ -3,8 +3,7 @@ import { CiLocationOn } from "react-icons/ci";
 
 import "swiper/css";
 import "swiper/css/pagination";
-
-import { Pagination } from "swiper/modules";
+import Pagination from "@/Components/CustomComponents/Pagination";
 import DialogReceipt from "@/Components/CustomSection/DialogReceipt";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -167,65 +166,69 @@ const UserOrder = () => {
     "/api/dashboard/user/order/index",
     token
   );
-  console.log(userorder)
 
-  
+  console.log(userorder);
 
+  const itemsPerPage = 6;
+  const allItems = userorder?.data || [];
+  const [offsetAll, setOffsetAll] = useState(0);
+  const endOffsetAll = offsetAll + itemsPerPage;
+  const currentAllItems = allItems.slice(offsetAll, endOffsetAll);
+  const pageCountAll = Math.ceil(allItems.length / itemsPerPage);
+  const handlePageChangeAll = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % allItems.length;
+    setOffsetAll(newOffset);
+  };
 
   return (
     <section className="py-12 lg:pb-0">
-      
       <section className="px-4 sm:px-6 md:px-10 overflow-hidden pb-2.5 border-b">
         <h2 className="text-xl font-semibold mb-7">Order history</h2>
-        <Swiper
-          slidesPerView={"auto"}
-          centeredSlides={false}
-          spaceBetween={20}
-          pagination={{
-            clickable: true,
-            renderBullet: function (index, className) {
-              return `<span class="${className} custom-bullet"></span>`;
-            },
-          }}
-          modules={[Pagination]}
-          className="!overflow-visible"
-        >
-          {userorder?.data?.map((useritems,index)=>(
-            <SwiperSlide key={index} className="!w-fit mb-12">
-              <div className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] min-w-[300px] sm:w-[350px] md:w-[420px] border border-[#C8C8C8]">
-                <div className="left shrink-0">
-                  <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
-                    <img
-                       src={
-                        useritems?.product?.image
-                          ? `${import.meta.env.VITE_BASE_URL}/${useritems?.product?.image}`
-                          : "/fallback.jpg"
-                      }
-                      alt=""
-                    />
-                  </figure>
-                </div>
-                <div className="right text-sm grow space-y-[14px]">
-                  <div>
-                    <h3 className="text-xl tracking-[0.6px] font-instrument mb-1 line-clamp-1">
-                      {useritems?.product?.name}
-                    </h3>
-                    <h3 className="text-xl font-semibold">${useritems?.product?.price}</h3>
-                  </div>
-                  <p className="line-clamp-3 tracking-[0.42px] text-sm text-[#4E4E4E]">
-                   fdf{useritems?.prodduct?.description}
-                  </p>
-                  <div className="flex justify-between">
-                    <p>Time : {useritems?.prodduct?.shots_time}</p>
-                    <p>Date : {useritems?.prodduct?.shots_date}</p>
-                  </div>
-                </div>
+
+        {currentAllItems?.map((useritems, index) => (
+          <div
+            key={index}
+            className="bg-[#fafafa] flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] min-w-[300px] sm:w-[350px] md:w-[420px] border border-[#C8C8C8]"
+          >
+            <div className="left shrink-0">
+              <figure className="w-[135px] h-full rounded-[6px] border border-[#C8C8C8] flex justify-center items-center">
+                <img
+                  src={
+                    useritems?.product?.image
+                      ? `${import.meta.env.VITE_BASE_URL}/${
+                          useritems?.product?.image
+                        }`
+                      : "/fallback.jpg"
+                  }
+                  alt=""
+                />
+              </figure>
+            </div>
+            <div className="right text-sm grow space-y-[14px]">
+              <div>
+                <h3 className="text-xl tracking-[0.6px] font-instrument mb-1 line-clamp-1">
+                  {useritems?.product?.name}
+                </h3>
+                <h3 className="text-xl font-semibold">
+                  ${useritems?.product?.price}
+                </h3>
               </div>
-            </SwiperSlide>
-
-          ))}
-
-        </Swiper>
+              <p className="line-clamp-3 tracking-[0.42px] text-sm text-[#4E4E4E]">
+                fdf{useritems?.prodduct?.description}
+              </p>
+              <div className="flex justify-between">
+                <p>Time : {useritems?.prodduct?.shots_time}</p>
+                <p>Date : {useritems?.prodduct?.shots_date}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+        <Pagination
+          itemsLength={allItems.length}
+          itemsPerPage={itemsPerPage}
+          pageCount={pageCountAll}
+          onPageChange={handlePageChangeAll}
+        />
       </section>
 
       <section className="px-4 sm:px-6 md:px-10 overflow-hidden pb-9 border-b">
