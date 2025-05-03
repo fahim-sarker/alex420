@@ -39,7 +39,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
   const {
     data: products,
   } = useFetchData(`/api/bar/${barId?.barId}/products`);
-  console.log( 'drinks', products);
+
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {

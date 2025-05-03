@@ -23,43 +23,50 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      let response = await Axios.post("/api/login", data, {
+      const response = await Axios.post("/api/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
   
-      if (response.data?.data?.token) {
-        localStorage.setItem("usertoken", JSON.stringify(response.data.data));
-        localStorage.setItem("role", response.data.data.userData.role);
-        toast.success("Logged in successfully");
+      const tokenData = response?.data?.data;
   
-        const redirectPath = localStorage.getItem("redirectPath");
-        if (redirectPath) {
-          localStorage.removeItem("redirectPath");
-          navigate(redirectPath, { replace: true });
-        } else {
-          const role = response.data.data.userData.role;
-          switch (role) {
-            case "user":
-              navigate("/user-dashboard");
-              break;
-            case "bar_owner":
-              navigate("/bar-dashboard");
-              break;
-            default:
-              navigate("/");
-              break;
-          }
+      if (!tokenData?.token) {
+        throw new Error(response?.data?.message || "Invalid credentials");
+      }
+  
+      localStorage.setItem("usertoken", JSON.stringify(tokenData));
+      localStorage.setItem("role", tokenData.userData.role);
+      toast.success("Logged in successfully");
+  
+      const redirectPath = localStorage.getItem("redirectPath");
+      if (redirectPath) {
+        localStorage.removeItem("redirectPath");
+        navigate(redirectPath, { replace: true });
+      } else {
+        const role = tokenData.userData.role;
+        switch (role) {
+          case "user":
+            navigate("/user-dashboard");
+            break;
+          case "bar_owner":
+            navigate("/bar-dashboard/order");
+            break;
+          default:
+            navigate("/");
+            break;
         }
       }
   
       reset();
     } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data?.message || "Something went wrong");
+      console.error("Login Error:", error);
+      toast.error(
+        "Something went wrong"
+      );
     }
   };
+  
 
   return (
     <section className="bg-[#000] min-h-screen flex items-center py-10 px-3 sm:py-16">

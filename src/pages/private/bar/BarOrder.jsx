@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import useAxios from "@/Components/Hooks/Api/UseAxios";
 import { PuffLoader } from "react-spinners";
 import toast from "react-hot-toast";
+import jsPDF from "jspdf";
 
 const BarOrder = () => {
   const userToken = JSON.parse(localStorage.getItem("usertoken"));
@@ -39,6 +40,7 @@ const BarOrder = () => {
   const [directionorderedready, setDirectionorderedready] = useState(0);
   const [directionorderedreadyserved, setDirectionorderedreadyserved] =
     useState(0);
+
   const [
     directionorderedreadyservedreceipt,
     setDirectionorderedreadyservedreceipt,
@@ -146,6 +148,37 @@ const BarOrder = () => {
     }
   };
 
+  const handlePrintPDF = (item) => {
+    const doc = new jsPDF();
+    const product = item?.product;
+    let y = 20;
+
+    doc.setFontSize(18);
+    doc.text("Receipt", 20, y);
+    y += 10;
+
+    doc.setFontSize(12);
+    doc.text(`Product: ${product?.name || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Product ID: #${product?.id || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Payment Method: ${item?.payment_method || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Table: ${item?.table?.table_name || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Date: ${product?.date || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Time: ${product?.time || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Quantity: ${item?.quantity || "N/A"}`, 20, y);
+    y += 10;
+    doc.text(`Price: $${product?.selling_price || "N/A"}`, 20, y);
+    y += 10;
+
+    doc.text("Thank you for your order!", 20, y + 10);
+    doc.save(`receipt-${product?.name || "product"}.pdf`);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -224,49 +257,50 @@ const BarOrder = () => {
                 ))}
               </motion.div>
             </AnimatePresence>
-
-            <div className="flex justify-center items-center gap-2 flex-wrap my-2">
-              <button
-                disabled={currentPageordered === 1}
-                onClick={() => {
-                  setDirectionordered(-1);
-                  setCurrentPageordered((prev) => Math.max(prev - 1, 1));
-                }}
-                className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
-              >
-                Prev
-              </button>
-
-              {getPaginationGroupOrdered().map((page) => (
+            {paginatedDataordered?.length > 0 && (
+              <div className="flex justify-center items-center gap-2 flex-wrap my-2">
                 <button
-                  key={page}
+                  disabled={currentPageordered === 1}
                   onClick={() => {
-                    setDirectionordered(page > currentPageordered ? 1 : -1);
-                    setCurrentPageordered(page);
+                    setDirectionordered(-1);
+                    setCurrentPageordered((prev) => Math.max(prev - 1, 1));
                   }}
-                  className={`px-3 py-1 rounded border cursor-pointer ${
-                    currentPageordered === page
-                      ? "bg-[#DBA514] text-black"
-                      : "text-black border-[#DBA514]"
-                  }`}
+                  className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
                 >
-                  {page}
+                  Prev
                 </button>
-              ))}
 
-              <button
-                disabled={currentPageordered === totalPagesordered}
-                onClick={() => {
-                  setDirectionordered(1);
-                  setCurrentPageordered((prev) =>
-                    Math.min(prev + 1, totalPagesordered)
-                  );
-                }}
-                className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
-              >
-                Next
-              </button>
-            </div>
+                {getPaginationGroupOrdered().map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      setDirectionordered(page > currentPageordered ? 1 : -1);
+                      setCurrentPageordered(page);
+                    }}
+                    className={`px-3 py-1 rounded border cursor-pointer ${
+                      currentPageordered === page
+                        ? "bg-[#DBA514] text-black"
+                        : "text-black border-[#DBA514]"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  disabled={currentPageordered === totalPagesordered}
+                  onClick={() => {
+                    setDirectionordered(1);
+                    setCurrentPageordered((prev) =>
+                      Math.min(prev + 1, totalPagesordered)
+                    );
+                  }}
+                  className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </section>
 
           <section className="px-5 xl:px-8 overflow-hidden pb-2.5">
@@ -338,51 +372,52 @@ const BarOrder = () => {
                 ))}
               </motion.div>
             </AnimatePresence>
-
-            <div className="flex justify-center items-center gap-2 flex-wrap my-2">
-              <button
-                disabled={currentPageorderready === 1}
-                onClick={() => {
-                  setDirectionorderedready(-1);
-                  setCurrentPageorderready((prev) => Math.max(prev - 1, 1));
-                }}
-                className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
-              >
-                Prev
-              </button>
-
-              {getPaginationGroupReady().map((page) => (
+            {paginatedDataorderready?.length > 0 && (
+              <div className="flex justify-center items-center gap-2 flex-wrap my-2">
                 <button
-                  key={page}
+                  disabled={currentPageorderready === 1}
                   onClick={() => {
-                    setDirectionorderedready(
-                      page > currentPageorderready ? 1 : -1
-                    );
-                    setCurrentPageorderready(page);
+                    setDirectionorderedready(-1);
+                    setCurrentPageorderready((prev) => Math.max(prev - 1, 1));
                   }}
-                  className={`px-3 py-1 rounded border cursor-pointer ${
-                    currentPageorderready === page
-                      ? "bg-[#DBA514] text-black"
-                      : "text-black border-[#DBA514]"
-                  }`}
+                  className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
                 >
-                  {page}
+                  Prev
                 </button>
-              ))}
 
-              <button
-                disabled={currentPageorderready === totalPagesorderready}
-                onClick={() => {
-                  setDirectionorderedready(1);
-                  setCurrentPageorderready((prev) =>
-                    Math.min(prev + 1, totalPagesorderready)
-                  );
-                }}
-                className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
-              >
-                Next
-              </button>
-            </div>
+                {getPaginationGroupReady().map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      setDirectionorderedready(
+                        page > currentPageorderready ? 1 : -1
+                      );
+                      setCurrentPageorderready(page);
+                    }}
+                    className={`px-3 py-1 rounded border cursor-pointer ${
+                      currentPageorderready === page
+                        ? "bg-[#DBA514] text-black"
+                        : "text-black border-[#DBA514]"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  disabled={currentPageorderready === totalPagesorderready}
+                  onClick={() => {
+                    setDirectionorderedready(1);
+                    setCurrentPageorderready((prev) =>
+                      Math.min(prev + 1, totalPagesorderready)
+                    );
+                  }}
+                  className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </section>
 
           <section className="px-5 xl:px-8 overflow-hidden pb-2.5">
@@ -457,53 +492,56 @@ const BarOrder = () => {
                 ))}
               </motion.div>
             </AnimatePresence>
-
-            <div className="flex justify-center items-center gap-2 flex-wrap my-2">
-              <button
-                disabled={currentPageorderreadyserved === 1}
-                onClick={() => {
-                  setDirectionorderedreadyserved(-1);
-                  setCurrentPageorderreadyserved((prev) =>
-                    Math.max(prev - 1, 1)
-                  );
-                }}
-                className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
-              >
-                Prev
-              </button>
-
-              {getPaginationGroupReadyserved().map((page) => (
+            {paginatedDataorderreadyserved?.length > 0 && (
+              <div className="flex justify-center items-center gap-2 flex-wrap my-2">
                 <button
-                  key={page}
+                  disabled={currentPageorderreadyserved === 1}
                   onClick={() => {
-                    setDirectionorderedreadyserved(
-                      page > currentPageorderreadyserved ? 1 : -1
+                    setDirectionorderedreadyserved(-1);
+                    setCurrentPageorderreadyserved((prev) =>
+                      Math.max(prev - 1, 1)
                     );
-                    setCurrentPageorderreadyserved(page);
                   }}
-                  className={`px-3 py-1 rounded border cursor-pointer ${
-                    currentPageorderreadyserved === page
-                      ? "bg-[#DBA514] text-black"
-                      : "text-black border-[#DBA514]"
-                  }`}
+                  className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
                 >
-                  {page}
+                  Prev
                 </button>
-              ))}
 
-              <button
-                disabled={currentPageorderready === totalPagesorderreadyserved}
-                onClick={() => {
-                  setDirectionorderedreadyserved(1);
-                  setCurrentPageorderreadyserved((prev) =>
-                    Math.min(prev + 1, totalPagesorderreadyserved)
-                  );
-                }}
-                className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
-              >
-                Next
-              </button>
-            </div>
+                {getPaginationGroupReadyserved().map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      setDirectionorderedreadyserved(
+                        page > currentPageorderreadyserved ? 1 : -1
+                      );
+                      setCurrentPageorderreadyserved(page);
+                    }}
+                    className={`px-3 py-1 rounded border cursor-pointer ${
+                      currentPageorderreadyserved === page
+                        ? "bg-[#DBA514] text-black"
+                        : "text-black border-[#DBA514]"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  disabled={
+                    currentPageorderready === totalPagesorderreadyserved
+                  }
+                  onClick={() => {
+                    setDirectionorderedreadyserved(1);
+                    setCurrentPageorderreadyserved((prev) =>
+                      Math.min(prev + 1, totalPagesorderreadyserved)
+                    );
+                  }}
+                  className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </section>
 
           <section className="px-5 xl:px-8 overflow-hidden pb-2.5">
@@ -527,7 +565,7 @@ const BarOrder = () => {
                   (serveitems, index) => (
                     <div
                       key={index}
-                      className="bg-[#1f1f1f] sm:flex gap-6 xl:gap-2.5 text-white p-[22px] xl:p-[18px] rounded-[6px]  border border-[#C8C8C8]"
+                      className="bg-[#1f1f1f] sm:flex gap-6 xl:gap-2.5 text-white p-[22px] xl:p-[18px] rounded-[6px] border border-[#C8C8C8]"
                     >
                       <div className="left shrink-0">
                         <figure className="w-[238px] sm:w-[135px] h-[190px] sm:h-full mb-1.5 sm:mb-0 p-4 sm:p-0 rounded-[6px] border border-[#DBA514] flex justify-center items-center">
@@ -569,9 +607,9 @@ const BarOrder = () => {
                             ${serveitems?.product?.selling_price}
                           </h3>
                           <button
-                            onClick={() => handleservedpost(serveitems.id)}
+                            onClick={() => handlePrintPDF(serveitems)}
                             type="button"
-                            className={`hover:bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] capitalize  cursor-pointer border border-[#F1B906] block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-white hover:text-[#0E0E0E] transition-all duration-300 group`}
+                            className={`hover:bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] capitalize cursor-pointer border border-[#F1B906] block py-1.5 px-6 rounded-[6px] text-center text-lg font-medium leading-none tracking-[0.54px] text-white hover:text-[#0E0E0E] transition-all duration-300 group`}
                           >
                             print
                           </button>
@@ -582,56 +620,57 @@ const BarOrder = () => {
                 )}
               </motion.div>
             </AnimatePresence>
-
-            <div className="flex justify-center items-center gap-2">
-              <button
-                disabled={currentPageorderreadyservedreceipt === 1}
-                onClick={() => {
-                  setDirectionorderedreadyservedreceipt(-1);
-                  setCurrentPageorderreadyservedreceipt((prev) =>
-                    Math.max(prev - 1, 1)
-                  );
-                }}
-                className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
-              >
-                Prev
-              </button>
-
-              {getPaginationGroupReadyservedreceipt().map((page) => (
+            {paginatedDataorderreadyservedreceipt?.length > 0 && (
+              <div className="flex justify-center items-center gap-2">
                 <button
-                  key={page}
+                  disabled={currentPageorderreadyservedreceipt === 1}
                   onClick={() => {
-                    setDirectionorderedreadyservedreceipt(
-                      page > currentPageorderreadyservedreceipt ? 1 : -1
+                    setDirectionorderedreadyservedreceipt(-1);
+                    setCurrentPageorderreadyservedreceipt((prev) =>
+                      Math.max(prev - 1, 1)
                     );
-                    setCurrentPageorderreadyservedreceipt(page);
                   }}
-                  className={`px-3 py-1 rounded border cursor-pointer ${
-                    currentPageorderreadyservedreceipt === page
-                      ? "bg-[#DBA514] text-black"
-                      : "text-black border-[#DBA514]"
-                  }`}
+                  className="px-3 py-1 text-black cursor-pointer border border-[#DBA514] rounded disabled:opacity-30 hover:bg-black hover:text-white duration-300"
                 >
-                  {page}
+                  Prev
                 </button>
-              ))}
 
-              <button
-                disabled={
-                  currentPageorderreadyservedreceipt ===
-                  totalPagesorderreadyservedreceipt
-                }
-                onClick={() => {
-                  setDirectionorderedreadyservedreceipt(1);
-                  setCurrentPageorderreadyservedreceipt((prev) =>
-                    Math.min(prev + 1, totalPagesorderreadyservedreceipt)
-                  );
-                }}
-                className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
-              >
-                Next
-              </button>
-            </div>
+                {getPaginationGroupReadyservedreceipt().map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => {
+                      setDirectionorderedreadyservedreceipt(
+                        page > currentPageorderreadyservedreceipt ? 1 : -1
+                      );
+                      setCurrentPageorderreadyservedreceipt(page);
+                    }}
+                    className={`px-3 py-1 rounded border cursor-pointer ${
+                      currentPageorderreadyservedreceipt === page
+                        ? "bg-[#DBA514] text-black"
+                        : "text-black border-[#DBA514]"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  disabled={
+                    currentPageorderreadyservedreceipt ===
+                    totalPagesorderreadyservedreceipt
+                  }
+                  onClick={() => {
+                    setDirectionorderedreadyservedreceipt(1);
+                    setCurrentPageorderreadyservedreceipt((prev) =>
+                      Math.min(prev + 1, totalPagesorderreadyservedreceipt)
+                    );
+                  }}
+                  className="px-3 py-1 text-black border border-[#DBA514] rounded disabled:opacity-30 cursor-pointer hover:bg-black hover:text-white duration-300"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </section>
         </section>
       )}

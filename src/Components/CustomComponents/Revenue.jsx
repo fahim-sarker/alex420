@@ -15,7 +15,7 @@ import { CalendarIcon } from "lucide-react";
 import { MainContext } from "../Context/ChartInfoContext";
 import { Dateformatter } from "@/Shared/Dateformatter";
 import RevenueChart from "./Revenuechart";
-import ReactPaginate from "react-paginate";
+import Pagination from "./Pagination";
 
 const Revenue = ({ tabValue, setTabValue }) => {
   // const handleSubmit = (e) => {
@@ -48,6 +48,15 @@ const Revenue = ({ tabValue, setTabValue }) => {
     token
   );
 
+  const { data: paidorderlist } = useFetchData(
+    "/api/dashboard/bar/orders/today-paid-order-list",
+    token
+  );
+  const { data: handcashorderlist } = useFetchData(
+    "/api/dashboard/bar/orders/today-handcash-order-list",
+    token
+  );
+
   const { selectdate, setSelectdate } = useContext(MainContext);
   const [date, setDate] = useState(new Date());
 
@@ -59,16 +68,39 @@ const Revenue = ({ tabValue, setTabValue }) => {
   console.log(selectdate);
 
   const itemsPerPage = 6;
-  const items = servedata?.data || [];
-  const [itemOffset, setItemOffset] = useState(0);
+  const allItems = servedata?.data || [];
+  const paidItems = paidorderlist?.data || [];
+  const cashItems = handcashorderlist?.data || [];
 
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const [offsetAll, setOffsetAll] = useState(0);
+  const [offsetPaid, setOffsetPaid] = useState(0);
+  const [offsetCash, setOffsetCash] = useState(0);
 
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    setItemOffset(newOffset);
+  const endOffsetAll = offsetAll + itemsPerPage;
+  const endOffsetPaid = offsetPaid + itemsPerPage;
+  const endOffsetCash = offsetCash + itemsPerPage;
+
+  const currentAllItems = allItems.slice(offsetAll, endOffsetAll);
+  const currentPaidItems = paidItems.slice(offsetPaid, endOffsetPaid);
+  const currentCashItems = cashItems.slice(offsetCash, endOffsetCash);
+
+  const pageCountAll = Math.ceil(allItems.length / itemsPerPage);
+  const pageCountPaid = Math.ceil(paidItems.length / itemsPerPage);
+  const pageCountCash = Math.ceil(cashItems.length / itemsPerPage);
+
+  const handlePageChangeAll = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % allItems.length;
+    setOffsetAll(newOffset);
+  };
+
+  const handlePageChangePaid = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % paidItems.length;
+    setOffsetPaid(newOffset);
+  };
+
+  const handlePageChangeCash = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % cashItems.length;
+    setOffsetCash(newOffset);
   };
 
   return (
@@ -245,7 +277,7 @@ const Revenue = ({ tabValue, setTabValue }) => {
               </div>
               <TabsContent value="all">
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                  {currentItems.map((item) => (
+                  {currentAllItems.map((item) => (
                     <div key={item.id}>
                       <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
@@ -321,11 +353,17 @@ const Revenue = ({ tabValue, setTabValue }) => {
                       </div>
                     </div>
                   ))}
+                  <Pagination
+                    itemsLength={allItems.length}
+                    itemsPerPage={itemsPerPage}
+                    pageCount={pageCountAll}
+                    onPageChange={handlePageChangeAll}
+                  />
                 </div>
               </TabsContent>
               <TabsContent value="paid">
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                  {currentItems.map((item) => (
+                  {currentPaidItems.map((item) => (
                     <div key={item.id}>
                       <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
@@ -401,11 +439,17 @@ const Revenue = ({ tabValue, setTabValue }) => {
                       </div>
                     </div>
                   ))}
+                  <Pagination
+                    itemsLength={paidItems.length}
+                    itemsPerPage={itemsPerPage}
+                    pageCount={pageCountPaid}
+                    onPageChange={handlePageChangePaid}
+                  />
                 </div>
               </TabsContent>
               <TabsContent value="hand-cash">
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mt-8">
-                  {currentItems.map((item) => (
+                  {currentCashItems.map((item) => (
                     <div key={item.id}>
                       <div className="bg-[#fafafa] sm:flex gap-2.5 text-[#181818] p-[18px] rounded-[6px] border border-[#C8C8C8]">
                         <div className="left shrink-0">
@@ -481,26 +525,14 @@ const Revenue = ({ tabValue, setTabValue }) => {
                       </div>
                     </div>
                   ))}
-                </div>
-              </TabsContent>
-              {items.length > itemsPerPage && (
-                <div className="mt-8 flex justify-center flex-wrap">
-                  <ReactPaginate
-                    breakLabel="..."
-                    nextLabel="Next>"
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={3}
-                    pageCount={pageCount}
-                    previousLabel="<Prev"
-                    containerClassName="flex items-center gap-2"
-                    pageClassName="px-3 py-1 border rounded cursor-pointer"
-                    activeClassName="bg-black text-white"
-                    previousClassName="px-3 py-1 border rounded cursor-pointer"
-                    nextClassName="px-3 py-1 border rounded cursor-pointer"
-                    breakClassName="px-3 py-1"
+                  <Pagination
+                    itemsLength={cashItems.length}
+                    itemsPerPage={itemsPerPage}
+                    pageCount={pageCountCash}
+                    onPageChange={handlePageChangeCash}
                   />
                 </div>
-              )}
+              </TabsContent>
             </Tabs>
           </div>
         </TabsContent>

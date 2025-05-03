@@ -5,10 +5,10 @@ const TextWithReadMore = ({ children, wordLimit=100, ...props }) => {
   const text = children;
   return (
     <p {...props}>
-      {isExpanded ? text : text.slice(0, wordLimit) + "..."}{" "}
+      {isExpanded ? text : text?.slice(0, wordLimit) + "..."}{" "}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="text-[#DBA514]"
+        className="text-[#DBA514] cursor-pointer"
       >
         {isExpanded ? " Read less" : " Read more"}
       </button>

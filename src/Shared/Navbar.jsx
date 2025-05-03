@@ -92,8 +92,8 @@ const Navbar = () => {
                 <Link
                   to={
                     role === "user"
-                      ? "/user-dashboard/profile-details"
-                      : "/bar-dashboard/profile-details"
+                      ? "/user-dashboard"
+                      : "/bar-dashboard/order"
                   }
                   className="flex items-center gap-2 leading-none text-black text-lg font-medium bg-[#DBA514] py-2 px-3 rounded-[4px]"
                 >
@@ -108,7 +108,7 @@ const Navbar = () => {
                     alt="avatar"
                     className="size-[30px] rounded-full shrink-0 object-cover"
                   />
-                  <h3>{barprofileinfo?.data?.name ?? "Bar"}</h3>
+                  <h3>{barprofileinfo?.data?.name ?? ""}</h3>
                 </Link>
               ) : (
                 <>

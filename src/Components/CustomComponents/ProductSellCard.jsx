@@ -24,7 +24,7 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
     token
   );
 
-  const combinedData = most_selling?.data || under_selling || [];
+  const combinedData = most_selling?.data || under_selling?.data;
 
   useEffect(() => {
     const handleChartInfo = async (id) => {
@@ -54,13 +54,13 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
   }, [selectdate, selectedid]);
  
   const offset = currentPage * itemsPerPage;
-  const currentPageData = combinedData.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(combinedData.length / itemsPerPage);
+  const currentPageData = combinedData?.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(combinedData?.length / itemsPerPage);
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[22px]">
-        {currentPageData.map((mostselling, index) => (
+        {currentPageData?.map((mostselling, index) => (
           <div
             key={index}
             className={cn(
