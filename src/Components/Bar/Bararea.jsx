@@ -50,7 +50,6 @@ const Bararea = () => {
             Bars in your area
           </h3>
         </div>
-
         {isLoading ? (
           <div className="flex flex-wrap gap-4 justify-center sm:justify-between w-full px-3">
             {Array.from({ length: 12 }).map((_, i) => (
@@ -70,7 +69,9 @@ const Bararea = () => {
                       <img
                         src={
                           baritems?.cover_photo
-                            ? `${import.meta.env.VITE_BASE_URL}/${baritems.cover_photo}`
+                            ? `${import.meta.env.VITE_BASE_URL}/${
+                                baritems.cover_photo
+                              }`
                             : "/fallback.jpg"
                         }
                         alt={baritems?.name || "Bar Item"}
@@ -106,45 +107,46 @@ const Bararea = () => {
           </div>
         )}
 
-        {/* Pagination */}
-        <div className="mt-10 px-3">
-          <div className="flex items-center justify-center flex-wrap gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="px-4 py-2 bg-[#DBA514] text-white rounded-lg disabled:opacity-50 cursor-pointer"
-            >
-              Previous
-            </button>
+        {paginatedItems?.length > 0 && (
+          <div className="mt-10 px-3">
+            <div className="flex items-center justify-center flex-wrap gap-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-[#DBA514] text-white rounded-lg disabled:opacity-50 cursor-pointer"
+              >
+                Previous
+              </button>
 
-            <div className="hidden lg:flex gap-2">
-              {[...Array(totalPages)].map((_, index) => {
-                const page = index + 1;
-                return (
-                  <button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={`px-3 py-2 text-sm rounded-md cursor-pointer ${
-                      page === currentPage
-                        ? "bg-[#000] text-white"
-                        : "bg-gray-200 text-black"
-                    }`}
-                  >
-                    {page}
-                  </button>
-                );
-              })}
+              <div className="hidden lg:flex gap-2">
+                {[...Array(totalPages)].map((_, index) => {
+                  const page = index + 1;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`px-3 py-2 text-sm rounded-md cursor-pointer ${
+                        page === currentPage
+                          ? "bg-[#000] text-white"
+                          : "bg-gray-200 text-black"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-[#DBA514] text-white rounded-lg disabled:opacity-50 cursor-pointer"
+              >
+                Next
+              </button>
             </div>
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-[#DBA514] text-white rounded-lg disabled:opacity-50 cursor-pointer"
-            >
-              Next
-            </button>
           </div>
-        </div>
+        )}
       </Container>
     </section>
   );
