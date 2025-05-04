@@ -39,7 +39,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const { data: products } = useFetchData(
+  const { data: products, isLoading } = useFetchData(
     `/api/bar/${barId?.barId}/feature/products`,
     token
   );
@@ -138,7 +138,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
     );
   };
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
   const items = products?.data || [];
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -169,50 +169,61 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
               ease: "easeInOut",
             }}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative bg-black">
-            {currentItems?.map((item, index) => (
-              <div
-                key={index}
-                className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
-              >
-                <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
-                  <img
-                    src={
-                      item?.image
-                        ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
-                        : "/fallback.jpg"
-                    }
-                    alt={item.title}
-                    className="h-full object-center object-cover mx-auto duration-300 transition-all"
-                  />
-                </figure>
-                <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
-                  {item.category}
-                </h3>
-                <h4 className="text-[16px] text-[#fff] font-normal py-[6px] leading-none grow">
-                  {item.description}
-                </h4>
-                <h5 className="text-[24px] text-[#fff] font-semibold py-[6px]">
-                  ${item.selling_price}
-                </h5>
-                <div className="pb-3 flex gap-x-[10px]">
-                  {renderStars(item.review)}
-                  {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
+          {isLoading ? (
+            <div className="flex flex-wrap gap-4 justify-between w-full">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse bg-gray-200 rounded-md w-[380px]  h-[260px]"
+                ></div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative bg-black">
+              {currentItems?.map((item, index) => (
+                <div
+                  key={index}
+                  className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
+                >
+                  <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
+                    <img
+                      src={
+                        item?.image
+                          ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
+                          : "/fallback.jpg"
+                      }
+                      alt={item.title}
+                      className="h-full object-center object-cover mx-auto duration-300 transition-all"
+                    />
+                  </figure>
+                  <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
+                    {item.category}
+                  </h3>
+                  <h4 className="text-[16px] text-[#fff] font-normal py-[6px] leading-none grow">
+                    {item.description}
+                  </h4>
+                  <h5 className="text-[24px] text-[#fff] font-semibold py-[6px]">
+                    ${item.selling_price}
+                  </h5>
+                  <div className="pb-3 flex gap-x-[10px]">
+                    {renderStars(item.review)}
+                    {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
                     {item.review}
                   </p> */}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedDrinkId(item.id);
+                      setSelectedDrinkDetails(item);
+                    }}
+                    className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full"
+                  >
+                    Buy now
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    setSelectedDrinkId(item.id);
-                    setSelectedDrinkDetails(item);
-                  }}
-                  className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full"
-                >
-                  Buy now
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {items.length > itemsPerPage && (
             <div className="mt-8 flex justify-center">
