@@ -64,7 +64,7 @@ const UserPayment = () => {
 
   return (
     <section className="pt-12 px-4 sm:px-6 md:px-10">
-      <div className="w-full max-w-[850px] mx-auto">
+      <div className="w-full max-w-[850px] mx-auto xl:mx-0">
         <h2 className="text-xl md:text-3xl font-semibold mb-6">
           My Payment Method
         </h2>

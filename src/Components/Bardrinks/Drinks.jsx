@@ -37,9 +37,10 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const { data: products, isLoading } = useFetchData(
-    `/api/bar/${barId?.barId}/products`
-  );
+  const {
+    data: products,
+  } = useFetchData(`/api/bar/${barId?.barId}/products`);
+
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -159,50 +160,40 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
 
   return (
     <>
-      <section className="bg-[#FFF] py-[100px]">
+      <section className="bg-[#FFF] py-[50px] lg:py-[100px]">
         <Container>
-          <h3 className="text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
+          <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
             Discover Our Drinks
           </h3>
-          {isLoading ? (
-            <div className="flex flex-wrap gap-4 justify-between w-full">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="animate-pulse bg-gray-200 rounded-md w-[380px]  h-[260px]"
-                ></div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">
-              {currentItems?.map((item, index) => (
-                <div
-                  key={index}
-                  className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
-                >
-                  <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
-                    <img
-                      src={
-                        item?.image
-                          ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
-                          : "/fallback.jpg"
-                      }
-                      alt={item.title}
-                      className="h-full object-center object-cover mx-auto duration-300 transition-all"
-                    />
-                  </figure>
-                  <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
-                    {item.category}
-                  </h3>
-                  <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
-                    {item.description}
-                  </h4>
-                  <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
-                    ${item.selling_price}
-                  </h5>
-                  <div className="pb-3 flex gap-x-[10px]">
-                    {renderStars(item.review)}
-                    {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">
+            {currentItems?.map((item, index) => (
+              <div
+                key={index}
+                className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
+              >
+                <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
+                  <img
+                    src={
+                      item?.image
+                        ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
+                        : "/fallback.jpg"
+                    }
+                    alt={item.title}
+                    className="h-full object-center object-cover mx-auto duration-300 transition-all"
+                  />
+                </figure>
+                <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
+                  {item.category}
+                </h3>
+                <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
+                  {item.description}
+                </h4>
+                <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
+                  ${item.selling_price}
+                </h5>
+                <div className="pb-3 flex gap-x-[10px]">
+                  {renderStars(item.review)}
+                  {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
                     {item.review}
                   </p> */}
                   </div>
@@ -242,18 +233,18 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
 
         {selectedDrinkDetails && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4"
             onClick={() => {
               setSelectedDrinkId(null);
               setSelectedDrinkDetails(null);
             }}
           >
             <div
-              className="bg-white pt-[30px] pb-[40px] pl-[58px] pr-[91px] rounded-lg relative  z-50 h-[850px] w-[700px]"
+              className="bg-white pt-[38px] pb-[40px] px-6 sm:px-8 md:pl-[58px] md:pr-[91px] rounded-lg relative z-50 w-full max-w-[700px] max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-4 right-4 text-2xl font-bold cursor-pointer"
+                className="absolute top-1.5 md:top-4 right-4 text-xl md:text-2xl font-bold cursor-pointer"
                 onClick={() => {
                   setSelectedDrinkId(null);
                   setSelectedDrinkDetails(null);
@@ -262,13 +253,12 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                 ×
               </button>
               <div className="flex gap-x-8">
-                <div className="px-[38px] py-[15px] border border-[#DBA514] rounded-[6px] h-[200px]">
+                <div className="px-[38px] py-[15px] border border-[#DBA514] rounded-[6px]">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       selectedDrinkDetails.image
                     }`}
                     alt={selectedDrinkDetails.name}
-                    className="h-[150px]"
                   />
                 </div>
                 <div>
@@ -284,7 +274,6 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                       {selectedDrinkDetails.review}
                     </p>
                   </div>
-
                   <div className="flex gap-x-3 py-[6px]">
                     <input
                       type="number"
@@ -306,7 +295,8 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                   </p>
                 </div>
               </div>
-              <div className="pl-[30px]">
+
+              <div className="pl-0 lg:pl-[30px]">
                 <h3 className="text-[#0E0E0E] text-[24px] font-normal font-instrument pt-[20px]">
                   Shots Time
                 </h3>
@@ -326,7 +316,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                         Time
                         <ClockIcon className="size-6 text-[#4E4E4E] opacity-90" />
                       </span>
-                      <div className="flex gap-x-1 items-center h-[35px] bg-white rounded-md border border-input w-[225px]">
+                      <div className="flex gap-x-1 items-center h-[35px] bg-white rounded-md border border-input w-full max-w-[225px]">
                         <input
                           type="number"
                           placeholder="00"
@@ -411,7 +401,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
               <div className="flex justify-center mt-[50px]">
                 <button
                   onClick={handleBtn}
-                  className="py-[18px] px-[90px] text-[18px] cursor-pointer rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] text-[#0E0E0E] font-semibold"
+                  className="py-[18px] px-[60px] md:px-[90px] text-[18px] cursor-pointer rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] text-[#0E0E0E] font-semibold"
                 >
                   Order Now
                 </button>

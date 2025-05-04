@@ -60,7 +60,7 @@ const Customer = () => {
                     For Customers
                   </a>
                 </div>
-                <h3 className="text-[28px] md:text-[48px] text-[#FFF] font-normal font-instrument pt-7 pb-10 text-center capitalize">
+                <h3 className="text-[25px] md:text-[48px] mx-4 md:mx-0 text-[#FFF] font-normal font-instrument pt-7 pb-10  text-center capitalize">
                   Indulge in a seamless experience with
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-6.5 w-full mx-auto">
@@ -106,7 +106,7 @@ const Customer = () => {
                     For Bar owners
                   </a>
                 </div>
-                <h3 className="text-[25px] md:text-[48px] sm:mx-4 md:mx-0 text-[#FFF] font-normal font-instrument pt-7 pb-10 text-center capitalize">
+                <h3 className="text-[25px] md:text-[48px] mx-3 md:mx-0 text-[#FFF] font-normal font-instrument pt-7 pb-10 text-center capitalize">
                   Empower Your Business With Tools Designed For Success
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-4 w-full mx-auto">

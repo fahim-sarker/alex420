@@ -34,20 +34,20 @@ const SupportAccordion = () => {
         ))}
       </Accordion>
 
-      <div className=" flex items-center justify-center gap-10 mt-5">
+      <div className=" sm:flex items-center justify-center gap-10 mt-5">
         {itemsCount === 3 && (
           <button
             type="button"
-            className="text-lg font-medium text-[#0E0E0E] cursor-pointer bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px] w-[180px]"
+            className="text-lg font-medium text-[#0E0E0E] cursor-pointer bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 mb-2 sm:mb-0 rounded-[6px] w-full sm:w-[180px]"
             onClick={() => setItemsCount(console.log(items.length))}
           >
             See all
           </button>
         )}
-        <Link to='/contact'>
+        <Link to="/contact">
           <button
             type="button"
-            className="text-lg font-medium text-[#0E0E0E] cursor-pointer bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px] w-[180px]"
+            className="text-lg font-medium text-[#0E0E0E] cursor-pointer bg-[linear-gradient(92deg,#DBA514_2.3%,#EEB609_35.25%,#FCC201_97.79%)] py-3.5 px-7 rounded-[6px] w-full sm:w-[180px]"
           >
             Contact
           </button>
