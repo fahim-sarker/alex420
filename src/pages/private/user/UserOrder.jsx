@@ -27,7 +27,7 @@ const UserOrder = () => {
   );
 
   // Order pagination logic
-  const orderItemsPerPage = 1;
+  const orderItemsPerPage = 16;
   const orderAllItems = userorder?.data || [];
   const [orderOffset, setOrderOffset] = useState(0);
   const orderEndOffset = orderOffset + orderItemsPerPage;
@@ -40,7 +40,7 @@ const UserOrder = () => {
   };
 
   // Nearby Bars pagination logic
-  const barItemsPerPage = 1;
+  const barItemsPerPage = 16;
   const barAllItems = advertise?.data || [];
   const [barOffset, setBarOffset] = useState(0);
   const barEndOffset = barOffset + barItemsPerPage;
@@ -118,7 +118,7 @@ const UserOrder = () => {
                     <p className="line-clamp-3 tracking-[0.42px] text-sm text-[#4E4E4E]">
                       {useritems?.product?.description}
                     </p>
-                    <div className="flex justify-between">
+                    <div className="flex flex-col justify-between">
                       <p>Time : {useritems?.shots_time}</p>
                       <p>Date : {useritems?.shots_date}</p>
                       <p>quantity :{useritems?.quantity}</p>
@@ -153,10 +153,10 @@ const UserOrder = () => {
           </div>
         ) : (
           <>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
               {currentBarItems.map((item, index) => (
                 <Link key={index} to="/bar">
-                  <div className="min-w-[280px] sm:w-[340px] md:w-[393px] group rounded-[4px] border-2 border-[#DBA514] flex flex-col group cursor-pointer">
+                  <div className=" group rounded-[4px] border-2 border-[#DBA514] flex flex-col group cursor-pointer">
                     <img
                       src={
                         item?.cover_photo

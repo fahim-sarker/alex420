@@ -37,11 +37,9 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     }));
   };
 
-  const {
-    data: products,
-    isLoading
-  } = useFetchData(`/api/bar/${barId?.barId}/products`);
-
+  const { data: products, isLoading } = useFetchData(
+    `/api/bar/${barId?.barId}/products`
+  );
 
   useEffect(() => {
     if (selectedDrinkId && barId?.barId) {
@@ -137,7 +135,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
     );
   };
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 16;
   const items = products?.data || [];
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -161,7 +159,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
 
   return (
     <>
-      <section className="bg-[#FFF] py-[50px] lg:py-[100px]">
+      <section className="bg-[#FFF] py-[50px] lg:py-[100px] xl:mx-0 mx-5">
         <Container>
           <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
             Discover Our Drinks
@@ -176,13 +174,13 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 relative">
               {currentItems?.map((item, index) => (
                 <div
                   key={index}
-                  className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
+                  className="lg:p-[20px] p-3 border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
                 >
-                  <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
+                  <figure className="xl:mb-[50px] lg:mb-7 mb-4 xl:h-[200px] lg:h-[150px] h-[120px] w-full overflow-hidden">
                     <img
                       src={
                         item?.image
@@ -190,7 +188,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
                           : "/fallback.jpg"
                       }
                       alt={item.title}
-                      className="h-full object-center object-cover mx-auto duration-300 transition-all"
+                      className="h-full object-center object-cover mx-auto duration-300 transition-all rounded-md"
                     />
                   </figure>
                   <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
@@ -223,20 +221,20 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
           )}
 
           {items.length > itemsPerPage && (
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex justify-center px-3">
               <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next >"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
+                pageRangeDisplayed={window.innerWidth < 640 ? 0 : 3}
                 pageCount={pageCount}
                 previousLabel="< Prev"
-                containerClassName="flex items-center gap-2"
-                pageClassName="px-3 py-1 border rounded cursor-pointer"
+                containerClassName="flex flex-wrap justify-center items-center gap-2"
+                pageClassName="px-2 sm:px-3 py-1 text-sm sm:text-base border rounded cursor-pointer"
                 activeClassName="bg-black text-white"
-                previousClassName="px-3 py-1 border rounded cursor-pointer"
-                nextClassName="px-3 py-1 border rounded cursor-pointer"
-                breakClassName="px-3 py-1"
+                previousClassName="px-2 sm:px-3 py-1 text-sm sm:text-base border rounded cursor-pointer"
+                nextClassName="px-2 sm:px-3 py-1 text-sm sm:text-base border rounded cursor-pointer"
+                breakClassName="px-2 sm:px-3 py-1 text-sm sm:text-base"
               />
             </div>
           )}
@@ -263,13 +261,14 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
               >
                 ×
               </button>
-              <div className="flex gap-x-8">
-                <div className="px-[38px] py-[15px] border border-[#DBA514] rounded-[6px]">
+              <div className="sm:flex gap-x-8">
+                <div className=" p-5 border border-[#DBA514] rounded-[6px]">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       selectedDrinkDetails.image
                     }`}
                     alt={selectedDrinkDetails.name}
+                    className="rounded-md w-full h-full"
                   />
                 </div>
                 <div>

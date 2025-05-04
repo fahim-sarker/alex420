@@ -36,7 +36,7 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
                 ref={contentRef}
                 className="flex flex-col md:flex-row gap-6 mb-10 pt-4 mx-3"
               >
-                <div className="w-full md:w-[320px] h-[220px] md:h-[250px] p-4 border border-[#DBA514] flex items-center justify-center shrink-0 rounded-[6px] max-w-full max-h-full">
+                <div className="w-full md:w-[320px] h-[220px] md:h-[150px] p-4 border border-[#DBA514] flex items-center justify-center shrink-0 rounded-[6px] max-w-full max-h-full">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       orderDetails?.image

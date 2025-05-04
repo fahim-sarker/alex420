@@ -24,7 +24,7 @@ const BarOrder = () => {
     token
   );
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 16;
   const Axiosinstance = useAxios();
 
   const [currentPageordered, setCurrentPageordered] = useState(1);
@@ -277,7 +277,7 @@ const BarOrder = () => {
                       setDirectionordered(page > currentPageordered ? 1 : -1);
                       setCurrentPageordered(page);
                     }}
-                    className={`px-3 py-1 rounded border cursor-pointer ${
+                    className={` hidden sm:flex px-3 py-1 rounded border cursor-pointer ${
                       currentPageordered === page
                         ? "bg-[#DBA514] text-black"
                         : "text-black border-[#DBA514]"
@@ -394,7 +394,7 @@ const BarOrder = () => {
                       );
                       setCurrentPageorderready(page);
                     }}
-                    className={`px-3 py-1 rounded border cursor-pointer ${
+                    className={`px-3 py-1 rounded border cursor-pointer hidden sm:flex ${
                       currentPageorderready === page
                         ? "bg-[#DBA514] text-black"
                         : "text-black border-[#DBA514]"
@@ -516,7 +516,7 @@ const BarOrder = () => {
                       );
                       setCurrentPageorderreadyserved(page);
                     }}
-                    className={`px-3 py-1 rounded border cursor-pointer ${
+                    className={`px-3 py-1 rounded border cursor-pointer hidden sm:flex ${
                       currentPageorderreadyserved === page
                         ? "bg-[#DBA514] text-black"
                         : "text-black border-[#DBA514]"
@@ -644,7 +644,7 @@ const BarOrder = () => {
                       );
                       setCurrentPageorderreadyservedreceipt(page);
                     }}
-                    className={`px-3 py-1 rounded border cursor-pointer ${
+                    className={`px-3 py-1 rounded border cursor-pointer hidden sm:flex ${
                       currentPageorderreadyservedreceipt === page
                         ? "bg-[#DBA514] text-black"
                         : "text-black border-[#DBA514]"

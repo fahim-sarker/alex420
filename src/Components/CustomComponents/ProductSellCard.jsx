@@ -10,7 +10,7 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
   const { setChartInfo, selectdate } = useContext(MainContext);
   const [selectedid, setSelectedid] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 16;
 
   const tokenData = JSON.parse(localStorage.getItem("usertoken"));
   const token = tokenData?.token;
@@ -121,7 +121,7 @@ const ProductSellCard = ({ className, onSelect, ...props }) => {
           containerClassName={
             "flex justify-center gap-2 mt-6 cursor-pointer w-full"
           }
-          pageClassName={"px-3 py-1 border rounded"}
+          pageClassName={"px-3 py-1 border rounded hidden sm:flex"}
           activeClassName={"bg-[#DBA514] text-white"}
           previousClassName={"px-3 py-1 border rounded"}
           nextClassName={"px-3 py-1 border rounded"}

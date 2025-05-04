@@ -24,6 +24,11 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
   const Axiosinstance = useAxios();
   const userToken = JSON.parse(localStorage.getItem("usertoken"));
   const token = userToken?.token;
+  const [selectedTableId, setSelectedTableId] = useState("");
+  const { data: tablelist } = useFetchData(
+    `/api/dashboard/get-table/bar/${barId?.barId}`,
+    token
+  );
 
   const [formData, setFormData] = useState({
     date: undefined,
@@ -138,7 +143,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
     );
   };
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 16;
   const items = products?.data || [];
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -153,22 +158,22 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
 
   return (
     <>
-      <section className="bg-[#000] py-[50px] lg:py-[100px]">
+      <section className="bg-[#000] py-[50px] lg:py-[100px] xl:px-0 px-5">
         <Container>
           <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
             Premium Drinks
           </h3>
           <motion.div
-              className="bg-[#EEB608] h-[2px] mx-auto mt-2 mb-20"
-              initial={{ width: 0 }}
-              animate={{ width: "257px" }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
-              }}
-            />
+            className="bg-[#EEB608] h-[2px] mx-auto mt-2 mb-20"
+            initial={{ width: 0 }}
+            animate={{ width: "257px" }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
           {isLoading ? (
             <div className="flex flex-wrap gap-4 justify-between w-full">
               {Array.from({ length: 6 }).map((_, i) => (
@@ -185,7 +190,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                   key={index}
                   className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
                 >
-                  <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
+                  <figure className="xl:mb-[50px] lg:mb-7 mb-4 xl:h-[200px] lg:h-[150px] h-[120px]w-full overflow-hidden">
                     <img
                       src={
                         item?.image
@@ -193,7 +198,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                           : "/fallback.jpg"
                       }
                       alt={item.title}
-                      className="h-full object-center object-cover mx-auto duration-300 transition-all"
+                      className="h-full object-center object-cover mx-auto duration-300 transition-all rounded-md"
                     />
                   </figure>
                   <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
@@ -227,19 +232,19 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
 
           {items.length > itemsPerPage && (
             <div className="mt-8 flex justify-center">
-              <ReactPaginate
+             <ReactPaginate
                 breakLabel="..."
                 nextLabel="Next >"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
+                pageRangeDisplayed={window.innerWidth < 640 ? 1 : 3}
                 pageCount={pageCount}
                 previousLabel="< Prev"
-                containerClassName="flex items-center gap-2"
-                pageClassName="px-3 py-1 border rounded cursor-pointer"
-                activeClassName="bg-black text-white"
-                previousClassName="px-3 py-1 border rounded cursor-pointer"
-                nextClassName="px-3 py-1 border rounded cursor-pointer"
-                breakClassName="px-3 py-1"
+                containerClassName="flex flex-wrap justify-center items-center gap-2 text-white"
+                pageClassName="px-2 sm:px-3 py-1 text-sm sm:text-base border rounded cursor-pointer"
+                activeClassName="bg-white text-black"
+                previousClassName="px-2 sm:px-3 py-1 text-sm sm:text-base border rounded cursor-pointer"
+                nextClassName="px-2 sm:px-3 py-1 text-sm sm:text-base border rounded cursor-pointer"
+                breakClassName="px-2 sm:px-3 py-1 text-sm sm:text-base"
               />
             </div>
           )}
@@ -360,6 +365,21 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                           <option value="PM">PM</option>
                         </select>
                       </div>
+                        <div className="mt-5">
+                          <h2>Table id :</h2>
+                          <select
+                            value={selectedTableId}
+                            onChange={(e) => setSelectedTableId(e.target.value)}
+                            className="px-2 py-3 border rounded-[4px] text-black w-[135px] mt-2 bg-white"
+                          >
+                            <option value="">Select Table</option>
+                            {tablelist?.data?.map((table) => (
+                              <option key={table.id} value={table.id}>
+                                {table?.table_name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                     </Label>
                   </div>
 

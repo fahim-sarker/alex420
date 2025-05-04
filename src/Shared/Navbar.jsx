@@ -76,7 +76,7 @@ const Navbar = () => {
             <li className="py-2 px-6 capitalize font-semibold text-[14px] text-[#F8F8FF] hover:text-[#E9B20C] duration-300 ease-in-out cursor-pointer">
               {userToken ? (
                 role === "bar_owner" ? (
-                  <Link to="/bar-dashboard">Dashboard</Link>
+                  <Link to="/bar-dashboard/order">Dashboard</Link>
                 ) : role === "user" ? (
                   <Link to="/user-dashboard">Dashboard</Link>
                 ) : (
