@@ -39,6 +39,7 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
 
   const {
     data: products,
+    isLoading
   } = useFetchData(`/api/bar/${barId?.barId}/products`);
 
 
@@ -165,35 +166,45 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
           <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#000] text-center pb-10">
             Discover Our Drinks
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">
-            {currentItems?.map((item, index) => (
-              <div
-                key={index}
-                className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
-              >
-                <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
-                  <img
-                    src={
-                      item?.image
-                        ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
-                        : "/fallback.jpg"
-                    }
-                    alt={item.title}
-                    className="h-full object-center object-cover mx-auto duration-300 transition-all"
-                  />
-                </figure>
-                <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
-                  {item.category}
-                </h3>
-                <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
-                  {item.description}
-                </h4>
-                <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
-                  ${item.selling_price}
-                </h5>
-                <div className="pb-3 flex gap-x-[10px]">
-                  {renderStars(item.review)}
-                  {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
+          {isLoading ? (
+            <div className="flex flex-wrap gap-4 justify-between w-full">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse bg-gray-200 rounded-md w-[380px]  h-[260px]"
+                ></div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative">
+              {currentItems?.map((item, index) => (
+                <div
+                  key={index}
+                  className="p-[20px] border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
+                >
+                  <figure className="mb-[50px] h-[200px] w-full overflow-hidden">
+                    <img
+                      src={
+                        item?.image
+                          ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
+                          : "/fallback.jpg"
+                      }
+                      alt={item.title}
+                      className="h-full object-center object-cover mx-auto duration-300 transition-all"
+                    />
+                  </figure>
+                  <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
+                    {item.category}
+                  </h3>
+                  <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
+                    {item.description}
+                  </h4>
+                  <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
+                    ${item.selling_price}
+                  </h5>
+                  <div className="pb-3 flex gap-x-[10px]">
+                    {renderStars(item.review)}
+                    {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
                     {item.review}
                   </p> */}
                   </div>
