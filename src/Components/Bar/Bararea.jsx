@@ -129,7 +129,7 @@ const Bararea = () => {
           </AnimatePresence>
         </div>
 
-        <div className="flex justify-center mt-10">
+        <div className="hidden sm:flex justify-center mt-10 ">
           <div className="flex gap-x-2 items-center">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
@@ -145,7 +145,7 @@ const Bararea = () => {
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-3 py-2 rounded-md cursor-pointer ${
+                  className={`px-3 py-2 text-sm sm:text-base rounded-md cursor-pointer ${
                     page === currentPage
                       ? "bg-[#000] text-white"
                       : "bg-gray-200 text-black"

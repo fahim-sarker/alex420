@@ -153,7 +153,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
 
   return (
     <>
-      <section className="bg-[#000] py-[100px]">
+      <section className="bg-[#000] py-[50px] lg:py-[100px]">
         <Container>
           <h3 className="text-[30px] md:text-[48px] font-normal font-instrument text-[#fff] text-center pb-2">
             Feature Drinks
@@ -169,7 +169,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
               ease: "easeInOut",
             }}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 relative bg-black">
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-5 relative bg-black mx-3">
             {currentItems?.map((item, index) => (
               <div
                 key={index}
@@ -236,18 +236,19 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
 
         {selectedDrinkDetails && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 px-4"
             onClick={() => {
               setSelectedDrinkId(null);
               setSelectedDrinkDetails(null);
             }}
           >
             <div
-              className="bg-white pt-[30px] pb-[40px] pl-[58px] pr-[91px] rounded-lg relative  z-50 h-[850px] w-[700px]"
+              className="bg-white rounded-lg relative z-50 max-h-[90vh] w-full max-w-[700px] overflow-y-auto p-6 md:p-10"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Close Button */}
               <button
-                className="absolute top-4 right-4 text-2xl font-bold cursor-pointer"
+                className="absolute top-1 md:top-4 right-4 text-2xl font-bold cursor-pointer"
                 onClick={() => {
                   setSelectedDrinkId(null);
                   setSelectedDrinkDetails(null);
@@ -255,41 +256,45 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
               >
                 ×
               </button>
-              <div className="flex gap-x-8">
-                <div className="px-[38px] py-[15px] border border-[#DBA514] rounded-[6px]">
+
+              {/* Top Content */}
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="border border-[#DBA514] rounded-[6px] p-4 mt-2.5 sm:mt-0 flex-shrink-0 flex justify-center items-center">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       selectedDrinkDetails.image
                     }`}
                     alt={selectedDrinkDetails.name}
+                    className="h-[200px] object-contain"
                   />
                 </div>
-                <div>
-                  <p className="text-[24px] font-instrument text-[#0E0E0E]">
+
+                <div className="flex flex-col gap-3">
+                  <p className="text-[20px] md:text-[24px] font-instrument text-[#0E0E0E]">
                     {selectedDrinkDetails.description}
                   </p>
-                  <h3 className="text-[16px] text-[#000] py-2">
+                  <h3 className="text-[16px] text-[#000]">
                     Brand: {selectedDrinkDetails.name}
                   </h3>
-                  <div className="flex gap-x-2">
+                  <div className="flex gap-2 items-center">
                     {renderStars(selectedDrinkDetails.review)}
                     <p className="text-[#6B6B6B] font-medium">
                       {selectedDrinkDetails.review}
                     </p>
                   </div>
-                  <div className="flex gap-x-3 py-[6px]">
+                  <div className="flex gap-2 py-2">
                     <input
                       type="number"
                       value={input2}
                       onChange={(e) => setInput2(e.target.value)}
-                      className="px-2 py-2 border rounded-[4px] outline-none text-[#000] w-[75px]"
+                      className="px-2 py-2 border rounded w-[75px] text-black"
                     />
-                    <select className="px-2 py-2 border rounded-[4px] text-[#000] w-[135px]">
+                    <select className="px-2 py-2 border rounded w-[135px] text-black">
                       <option>Bottles</option>
                       <option>Glass</option>
                     </select>
                   </div>
-                  <p className="text-[24px] font-semibold text-[#000]">
+                  <p className="text-[20px] md:text-[24px] font-semibold text-[#000]">
                     {input2 > 1
                       ? `$${(
                           input2 * selectedDrinkDetails.selling_price
@@ -298,11 +303,14 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                   </p>
                 </div>
               </div>
-              <div className="pl-[30px]">
-                <h3 className="text-[#0E0E0E] text-[24px] font-normal font-instrument pt-[20px]">
+
+              {/* Shots Time */}
+              <div className="pt-6">
+                <h3 className="text-[#0E0E0E] text-[20px] md:text-[24px] font-instrument">
                   Shots Time
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  {/* Time Input */}
                   <div>
                     <Label
                       htmlFor="hours"
@@ -313,12 +321,11 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                           {errors.time}
                         </p>
                       )}
-
-                      <span className="flex justify-between px-[11px] py-[12px] border-[0.5px] mb-[7px] text-[18px] border-[#6B6B6B] rounded-[4px] items-center">
+                      <span className="flex justify-between px-3 py-3 border mb-2 text-[18px] border-[#6B6B6B] rounded items-center">
                         Time
                         <ClockIcon className="size-6 text-[#4E4E4E] opacity-90" />
                       </span>
-                      <div className="flex gap-x-1 items-center h-[35px] bg-white rounded-md border border-input w-[225px]">
+                      <div className="flex gap-1 items-center h-[40px] rounded border w-full max-w-[225px]">
                         <input
                           type="number"
                           placeholder="00"
@@ -326,7 +333,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                           onChange={(e) =>
                             updateFormData("hours", e.target.value)
                           }
-                          className="bg-[#F8F8FF] text-black w-[75px] text-center outline-none h-full"
+                          className="bg-[#F8F8FF] text-black w-[65px] text-center outline-none h-full"
                         />
                         <input
                           type="number"
@@ -335,14 +342,14 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                           onChange={(e) =>
                             updateFormData("minutes", e.target.value)
                           }
-                          className="bg-[#F8F8FF] text-black w-[75px] text-center outline-none h-full"
+                          className="bg-[#F8F8FF] text-black w-[65px] text-center outline-none h-full"
                         />
                         <select
                           value={formData.ampm}
                           onChange={(e) =>
                             updateFormData("ampm", e.target.value)
                           }
-                          className="bg-[#F8F8FF] text-black w-[75px] text-center outline-none text-[14px] appearance-none h-full"
+                          className="bg-[#F8F8FF] text-black w-[75px] text-center outline-none text-[14px] h-full"
                         >
                           <option value="AM">AM</option>
                           <option value="PM">PM</option>
@@ -351,6 +358,7 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                     </Label>
                   </div>
 
+                  {/* Date Picker */}
                   <div>
                     <Popover>
                       <div>
@@ -362,13 +370,13 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                         >
                           {formData.date
                             ? format(formData.date, "PPP")
-                            : " Date"}
+                            : "Date"}
                           <CalenderIcon className="size-6" />
                         </Button>
                       </div>
                       <div className="w-auto p-0">
                         <CalendarComponent
-                          className="border border-black/5 rounded-[4px] p-3 mt-2 w-fit"
+                          className="border border-black/5 rounded p-3 mt-2 w-fit"
                           mode="single"
                           selected={formData.date}
                           onSelect={(date) => updateFormData("date", date)}
@@ -385,10 +393,11 @@ const Premiumdrinks = ({ receipt, setReceipt, barId }) => {
                 </div>
               </div>
 
-              <div className="flex justify-center mt-[50px]">
+              {/* Order Button */}
+              <div className="flex justify-center mt-10">
                 <button
                   onClick={handleBtn}
-                  className="py-[18px] px-[90px] text-[18px] cursor-pointer rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] text-[#0E0E0E] font-semibold"
+                  className="py-4 px-16 text-[18px] rounded-lg bg-gradient-to-r from-[#DBA514] via-[#EEB609] to-[#FCC201] text-[#0E0E0E] font-semibold"
                 >
                   Order Now
                 </button>
