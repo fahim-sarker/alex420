@@ -174,49 +174,52 @@ const Drinks = ({ receipt, setReceipt, barId }) => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 relative">
-              {currentItems?.map((item, index) => (
-                <div
-                  key={index}
-                  className="lg:p-[20px] p-3 border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
-                >
-                  <figure className="xl:mb-[50px] lg:mb-7 mb-4 xl:h-[200px] lg:h-[150px] h-[120px] w-full overflow-hidden">
-                    <img
-                      src={
-                        item?.image
-                          ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
-                          : "/fallback.jpg"
-                      }
-                      alt={item.title}
-                      className="h-full object-center object-cover mx-auto duration-300 transition-all rounded-md"
-                    />
-                  </figure>
-                  <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
-                    {item.category}
-                  </h3>
-                  <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
-                    {item.description}
-                  </h4>
-                  <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
-                    ${item.selling_price}
-                  </h5>
-                  <div className="pb-3 flex gap-x-[10px]">
-                    {renderStars(item.review)}
-                    {/* <p className="text-[16px] font-medium text-[#6B6B6B] ">
-                    {item.review}
-                  </p> */}
-                  </div>
-                  <button
-                    onClick={() => {
-                      setSelectedDrinkId(item.id);
-                      setSelectedDrinkDetails(item);
-                    }}
-                    className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full"
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-3 relative w-full">
+              {currentItems && currentItems.length > 0 ? (
+                currentItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className="lg:p-[20px] p-3 border-[0.5px] border-[#DBA514]/30 rounded-[6px] relative cursor-pointer group flex flex-col"
                   >
-                    Buy now
-                  </button>
+                    <figure className="xl:mb-[50px] lg:mb-7 mb-4 xl:h-[200px] lg:h-[150px] h-[120px] w-full overflow-hidden">
+                      <img
+                        src={
+                          item?.image
+                            ? `${import.meta.env.VITE_BASE_URL}/${item.image}`
+                            : "/fallback.jpg"
+                        }
+                        alt={item.title}
+                        className="h-full object-center object-cover mx-auto duration-300 transition-all rounded-md"
+                      />
+                    </figure>
+                    <h3 className="text-[16px] text-[#6B6B6B] font-medium capitalize">
+                      {item.category}
+                    </h3>
+                    <h4 className="text-[16px] text-[#0E0E0E] font-normal py-[6px] leading-none grow">
+                      {item.description}
+                    </h4>
+                    <h5 className="text-[24px] text-[#0E0E0E] font-semibold py-[6px]">
+                      ${item.selling_price}
+                    </h5>
+                    <div className="pb-3 flex gap-x-[10px]">
+                      {renderStars(item.review)}
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSelectedDrinkId(item.id);
+                        setSelectedDrinkDetails(item);
+                      }}
+                      className="flex justify-center items-center leading-none py-[16px] px-[32px] capitalize font-semibold text-[18px] rounded-lg bg-[linear-gradient(92deg,_#DBA514_2.3%,_#EEB609_35.25%,_#C69320_66.76%,_#FCC201_97.79%)] backdrop-blur-[6.5px] text-[#0E0E0E] cursor-pointer tracking-[0.72px] w-full"
+                    >
+                      Buy now
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-12 text-[#0E0E0E] text-lg font-medium">
+                  No product found.
                 </div>
-              ))}
+              )}
             </div>
           )}
 

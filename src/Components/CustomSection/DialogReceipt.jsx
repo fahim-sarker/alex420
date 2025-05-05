@@ -36,13 +36,13 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
                 ref={contentRef}
                 className="flex flex-col md:flex-row gap-6 mb-10 pt-4 mx-3"
               >
-                <div className="w-full md:w-[320px] h-[220px] md:h-[150px] p-4 border border-[#DBA514] flex items-center justify-center shrink-0 rounded-[6px] max-w-full max-h-full">
+                <div className="w-[250px] md:w-[270px] md:h-[150px] p-4 border border-[#DBA514] flex items-center justify-center shrink-0 rounded-[6px] max-w-full max-h-full">
                   <img
                     src={`${import.meta.env.VITE_BASE_URL}/${
                       orderDetails?.image
                     }`}
                     alt=""
-                    className="object-cover w-full h-full rounded-md"
+                    className="rounded-md h-full"
                   />
                 </div>
                 <div className="text-[#0E0E0E] space-y-3 flex-1">
@@ -109,7 +109,7 @@ const DialogReceipt = ({ receipt, setReceipt }) => {
             </div>
             <h3 className="text-[20px] md:text-[24px] text-[#000] font-medium text-center pt-8">
               Your file has been downloaded
-            </h3> 
+            </h3>
             <div className="flex justify-center">
               <Link to="/bar">
                 <button
